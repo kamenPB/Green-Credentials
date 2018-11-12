@@ -16,6 +16,6 @@ you might write something on top line, then press
 Esc, type :wq and enter to save and exit.
 
 Step 5: 
-'git push' to push files to reporsitory
+'git push' to push files to reporsitory (Don't forget!)
 
 Note: 'git status'
