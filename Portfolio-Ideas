@@ -10,6 +10,9 @@ Cabot Circus shopping centre
 
 Display data using appealing graphics on a large Smart TV
 
+
+
+
 Requirements
 --------------------------------------------------
 - Beth: inputting the data
@@ -18,11 +21,22 @@ Requirements
 - Cabot Circus + its parent company
 - Customers at Cabot who will see the board
 
-Key actor(s): Beth, as she is inputting the data into the excel spreadsheet
+Key actor(s): 
+- Beth, as she is inputting the data into the excel spreadsheet
+- generator, solar panels etc
+
+
+1. High level diagram
+1. use case goals and sequence of steps
+1. important goal into atomic parts
+
 
 
 OO Design & UML
 -----------------------------------------------------
+Stand alone application
+
+
 
 Development Testing
 ----------------------------------------------------
