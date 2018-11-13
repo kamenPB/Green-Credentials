@@ -35,17 +35,23 @@ Non-functional requirements:
 * Display green credentials of cabot circus on a Smart TV
 * Update data in real time
 * Filter out negative data
+
 **Flow**
+
 1. Recieve the new data
 1. Compare with currently displayed data and the data of previous months
 1. If new data is significantly inferior in terms of being environmentally friendly, do not display
 1. Else, update screen data
+
 **Alternative flow**
+
 1. Recieve the new data
 1. Compare with currently displayed data and the data of previous months
 1. Data is identical to previous data
 1. Do not update screen data
+
 **Exceptional flow**
+
 1. New data is not recieved
 1. No comparisons made
 1. Wait for next batch of data and continue displaying current screen data
