@@ -29,3 +29,32 @@ Non-functional requirements:
 1.  Perform well enough to update at least every half-hour
 1.  Appear eye-catching and vibrant to engage passers-by
 1.  Inform passers-by in easy-to-understand visuals how Cabot Circus is environmentally positive
+
+**Use-case goals:**
+=================================================================================
+* Display green credentials of cabot circus on a Smart TV
+* Update data in real time
+* Filter out negative data
+**Flow**
+1. Recieve the new data
+1. Compare with currently displayed data and the data of previous months
+1. If new data is significantly inferior in terms of being environmentally friendly, do not display
+1. Else, update screen data
+**Alternative flow**
+1. Recieve the new data
+1. Compare with currently displayed data and the data of previous months
+1. Data is identical to previous data
+1. Do not update screen data
+**Exceptional flow**
+1. New data is not recieved
+1. No comparisons made
+1. Wait for next batch of data and continue displaying current screen data
+* Calculate statistics/pictorial data
+* Integrate with app
+* Integrate with website
+
+In terms of importance, displaying the green credentials of cabot circus accurately in a pictorial and graphical fashion on a smart TV is at the top, the website and app integration are secondary goals. This main goal can be divided into the following atomic requirements:
+1. The TV screen displays all the required data
+1. There is a constant input stream of the real time data about some of the applicable topics.
+1. The internal data processing filters out negative data
+1. There is an accesible and simple interface for any cabot circus staff to alter data in any way they see fit
