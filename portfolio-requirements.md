@@ -1,6 +1,6 @@
 Stakeholders:
 =================================================================================
-*   Beth: She is the environmental sustainability supervisor and the source of the information that we will be presenting in our product. The data is all from her sector of cabot circus.
+*   Beth: She is the environment and community coordinator and is the source of the information that we will be presenting in our product. The data is all from her sector of the cabot circus business.
 *   Craig: project overseer, supervisor
 *   Cabot circus customers: These are the people who will observe the final product on a day to day basis.
 *   Marketing dept: They are responsible the business promotion and advertising, and thus, they have interest in how we present our product, there must be consistency with the brand they publicize (logos used, colour scheme, etc ).
@@ -33,7 +33,46 @@ Non-functional requirements:
 **Use-case goals:**
 =================================================================================
 * Display green credentials of cabot circus on a Smart TV
+
+**Flow**
+
+1. Display all of the data required on the screen
+1. Make all the text readable
+1. Use eye catching colours and pictures
+
+**Alternative flow**
+
+1. Display all of the data required on the screen
+1. Too much data makes the text on the screen to small and thus unreadable
+1. Split Display into 2 slides and alternate between them on a timely basis
+
+**Exceptional flow**
+
+1. The screen doesn't turn on or is having problems displaying the data
+1. Make sure all the power cables are inserted properly
+1. Turn the TV off then back on
+1. If there are still problems, consult the IT department
+
 * Update data in real time
+
+**Flow**
+
+1. A member of cabot circus rewrites some value on the excel spreadsheet
+1. The spreadsheet is directly linked to the program so it will go through a filter and the output of that will go straight to the screen
+1. Every 30 minutes, Take the current data of the power usage 
+1. Filter the data and display the output immediately
+
+**Alternative flow**
+
+1. A member of cabot circus is currently rewriting data on the spreadsheet and another member attempts to edit the same data
+1. Lock the file so only one person can access it at a time
+1. Unlock once there is nobody on the file
+
+**Exceptional flow**
+
+1. A member of staff accidentally deletes some data and doesn't replace it with anything
+1. Continue displaying currently showing data until the spreadsheet is sorted out (store current data somewhere other than the spreadsheet)
+
 * Filter out negative data
 
 **Flow**
@@ -55,9 +94,32 @@ Non-functional requirements:
 1. New data is not recieved
 1. No comparisons made
 1. Wait for next batch of data and continue displaying current screen data
-* Calculate statistics/pictorial data
-* Integrate with app
-* Integrate with website
+
+* Calculate pictorial data
+
+**Flow**
+
+1. Once the data has been checked to be positive, take the data that is being displayed pictorially
+1. Split them up into each pictorial section (e.g elephants, bath tubs etc)
+1. For each section, using the new numerical data, calculate how many of said data presentation picture corresponds to the data
+1. Display that many of the pictures on the screen
+
+**Alternative flow**
+
+1. Once the data has been checked to be positive, take the data that is being displayed pictorially
+1. Split them up into each pictorial section (e.g elephants, bath tubs etc)
+1. For each section, using the new numerical data, calculate how many of said data presentation picture corresponds to the data
+1. The data corresponds to and small percentage of a visual representation of that data (e.g 0.0006% of an elephant)
+1. Round the percentage to the nearest Integer
+1. Display the data on the screen
+
+**Exceptional flow**
+
+1. Once the data has been checked to be positive, take the data that is being displayed pictorially
+1. Split them up into each pictorial section (e.g elephants, bath tubs etc)
+1. For each section, using the new numerical data, calculate how many of said data presentation picture corresponds to the data
+1. The number of pictures to be displayed is way too many to be displayed on the screen/ It is no longer a suitable representation and something of a bigger scale would be better
+1. Update the text display and pictures to something more suitable (Something of bigger scale for each picture display will be planned in advance)
 
 In terms of importance, displaying the green credentials of cabot circus accurately in a pictorial and graphical fashion on a smart TV is at the top, the website and app integration are secondary goals. This main goal can be divided into the following atomic requirements:
 1. The TV screen displays all the required data
