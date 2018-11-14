@@ -40,3 +40,11 @@ Stand alone application
 
 Development Testing
 ----------------------------------------------------
+Talk about lack of front end
+framework (maven?)
+human error in spreadsheet (wrong type, exxagerated data etc)
+    template for spreadsheet 
+integration testing as we go, unit testing at end for example datasets
+mostly testable
+    "eye-catchiness" is hard to test
+    hard to cover every eventuality as data categories might change
