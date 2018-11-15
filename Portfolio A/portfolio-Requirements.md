@@ -38,22 +38,12 @@ We have different types of data that is being calculated every month. Electricit
 
 **Use-case goals:**
 =================================================================================
-* Generate 
-
-(scenarios of getting the data from different sort of generators)
-**Flow**
-TO BE DONE
-
-**Alternative flow**
-TO BE DONE
-
-**Exceptional flow**
-TO BE DONE
-
 * Update
 
 **Flow**
 
+1. The data from the power usage is dirctly delivered to our system in 30 minute intervals
+1. A member of cabot circus staff collects water/electricity/gas data from their respective usage meters/generators.
 1. A member of cabot circus rewrites some value on the excel spreadsheet
 1. The spreadsheet is directly linked to the program so it will go through a filter and the output of that will go straight to the screen
 1. Every 30 minutes, take the current data of the power usage 
@@ -61,6 +51,8 @@ TO BE DONE
 
 **Alternative flow**
 
+1. The data from the power usage is dirctly delivered to our system in 30 minute intervals
+1. A member of cabot circus staff collects water/electricity/gas data from their respective usage meters/generators.
 1. A member of cabot circus is currently rewriting data on the spreadsheet and another member attempts to edit the same data
 1. Lock the file so only one person can access it at a time
 1. Unlock once there is nobody on the file
