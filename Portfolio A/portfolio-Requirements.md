@@ -141,6 +141,8 @@ TO BE DONE
 
 In terms of importance, displaying the green credentials of cabot circus accurately in a pictorial and graphical fashion on a smart TV is at the top, the website and app integration are secondary goals. This main goal can be divided into the following atomic requirements:
 1. The TV screen displays all the required data
+1. There is at least 1 pictorial presentation per sector (gas, electricity .etc.)
 1. There is a constant input stream of the real time data about some of the applicable topics.
 1. The internal data processing filters out negative data
 1. There is an accesible and simple interface for any cabot circus staff to alter data in any way they see fit
+1. Animations and different colours are used
