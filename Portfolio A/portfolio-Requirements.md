@@ -30,36 +30,33 @@ Non-functional requirements:
 1.  Appear eye-catching and vibrant to engage passers-by
 1.  Inform passers-by in easy-to-understand visuals how Cabot Circus is environmentally positive
 
+Use-case diagram:
+=================================================================================
+![alt text](https://github.com/kamenPB/Green-Credentials/blob/master/use-case_diagram.png)
+
+We have different types of data that is being calculated every month. Electricity generated from the solar panels, gas generated from recycling the food wasteand water harvested from the rain - this is the data that Beth collects and stores in Excel spreadsheets. Later on, another actor - Cabot's staff - is allowed to edit the these if it is required. This is eventually what we are provided with, thus we enter the system we are developing. It can be seen is that a decision needs to be made - whether the data is positive or negative so we need to compare it to the prvious month. In the former case, we go on to the use-case that builds a TV representation whereas in the latter case, the decision to continue or not is up to the actors (Beth and the staff). After a screen has been made, it goes to a preview stage where either Beth or the staff need to approve that the information is correct and looks good enough to be presented. Given the green light, the TV is updated and the Customers are able to view its new stats being displayed. 
+
 **Use-case goals:**
 =================================================================================
-* Display green credentials of cabot circus on a Smart TV
+* Generate 
 
+(scenarios of getting the data from different sort of generators)
 **Flow**
-
-1. Display all of the data required on the screen
-1. Make all the text readable
-1. Use eye catching colours and pictures
+TO BE DONE
 
 **Alternative flow**
-
-1. Display all of the data required on the screen
-1. Too much data makes the text on the screen to small and thus unreadable
-1. Split Display into 2 slides and alternate between them on a timely basis
+TO BE DONE
 
 **Exceptional flow**
+TO BE DONE
 
-1. The screen doesn't turn on or is having problems displaying the data
-1. Make sure all the power cables are inserted properly
-1. Turn the TV off then back on
-1. If there are still problems, consult the IT department
-
-* Update data in real time
+* Update
 
 **Flow**
 
 1. A member of cabot circus rewrites some value on the excel spreadsheet
 1. The spreadsheet is directly linked to the program so it will go through a filter and the output of that will go straight to the screen
-1. Every 30 minutes, Take the current data of the power usage 
+1. Every 30 minutes, take the current data of the power usage 
 1. Filter the data and display the output immediately
 
 **Alternative flow**
@@ -73,7 +70,7 @@ Non-functional requirements:
 1. A member of staff accidentally deletes some data and doesn't replace it with anything
 1. Continue displaying currently showing data until the spreadsheet is sorted out (store current data somewhere other than the spreadsheet)
 
-* Filter out negative data
+* Compare
 
 **Flow**
 
@@ -95,7 +92,7 @@ Non-functional requirements:
 1. No comparisons made
 1. Wait for next batch of data and continue displaying current screen data
 
-* Calculate pictorial data
+* (pre)view TV representation 
 
 **Flow**
 
@@ -120,6 +117,27 @@ Non-functional requirements:
 1. For each section, using the new numerical data, calculate how many of said data presentation picture corresponds to the data
 1. The number of pictures to be displayed is way too many to be displayed on the screen/ It is no longer a suitable representation and something of a bigger scale would be better
 1. Update the text display and pictures to something more suitable (Something of bigger scale for each picture display will be planned in advance)
+
+* Display green credentials
+
+**Flow**
+
+1. Display all of the data required on the screen
+1. Make all the text readable
+1. Use eye catching colours and pictures
+
+**Alternative flow**
+
+1. Display all of the data required on the screen
+1. Too much data makes the text on the screen to small and thus unreadable
+1. Split Display into 2 slides and alternate between them on a timely basis
+
+**Exceptional flow**
+
+1. The screen doesn't turn on or is having problems displaying the data
+1. Make sure all the power cables are inserted properly
+1. Turn the TV off then back on
+1. If there are still problems, consult the IT department
 
 In terms of importance, displaying the green credentials of cabot circus accurately in a pictorial and graphical fashion on a smart TV is at the top, the website and app integration are secondary goals. This main goal can be divided into the following atomic requirements:
 1. The TV screen displays all the required data
