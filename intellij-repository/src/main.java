@@ -25,6 +25,8 @@ public class main {
         XSSFWorkbook wb = new XSSFWorkbook(file);
 
         // Read the cell at [0,0] of the Waste sheet
+        // TODO: Process and display the relevant stats from the table
+        // TODO: Generalise and repeat for all data categories
         XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(0).getCell(0);
 
         // Print the cell's String value
