@@ -1,0 +1,37 @@
+<component name="libraryTable">
+  <library name="com.github.kondaurovdev:apache_poi_2.11:0.1.1" type="repository">
+    <properties maven-id="com.github.kondaurovdev:apache_poi_2.11:0.1.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/apache_poi_2.11-0.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/scala-library-2.11.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-3.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-examples-3.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-scratchpad-3.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-3.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-schemas-3.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xmlbeans-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-api-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/apache_poi_2.11-0.1.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/scala-library-2.11.8-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.21-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-3.13-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.9-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-scratchpad-3.13-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-3.13-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/apache_poi_2.11-0.1.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/scala-library-2.11.8-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.21-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-3.13-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.9-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-examples-3.13-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-scratchpad-3.13-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/poi-ooxml-3.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
