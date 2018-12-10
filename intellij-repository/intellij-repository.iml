@@ -53,5 +53,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.6.2" level="project" />
     <orderEntry type="library" name="poi-4.0" level="project" />
     <orderEntry type="library" name="com.github.kondaurovdev:apache_poi_2.11:0.1.1" level="project" />
+    <orderEntry type="library" name="poi-3.13" level="project" />
   </component>
 </module>
