@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class main {
+    // A method to print to the console the string contents of cell (0,0) from test.xlsx
     public static void readExcelFile() throws IOException
     {
         InputStream ExcelFileToRead = new FileInputStream("test.xlsx");
