@@ -20,18 +20,30 @@ public class main {
 
     public static void main(String [] args) throws IOException {
         // Take in the Excel file and create a workbook to read from
-        // TODO: Let the user specify the path for the Excel file to read from
+        // TODO: Let the user specify the path for the Excel file at run-time
         InputStream file = new FileInputStream(EXCEL_FILE);
         XSSFWorkbook wb = new XSSFWorkbook(file);
 
         // Read the cell at [0,0] of the Waste sheet
-        // TODO: Process and display the relevant stats from the table
+        // TODO: Process and display relevant stats from the table
         // TODO: Generalise and repeat for all data categories
         XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(0).getCell(0);
 
-        // Print the cell's String value
-        // TODO: Allow reading from non-String cell values (e.g. Numeric cells)
-        // System.out.print(cell.getNumericCellValue() + "");
-        System.out.print(cell.getStringCellValue() + "");
+        // Print the cell's value
+        switch (cell.getCellType()) {
+            case XSSFCell.CELL_TYPE_STRING:
+                System.out.print(cell.getStringCellValue() + "");
+                break;
+            case XSSFCell.CELL_TYPE_NUMERIC:
+                System.out.print(cell.getNumericCellValue() + "");
+                break;
+            case XSSFCell.CELL_TYPE_BLANK:
+            case XSSFCell.CELL_TYPE_BOOLEAN:
+            case XSSFCell.CELL_TYPE_ERROR:
+            case XSSFCell.CELL_TYPE_FORMULA:
+            default:
+                System.out.print("Unexpected cell type received.");
+                break;
+        }
     }
 }
