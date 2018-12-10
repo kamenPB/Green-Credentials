@@ -115,6 +115,7 @@ public class main {
         Janrecycle = cell2.getNumericCellValue();
 
         JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new GUIComponent());
         frame.setSize(300, 300);
         frame.setVisible(true);
