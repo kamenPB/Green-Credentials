@@ -175,9 +175,8 @@ public class ConsumptionData {
 
     // Take in the Excel file and create a workbook to read from
     // TODO: Let the user specify Excel file path at run-time
-    private static final String EXCEL_FILE = "..\\data.xlsx"; // For now, hardcode the path
     private static XSSFWorkbook getWorkbookFromExcelFile() throws IOException {
-        return new XSSFWorkbook(new FileInputStream(EXCEL_FILE));
+        return new XSSFWorkbook(new FileInputStream("..\\data.xlsx")); // For now, hardcode the path
     }
 
     // Main
