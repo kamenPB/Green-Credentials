@@ -6,6 +6,7 @@ import javax.swing.*;
 class GUIComponent extends JComponent {
     /* Pie chart code adapted from:
      * https://stackoverflow.com/questions/41937664/how-can-we-paint-this-piechart-class
+     * Credits: Paul Schutrups
      */
 
     // A pie chart is composed of Slices
@@ -67,9 +68,9 @@ public class ConsumptionData {
     // N.B. The Excel workbook's sheets MUST be in this order!
     public static final int DATA_WASTE = 0;
     public static final int DATA_WATER = 1;
-    public static final int DATA_WATER_LL = 2;
+    public static final int DATA_WATER_LL = 2; // Landlord-only water usage
     public static final int DATA_ELEC = 3;
-    public static final int DATA_ELEC_CP = 4;
+    public static final int DATA_ELEC_CP = 4; // Car park electricity
     public static final int DATA_GAS = 5;
 
     // DEBUG METHOD: Print the contents of a cell to the console
@@ -138,9 +139,9 @@ public class ConsumptionData {
     // Initialize and display the GUI
     private static void display() {
         JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(new GUIComponent());
         frame.setTitle("Cabot Circus Green Credentials");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 300);
         frame.setVisible(true);
     }
