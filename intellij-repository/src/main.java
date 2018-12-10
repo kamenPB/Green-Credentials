@@ -17,6 +17,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class main {
     public static void readExcelFile() throws IOException
     {
-        InputStream ExcelFileToRead = new FileInputStream("C:/Test.xlsx");
+        InputStream ExcelFileToRead = new FileInputStream("test.xlsx");
+        HSSFWorkbook wb = new HSSFWorkbook(ExcelFileToRead);
+        HSSFCell cell = wb.getSheetAt(0).getRow(0).getCell(0);
+        System.out.print(cell.getStringCellValue() + "");
     }
 }
