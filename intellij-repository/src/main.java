@@ -7,16 +7,16 @@ import java.io.InputStream;
 
 public class main {
     // Hardcoded path for the Excel file to read from
-    public static final String EXCEL_FILE = "..\\data.xlsx";
+    private static final String EXCEL_FILE = "..\\data.xlsx";
 
     // Aliases for the different data categories
     // The Excel workbook must order the sheets in this order
-    public static final int DATA_WASTE = 0;
-    public static final int DATA_WATER = 1;
-    public static final int DATA_WATER_LL = 2;
-    public static final int DATA_ELEC = 3;
-    public static final int DATA_ELEC_CP = 4;
-    public static final int DATA_GAS = 5;
+    private static final int DATA_WASTE = 0;
+    private static final int DATA_WATER = 1;
+    private static final int DATA_WATER_LL = 2;
+    private static final int DATA_ELEC = 3;
+    private static final int DATA_ELEC_CP = 4;
+    private static final int DATA_GAS = 5;
 
     // A method which prints the contents of a String or Numeric cell to the console
     // Other cell types are not supported
