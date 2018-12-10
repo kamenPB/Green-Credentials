@@ -104,7 +104,7 @@ public class ConsumptionData {
         switch (dataCategory) {
             case DATA_WASTE:
                 for (int row = 0; row < 13; row++) {
-                    for (int column = 0 ; column < 4; column++) {
+                    for (int column = 0; column < 4; column++) {
                         XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
                         printCellToConsole(cell);
 
@@ -146,8 +146,7 @@ public class ConsumptionData {
         frame.setVisible(true);
     }
 
-    private static final int NUM_MONTHS = 12; // For readability
-    private static double[] percentageWasteRecycled = new double[NUM_MONTHS];
+    private static double[] percentageWasteRecycled = new double[12];
     public static double getPercentageWasteRecycled(int month) {
         return percentageWasteRecycled[month];
     }
@@ -156,7 +155,7 @@ public class ConsumptionData {
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
         switch (dataCategory) {
             case DATA_WASTE:
-                for (int month = 0; month < NUM_MONTHS; month++) {
+                for (int month = 0; month < 12; month++) {
                     percentageWasteRecycled[month] = wb.getSheetAt(0)
                             .getRow(month + 1) // Skip titles in row 1
                             .getCell(3) // Percentage Recycled column is 3
