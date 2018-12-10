@@ -16,28 +16,34 @@ class Slice {
 }
 
 class GUIComponent extends JComponent {
-    Slice[] slices = {
-        new Slice(5, Color.black), new Slice(33, Color.green), new Slice(20, Color.yellow), new Slice(15, Color.red)
+    private Slice[] generateSlices() {
+        double recycledVal, wastedVal;
+        recycledVal = main.getRecycledVal(0);
+        wastedVal = main.getWastedVal(0);
+        Slice[] slices = {
+            new Slice(recycledVal, Color.green), new Slice(wastedVal, Color.red)
+        };
+        return slices;
     };
 
     public void paint(Graphics g) {
+        Slice[] slices = generateSlices();
         drawPie((Graphics2D) g, getBounds(), slices);
     }
 
-    void drawPie(Graphics2D g, Rectangle area, Slice[] slices) {
+    private void drawPie(Graphics2D g, Rectangle area, Slice[] slices) {
         double total = 0.0D;
 
-        for (int i = 0; i < slices.length; i++) {
-            total += slices[i].value;
-        }
+        for (Slice slice : slices) total += slice.value;
+
         double curValue = 0.0D;
-        int startAngle = 0;
-        for (int i = 0; i < slices.length; i++) {
+        int startAngle;
+        for (Slice slice : slices) {
             startAngle = (int) (curValue * 360 / total);
-            int arcAngle = (int) (slices[i].value * 360 / total);
-            g.setColor(slices[i].color);
+            int arcAngle = (int) (slice.value * 360 / total);
+            g.setColor(slice.color);
             g.fillArc(area.x, area.y, area.width, area.height, startAngle, arcAngle);
-            curValue += slices[i].value;
+            curValue += slice.value;
         }
     }
 }
@@ -45,6 +51,9 @@ class GUIComponent extends JComponent {
 public class main {
     // Hardcoded path for the Excel file to read from
     private static final String EXCEL_FILE = "..\\data.xlsx";
+
+    // Easier readability
+    private static final int NUM_MONTHS = 12;
 
     // Aliases for the different data categories
     // The Excel workbook must order the sheets in this order
@@ -98,6 +107,17 @@ public class main {
         }
     }
 
+    public static double getRecycledVal(int month) {
+        double recycledVal = percentageRecycled[month] * 100;
+        return recycledVal;
+    }
+
+    public static double getWastedVal(int month) {
+        double wastedVal = 100 - getRecycledVal(month);
+        return wastedVal;
+    }
+    private static double[] percentageRecycled;
+
     public static void main(String [] args) throws IOException {
         // Take in the Excel file and create a workbook to read from
         // TODO: Let the user specify the path for the Excel file at run-time
@@ -106,13 +126,13 @@ public class main {
 
         printDataCategoryToConsole(wb, DATA_WASTE);
 
-        // Graphically represent the January recycling
-        double JanTonnes;
-        double Janrecycle;
-        XSSFCell cell1 = wb.getSheetAt(0).getRow(1).getCell(1);
-        JanTonnes = cell1.getNumericCellValue();
-        XSSFCell cell2 = wb.getSheetAt(0).getRow(1).getCell(2);
-        Janrecycle = cell2.getNumericCellValue();
+        // Graphically represent the waste recycling
+        percentageRecycled = new double[NUM_MONTHS];
+
+        for (int month = 0; month < NUM_MONTHS; month++) {
+            XSSFCell cellTonnes = wb.getSheetAt(0).getRow(month+1).getCell(3);
+            percentageRecycled[month] = cellTonnes.getNumericCellValue();
+        }
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
