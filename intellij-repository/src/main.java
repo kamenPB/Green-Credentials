@@ -18,18 +18,9 @@ public class main {
     public static final int DATA_ELEC_CP = 4;
     public static final int DATA_GAS = 5;
 
-    public static void main(String [] args) throws IOException {
-        // Take in the Excel file and create a workbook to read from
-        // TODO: Let the user specify the path for the Excel file at run-time
-        InputStream file = new FileInputStream(EXCEL_FILE);
-        XSSFWorkbook wb = new XSSFWorkbook(file);
-
-        // Read the cell at [0,0] of the Waste sheet
-        // TODO: Process and display relevant stats from the table
-        // TODO: Generalise and repeat for all data categories
-        XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(0).getCell(0);
-
-        // Print the cell's value
+    // A method which prints the contents of a String or Numeric cell to the console
+    // Other cell types are not supported
+    private static void printCellToConsole(XSSFCell cell) {
         switch (cell.getCellType()) {
             case XSSFCell.CELL_TYPE_STRING:
                 System.out.print(cell.getStringCellValue() + "");
@@ -45,5 +36,18 @@ public class main {
                 System.out.print("Unexpected cell type received.");
                 break;
         }
+    }
+
+    public static void main(String [] args) throws IOException {
+        // Take in the Excel file and create a workbook to read from
+        // TODO: Let the user specify the path for the Excel file at run-time
+        InputStream file = new FileInputStream(EXCEL_FILE);
+        XSSFWorkbook wb = new XSSFWorkbook(file);
+
+        // Read the cell at [0,0] of the Waste sheet
+        // TODO: Process and display relevant stats from the table
+        // TODO: Generalise and repeat for all data categories
+        XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(0).getCell(0);
+        printCellToConsole(cell);
     }
 }
