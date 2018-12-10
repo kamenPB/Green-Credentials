@@ -1,6 +1,46 @@
 import java.io.*;
-
 import org.apache.poi.xssf.usermodel.*;
+import java.awt.*;
+import javax.swing.*;
+
+class Slice {
+    double value;
+    Color color;
+    public Slice(double value, Color color) {
+        this.value = value;
+        this.color = color;
+    }
+}
+
+class MyComponent extends JComponent {
+    Slice[] slices = {
+            new Slice(5, Color.black), new Slice(33, Color.green), new Slice(20, Color.yellow), new Slice(15, Color.red)
+    };
+
+    MyComponent() {
+    }
+
+    public void paint(Graphics g) {
+        drawPie((Graphics2D) g, getBounds(), slices);
+    }
+
+    void drawPie(Graphics2D g, Rectangle area, Slice[] slices) {
+        double total = 0.0D;
+
+        for (int i = 0; i < slices.length; i++) {
+            total += slices[i].value;
+        }
+        double curValue = 0.0D;
+        int startAngle = 0;
+        for (int i = 0; i < slices.length; i++) {
+            startAngle = (int) (curValue * 360 / total);
+            int arcAngle = (int) (slices[i].value * 360 / total);
+            g.setColor(slices[i].color);
+            g.fillArc(area.x, area.y, area.width, area.height, startAngle, arcAngle);
+            curValue += slices[i].value;
+        }
+    }
+}
 
 public class main {
     // Hardcoded path for the Excel file to read from
@@ -41,6 +81,7 @@ public class main {
                 break;
         }
     }
+
     // Print the current data category to console
     // This will help us verify the data is being read from the Excel file properly
     private static void printDataCategoryToConsole(XSSFWorkbook wb, int id) {
@@ -64,5 +105,18 @@ public class main {
         XSSFWorkbook wb = new XSSFWorkbook(file);
 
         printDataCategoryToConsole(wb, DATA_WASTE);
+
+        // Graphically represent the January recycling
+        double JanTonnes;
+        double Janrecycle;
+        XSSFCell cell1 = wb.getSheetAt(0).getRow(1).getCell(1);
+        JanTonnes = cell1.getNumericCellValue();
+        XSSFCell cell2 = wb.getSheetAt(0).getRow(1).getCell(2);
+        Janrecycle = cell2.getNumericCellValue();
+
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(new MyComponent());
+        frame.setSize(300, 300);
+        frame.setVisible(true);
     }
 }
