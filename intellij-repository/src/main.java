@@ -23,17 +23,19 @@ public class main {
     private static void printCellToConsole(XSSFCell cell) {
         switch (cell.getCellType()) {
             case XSSFCell.CELL_TYPE_STRING:
-                System.out.print(cell.getStringCellValue() + "");
+                System.out.print(cell.getStringCellValue());
                 break;
             case XSSFCell.CELL_TYPE_NUMERIC:
-                System.out.print(cell.getNumericCellValue() + "");
+                System.out.print(cell.getNumericCellValue());
                 break;
             case XSSFCell.CELL_TYPE_BLANK:
+                System.out.print("[EMPTY]");
+                break;
             case XSSFCell.CELL_TYPE_BOOLEAN:
             case XSSFCell.CELL_TYPE_ERROR:
             case XSSFCell.CELL_TYPE_FORMULA:
             default:
-                System.out.print("Unexpected cell type received.");
+                System.out.print("Unexpected cell type.");
                 break;
         }
     }
@@ -47,7 +49,16 @@ public class main {
         // Read the cell at [0,0] of the Waste sheet
         // TODO: Process and display relevant stats from the table
         // TODO: Generalise and repeat for all data categories
-        XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(0).getCell(0);
-        printCellToConsole(cell);
+        for (int row = 0; row < 13; row++) {
+            for (int column = 0 ; column < 4; column++) {
+                XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(row).getCell(column);
+                printCellToConsole(cell);
+
+                // Padding
+                if (row > 0) System.out.print("    ");
+                System.out.print("     ");
+            }
+            System.out.print("\n");
+        }
     }
 }
