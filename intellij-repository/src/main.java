@@ -1,9 +1,6 @@
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import org.apache.poi.xssf.usermodel.*;
 
 public class main {
     // Hardcoded path for the Excel file to read from
@@ -22,21 +19,41 @@ public class main {
     // Other cell types are not supported
     private static void printCellToConsole(XSSFCell cell) {
         switch (cell.getCellType()) {
-            case XSSFCell.CELL_TYPE_STRING:
-                System.out.print(cell.getStringCellValue());
-                break;
             case XSSFCell.CELL_TYPE_NUMERIC:
                 System.out.print(cell.getNumericCellValue());
                 break;
+            case XSSFCell.CELL_TYPE_STRING:
+                System.out.print(cell.getStringCellValue());
+                break;
+            case XSSFCell.CELL_TYPE_FORMULA:
+                // TODO: Write evaluator so formula cells are displayed properly
+                System.out.print("[FRMLA]");
+                break;
             case XSSFCell.CELL_TYPE_BLANK:
-                System.out.print("[EMPTY]");
+                System.out.print("[BLANK]");
                 break;
             case XSSFCell.CELL_TYPE_BOOLEAN:
-            case XSSFCell.CELL_TYPE_ERROR:
-            case XSSFCell.CELL_TYPE_FORMULA:
-            default:
-                System.out.print("Unexpected cell type.");
+                System.out.print(cell.getBooleanCellValue());
                 break;
+            case XSSFCell.CELL_TYPE_ERROR:
+            default:
+                System.out.print("[ERROR]");
+                break;
+        }
+    }
+    // Print the current data category to console
+    // This will help us verify the data is being read from the Excel file properly
+    private static void printDataCategoryToConsole(XSSFWorkbook wb, int id) {
+        for (int row = 0; row < 13; row++) {
+            for (int column = 0 ; column < 4; column++) {
+                XSSFCell cell = wb.getSheetAt(id).getRow(row).getCell(column);
+                printCellToConsole(cell);
+
+                // Padding
+                if (row > 0) System.out.print("    ");
+                System.out.print("     ");
+            }
+            System.out.print("\n");
         }
     }
 
@@ -46,19 +63,6 @@ public class main {
         InputStream file = new FileInputStream(EXCEL_FILE);
         XSSFWorkbook wb = new XSSFWorkbook(file);
 
-        // Read the cell at [0,0] of the Waste sheet
-        // TODO: Process and display relevant stats from the table
-        // TODO: Generalise and repeat for all data categories
-        for (int row = 0; row < 13; row++) {
-            for (int column = 0 ; column < 4; column++) {
-                XSSFCell cell = wb.getSheetAt(DATA_WASTE).getRow(row).getCell(column);
-                printCellToConsole(cell);
-
-                // Padding
-                if (row > 0) System.out.print("    ");
-                System.out.print("     ");
-            }
-            System.out.print("\n");
-        }
+        printDataCategoryToConsole(wb, DATA_WASTE);
     }
 }
