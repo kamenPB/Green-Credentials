@@ -3,6 +3,9 @@ import org.apache.poi.xssf.usermodel.*;
 import java.awt.*;
 import javax.swing.*;
 
+// Slice and GUIComponent classes taken from:
+// https://stackoverflow.com/questions/41937664/how-can-we-paint-this-piechart-class
+
 class Slice {
     double value;
     Color color;
@@ -12,13 +15,10 @@ class Slice {
     }
 }
 
-class MyComponent extends JComponent {
+class GUIComponent extends JComponent {
     Slice[] slices = {
-            new Slice(5, Color.black), new Slice(33, Color.green), new Slice(20, Color.yellow), new Slice(15, Color.red)
+        new Slice(5, Color.black), new Slice(33, Color.green), new Slice(20, Color.yellow), new Slice(15, Color.red)
     };
-
-    MyComponent() {
-    }
 
     public void paint(Graphics g) {
         drawPie((Graphics2D) g, getBounds(), slices);
@@ -115,7 +115,7 @@ public class main {
         Janrecycle = cell2.getNumericCellValue();
 
         JFrame frame = new JFrame();
-        frame.getContentPane().add(new MyComponent());
+        frame.getContentPane().add(new GUIComponent());
         frame.setSize(300, 300);
         frame.setVisible(true);
     }
