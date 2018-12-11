@@ -34,25 +34,29 @@ class GUIComponent extends JComponent {
                 return new Slice[] { new Slice(recycledPieSliceSize, Color.green), new Slice(wastedPieSliceSize, Color.red)};
             case ConsumptionData.DATA_WATER:
 //                double waterUsageCurrentMonth = ConsumptionData.getWaterUsage(month);
-//                double waterUsagePreviousMonth = ConsumptionData.getWaterUsage(month - 1);
+//                double waterUsagePreviousMonth = ConsumptionData.getWaterUsage((month - 1)  % 24);
 //                double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
             case ConsumptionData.DATA_WATER_LL:
 //                double waterLLUsageCurrentMonth = ConsumptionData.getLLWaterUsage(month);
-//                double waterLLUsagePreviousMonth = ConsumptionData.getLLWaterUsage(month - 1);
+//                double waterLLUsagePreviousMonth = ConsumptionData.getLLWaterUsage((month - 1)  % 24);
 //                double waterLLPercentageChange = ((waterLLUsageCurrentMonth / waterLLUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(waterLLPercentageChange, Color.lightGray)};
             case ConsumptionData.DATA_ELEC:
 //                double electricityUsageCurrentMonth = ConsumptionData.getElectricityUsage(month);
-//                double electricityUsagePreviousMonth = ConsumptionData.getElectricityUsage(month - 1);
+//                double electricityUsagePreviousMonth = ConsumptionData.getElectricityUsage((month - 1)  % 24);
 //                double electricityPercentageChange = ((electricityUsageCurrentMonth / electricityUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(electricityPercentageChange, Color.yellow)};
             case ConsumptionData.DATA_ELEC_CP:
 //                double electricityCPUsageCurrentMonth = ConsumptionData.getCPElectricityUsage(month);
-//                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage(month - 1);
+//                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage((month - 1)  % 24);
 //                double electricityCPPercentageChange = ((electricityCPUsageCurrentMonth / electricityCPUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(electricityCPPercentageChange, Color.orange)};
-            case ConsumptionData.DATA_GAS: // TODO: Implement
+            case ConsumptionData.DATA_GAS:
+//                double gasUsageCurrentMonth = ConsumptionData.getGasUsage(month);
+//                double gasUsagePreviousMonth = ConsumptionData.getGasUsage((month - 1)  % 24);
+//                double gasPercentageChange = ((gasUsageCurrentMonth / gasUsagePreviousMonth) - 1) * 100;
+//                return new Slice[] { new Slice(gasPercentageChange, Color.magenta)};
             default:
                 System.out.print("Unexpected data category.");
                 return new Slice[0]; // Return an empty array
