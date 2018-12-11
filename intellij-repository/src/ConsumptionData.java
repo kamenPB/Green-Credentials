@@ -80,7 +80,11 @@ class GUIComponent extends JComponent {
 
     // Overload paint method
     public void paint(Graphics g) {
-        drawPie((Graphics2D) g, getBounds(), generateSlices());
+        int x = 100; // N.B. These co-ordinates are not cartesian
+        int y = 100; //      Instead, they are offsets from the top-left corner of the JFrame
+        int width = 800;
+        int height = 800;
+        drawPie((Graphics2D) g, new Rectangle(x,y,width,height), generateSlices());
     }
 }
 public class ConsumptionData {
@@ -163,7 +167,7 @@ public class ConsumptionData {
         frame.getContentPane().add(new GUIComponent());
         frame.setTitle("Cabot Circus Green Credentials");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
+        frame.setSize(1920, 1080); // Assume the Smart TV display is 1080p, for now
         frame.setVisible(true);
     }
 
