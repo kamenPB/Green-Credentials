@@ -52,7 +52,11 @@ class GUIComponent extends JComponent {
 //                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage(month - 1);
 //                double electricityCPPercentageChange = ((electricityCPUsageCurrentMonth / electricityCPUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(electricityCPPercentageChange, Color.orange)};
-            case ConsumptionData.DATA_GAS: // TODO: Implement
+            case ConsumptionData.DATA_GAS:
+//                double gasUsageCurrentMonth = ConsumptionData.getGasUsage(month);
+//                double gasUsagePreviousMonth = ConsumptionData.getGasUsage(month - 1);
+//                double gasPercentageChange = ((gasUsageCurrentMonth / gasUsagePreviousMonth) - 1) * 100;
+//                return new Slice[] { new Slice(gasPercentageChange, Color.magenta)};
             default:
                 System.out.print("Unexpected data category.");
                 return new Slice[0]; // Return an empty array
