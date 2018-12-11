@@ -1,7 +1,10 @@
-import java.io.*;
-import org.apache.poi.xssf.usermodel.*;
-import java.awt.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.*;
+import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 class GUIComponent extends JComponent {
     /* Pie chart code adapted from:
@@ -29,8 +32,16 @@ class GUIComponent extends JComponent {
                 double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycled(month) * 100;
                 double wastedPieSliceSize = 100 - recycledPieSliceSize;
                 return new Slice[] { new Slice(recycledPieSliceSize, Color.green), new Slice(wastedPieSliceSize, Color.red)};
-            case ConsumptionData.DATA_WATER: // TODO: Implement
-            case ConsumptionData.DATA_WATER_LL: // TODO: Implement
+            case ConsumptionData.DATA_WATER:
+//                double waterUsageCurrentMonth = ConsumptionData.getCurrentWaterUsage();
+//                double waterUsagePreviousMonth = ConsumptionData.getPreviousWaterUsage();
+//                double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
+//                return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
+            case ConsumptionData.DATA_WATER_LL:
+//                double waterLLUsageCurrentMonth = ConsumptionData.getCurrentWaterUsage();
+//                double waterLLUsagePreviousMonth = ConsumptionData.getPreviousWaterUsage();
+//                double waterLLPercentageChange = ((waterLLUsageCurrentMonth / waterLLUsagePreviousMonth) - 1) * 100;
+//                return new Slice[] { new Slice(waterLLPercentageChange, Color.lightGray)};
             case ConsumptionData.DATA_ELEC: // TODO: Implement
             case ConsumptionData.DATA_ELEC_CP: // TODO: Implement
             case ConsumptionData.DATA_GAS: // TODO: Implement
@@ -129,6 +140,8 @@ public class ConsumptionData {
         // TODO: Implement
         return 0; // 0 = January, 1 = February, etc.
     }
+
+
 
     // Return the data category currently being displayed
     public static int getCurrentDataCategory() {
