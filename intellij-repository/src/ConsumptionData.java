@@ -33,28 +33,28 @@ class GUIComponent extends JComponent {
                 double wastedPieSliceSize = 100 - recycledPieSliceSize;
                 return new Slice[] { new Slice(recycledPieSliceSize, Color.green), new Slice(wastedPieSliceSize, Color.red)};
             case ConsumptionData.DATA_WATER:
-//                double waterUsageCurrentMonth = ConsumptionData.getWaterUsage(month);
-//                double waterUsagePreviousMonth = ConsumptionData.getWaterUsage((month - 1)  % 24);
-//                double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
-//                return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
+                double waterUsageCurrentMonth = ConsumptionData.getWaterUsage(month);
+                double waterUsagePreviousMonth = ConsumptionData.getWaterUsage((month - 12)  % 24);
+                double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
+                return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
             case ConsumptionData.DATA_WATER_LL:
 //                double waterLLUsageCurrentMonth = ConsumptionData.getLLWaterUsage(month);
-//                double waterLLUsagePreviousMonth = ConsumptionData.getLLWaterUsage((month - 1)  % 24);
+//                double waterLLUsagePreviousMonth = ConsumptionData.getLLWaterUsage((month - 12)  % 24);
 //                double waterLLPercentageChange = ((waterLLUsageCurrentMonth / waterLLUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(waterLLPercentageChange, Color.lightGray)};
             case ConsumptionData.DATA_ELEC:
 //                double electricityUsageCurrentMonth = ConsumptionData.getElectricityUsage(month);
-//                double electricityUsagePreviousMonth = ConsumptionData.getElectricityUsage((month - 1)  % 24);
+//                double electricityUsagePreviousMonth = ConsumptionData.getElectricityUsage((month - 12)  % 24);
 //                double electricityPercentageChange = ((electricityUsageCurrentMonth / electricityUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(electricityPercentageChange, Color.yellow)};
             case ConsumptionData.DATA_ELEC_CP:
 //                double electricityCPUsageCurrentMonth = ConsumptionData.getCPElectricityUsage(month);
-//                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage((month - 1)  % 24);
+//                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage((month - 12)  % 24);
 //                double electricityCPPercentageChange = ((electricityCPUsageCurrentMonth / electricityCPUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(electricityCPPercentageChange, Color.orange)};
             case ConsumptionData.DATA_GAS:
 //                double gasUsageCurrentMonth = ConsumptionData.getGasUsage(month);
-//                double gasUsagePreviousMonth = ConsumptionData.getGasUsage((month - 1)  % 24);
+//                double gasUsagePreviousMonth = ConsumptionData.getGasUsage((month - 12)  % 24);
 //                double gasPercentageChange = ((gasUsageCurrentMonth / gasUsagePreviousMonth) - 1) * 100;
 //                return new Slice[] { new Slice(gasPercentageChange, Color.magenta)};
             default:
@@ -171,23 +171,38 @@ public class ConsumptionData {
         frame.setVisible(true);
     }
 
-    private static double[] percentageWasteRecycled = new double[12];
+    private static double[] percentageWasteRecycled = new double[24];
     public static double getPercentageWasteRecycled(int month) {
         return percentageWasteRecycled[month];
     }
+
+    private static double[] waterUsage = new double[24];
+    public static double getWaterUsage(int month) { return waterUsage[month];}
 
     // Collate the data for a given data category into its respective memory space
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
         switch (dataCategory) {
             case DATA_WASTE:
-                for (int month = 0; month < 12; month++) {
+                for (int month = 0; month < 24; month++) {
                     percentageWasteRecycled[month] = wb.getSheetAt(0)
                             .getRow(month + 1) // Skip titles in row 1
                             .getCell(3) // Percentage Recycled column is 3
                             .getNumericCellValue();
                 }
                 break;
-            case DATA_WATER: // TODO: Implement
+            case DATA_WATER:
+                for (int month = 0; month < 12; month++){
+                    waterUsage[month] = wb.getSheetAt(1)
+                            .getRow(month + 1)
+                            .getCell(2)
+                            .getNumericCellValue();
+                }
+                for (int month = 0; month < 12; month++) {
+                    waterUsage[month + 12] = wb.getSheetAt(1)
+                            .getRow(month + 1)
+                            .getCell(4)
+                            .getNumericCellValue();
+                }
             case DATA_WATER_LL: // TODO: Implement
             case DATA_ELEC: // TODO: Implement
             case DATA_ELEC_CP: // TODO: Implement
@@ -209,7 +224,7 @@ public class ConsumptionData {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
         printDataCategoryToConsole(wb, DATA_WASTE);
-        collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
+        collateData(wb, DATA_WATER); // TODO: Implement for other data categories
 
         display();
     }
