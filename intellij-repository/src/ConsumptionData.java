@@ -1,10 +1,7 @@
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
+import org.apache.poi.xssf.usermodel.*;
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 class GUIComponent extends JComponent {
     /* Pie chart code adapted from:
@@ -82,13 +79,34 @@ class GUIComponent extends JComponent {
         }
     }
 
+    private void drawString(Graphics2D g, String string, int x, int y, int size) {
+        g.setColor(Color.black);
+        if (g.getFont().getFontName() != "Cabot Font") { // Do not create more than one font
+            Font defaultFont = new Font ("Cabot Font", Font.BOLD, size);
+            g.setFont(defaultFont);
+        }
+        g.drawString(string, x, y);
+    }
+
     // Overload paint method
     public void paint(Graphics g) {
-        int x = 100; // N.B. These co-ordinates are not cartesian
-        int y = 100; //      Instead, they are offsets from the top-left corner of the JFrame
+        // Display graph
+        // TODO: Implement switch for different graphs depending on current data category
         int width = 800;
         int height = 800;
+        int x = 1920 / 2 - width / 2; // N.B. These co-ordinates are not cartesian
+        int y = 150; //      Instead, they are offsets from the top-left corner of the JFrame
         drawPie((Graphics2D) g, new Rectangle(x,y,width,height), generateSlices());
+
+        // Display text to explain the above graph
+        // TODO: Actually implement this
+        //       (This is just a mock-up with hardcoded strings, positions, etc.).
+        int month = ConsumptionData.getCurrentMonth();
+        double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycled(month) * 100;
+        double wastedPieSliceSize = 100 - recycledPieSliceSize;
+        drawString((Graphics2D) g, "Where did January's Waste go?", x, y - 40, 56);
+        drawString((Graphics2D) g, "Recycled: " + (int) recycledPieSliceSize + "%", x + 220, y + 180, 48);
+        drawString((Graphics2D) g, "Sent to landfill: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
     }
 }
 public class ConsumptionData {
