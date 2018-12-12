@@ -162,7 +162,17 @@ public class ConsumptionData {
                     }
                     System.out.print("\n");
                 }
-            case ConsumptionData.DATA_WATER: // TODO: Implement
+            case ConsumptionData.DATA_WATER:
+                for (int row = 0; row < 13; row++) {
+                    for (int column = 0; column < 6; column++) {
+                        XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
+                        printCellToConsole(cell);
+
+                        if (row > 0) System.out.print("         ");
+                        System.out.print("     ");
+                    }
+                    System.out.print("\n");
+                }
             case ConsumptionData.DATA_WATER_LL: // TODO: Implement
             case ConsumptionData.DATA_ELEC: // TODO: Implement
             case ConsumptionData.DATA_ELEC_CP: // TODO: Implement
@@ -250,7 +260,7 @@ public class ConsumptionData {
     public static void main(String [] args) throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
-        printDataCategoryToConsole(wb, DATA_WASTE);
+        printDataCategoryToConsole(wb, DATA_WATER);
         collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
         display();
