@@ -162,6 +162,7 @@ public class ConsumptionData {
                     }
                     System.out.print("\n");
                 }
+                break;
             case ConsumptionData.DATA_WATER:
                 for (int row = 0; row < 13; row++) {
                     for (int column = 0; column < 6; column++) {
@@ -173,10 +174,55 @@ public class ConsumptionData {
                     }
                     System.out.print("\n");
                 }
-            case ConsumptionData.DATA_WATER_LL: // TODO: Implement
-            case ConsumptionData.DATA_ELEC: // TODO: Implement
-            case ConsumptionData.DATA_ELEC_CP: // TODO: Implement
-            case ConsumptionData.DATA_GAS: // TODO: Implement
+                break;
+            case ConsumptionData.DATA_WATER_LL:
+                for (int row = 0; row < 13; row++) {
+                    for (int column = 0; column < 7; column++) {
+                        XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
+                        printCellToConsole(cell);
+
+                        if (row > 0) System.out.print("         ");
+                        System.out.print("     ");
+                    }
+                    System.out.print("\n");
+                }
+                break;
+            case ConsumptionData.DATA_ELEC:
+                for (int row = 0; row < 13; row++) {
+                    for (int column = 0; column < 6; column++) {
+                        XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
+                        printCellToConsole(cell);
+
+                        if (row > 0) System.out.print("         ");
+                        System.out.print("     ");
+                    }
+                    System.out.print("\n");
+                }
+                break;
+            case ConsumptionData.DATA_ELEC_CP:
+                for (int row = 0; row < 13; row++) {
+                    for (int column = 0; column < 6; column++) {
+                        XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
+                        printCellToConsole(cell);
+
+                        if (row > 0) System.out.print("         ");
+                        System.out.print("     ");
+                    }
+                    System.out.print("\n");
+                }
+                break;
+            case ConsumptionData.DATA_GAS:
+                for (int row = 0; row < 13; row++) {
+                    for (int column = 0; column < 6; column++) {
+                        XSSFCell cell = wb.getSheetAt(dataCategory).getRow(row).getCell(column);
+                        printCellToConsole(cell);
+
+                        if (row > 0) System.out.print("         ");
+                        System.out.print("     ");
+                    }
+                    System.out.print("\n");
+                }
+                break;
             default:
                 System.out.print("Unexpected data category.");
         }
@@ -260,7 +306,7 @@ public class ConsumptionData {
     public static void main(String [] args) throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
-        printDataCategoryToConsole(wb, DATA_WATER);
+        printDataCategoryToConsole(wb, DATA_GAS);
         collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
         display();
