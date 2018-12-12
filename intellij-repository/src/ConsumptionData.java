@@ -82,9 +82,34 @@ class GUIComponent extends JComponent {
         }
     }
 
+    private void drawString(Graphics2D g, String string, int x, int y, int size) {
+        g.setColor(Color.black);
+        if (g.getFont().getFontName() != "Cabot Font") { // Do not create more than one font
+            Font defaultFont = new Font ("Cabot Font", Font.BOLD, size);
+            g.setFont(defaultFont);
+        }
+        g.drawString(string, x, y);
+    }
+
     // Overload paint method
     public void paint(Graphics g) {
-        drawPie((Graphics2D) g, getBounds(), generateSlices());
+        // Display graph
+        // TODO: Implement switch for different graphs depending on current data category
+        int width = 800;
+        int height = 800;
+        int x = 1920 / 2 - width / 2; // N.B. These co-ordinates are not cartesian
+        int y = 150; //      Instead, they are offsets from the top-left corner of the JFrame
+        drawPie((Graphics2D) g, new Rectangle(x,y,width,height), generateSlices());
+
+        // Display text to explain the above graph
+        // TODO: Actually implement this
+        //       (This is just a mock-up with hardcoded strings, positions, etc.).
+        int month = ConsumptionData.getCurrentMonth();
+        double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycled(month) * 100;
+        double wastedPieSliceSize = 100 - recycledPieSliceSize;
+        drawString((Graphics2D) g, "Where did January's Waste go?", x, y - 40, 56);
+        drawString((Graphics2D) g, "Recycled: " + (int) recycledPieSliceSize + "%", x + 220, y + 180, 48);
+        drawString((Graphics2D) g, "Sent to landfill: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
     }
 }
 public class ConsumptionData {
@@ -167,11 +192,11 @@ public class ConsumptionData {
         frame.getContentPane().add(new GUIComponent());
         frame.setTitle("Cabot Circus Green Credentials");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 300);
+        frame.setSize(1920, 1080); // Assume the Smart TV display is 1080p, for now
         frame.setVisible(true);
     }
 
-    private static double[] percentageWasteRecycled = new double[24];
+    private static double[] percentageWasteRecycled = new double[12];
     public static double getPercentageWasteRecycled(int month) {
         return percentageWasteRecycled[month];
     }
@@ -183,13 +208,14 @@ public class ConsumptionData {
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
         switch (dataCategory) {
             case DATA_WASTE:
-                for (int month = 0; month < 24; month++) {
+                for (int month = 0; month < 12; month++) {
                     percentageWasteRecycled[month] = wb.getSheetAt(0)
                             .getRow(month + 1) // Skip titles in row 1
                             .getCell(3) // Percentage Recycled column is 3
                             .getNumericCellValue();
                 }
                 break;
+
             case DATA_WATER:
                 for (int month = 0; month < 12; month++){
                     waterUsage[month] = wb.getSheetAt(1)
@@ -203,6 +229,7 @@ public class ConsumptionData {
                             .getCell(4)
                             .getNumericCellValue();
                 }
+                break;
             case DATA_WATER_LL: // TODO: Implement
             case DATA_ELEC: // TODO: Implement
             case DATA_ELEC_CP: // TODO: Implement
@@ -224,7 +251,7 @@ public class ConsumptionData {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
         printDataCategoryToConsole(wb, DATA_WASTE);
-        collateData(wb, DATA_WATER); // TODO: Implement for other data categories
+        collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
         display();
     }
