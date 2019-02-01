@@ -1,3 +1,4 @@
+import com.sun.xml.internal.bind.v2.TODO;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -29,12 +30,12 @@ class GUIComponent extends JComponent {
         int dataCategory = ConsumptionData.getCurrentDataCategory();
         switch (dataCategory) {
             case ConsumptionData.DATA_WASTE:
-                double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycled(month) * 100;
+                double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycledCY(month) * 100;
                 double wastedPieSliceSize = 100 - recycledPieSliceSize;
                 return new Slice[] { new Slice(recycledPieSliceSize, Color.green), new Slice(wastedPieSliceSize, Color.red)};
             case ConsumptionData.DATA_WATER:
-                double waterUsageCurrentMonth = ConsumptionData.getWaterUsage(month);
-                double waterUsagePreviousMonth = ConsumptionData.getWaterUsage((month - 12)  % 24);
+                double waterUsageCurrentMonth = ConsumptionData.getWaterUsagePY(month);
+                double waterUsagePreviousMonth = ConsumptionData.getWaterUsageCY(month);
                 double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
                 return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
             case ConsumptionData.DATA_WATER_LL:
@@ -105,11 +106,11 @@ class GUIComponent extends JComponent {
         // TODO: Actually implement this
         //       (This is just a mock-up with hardcoded strings, positions, etc.).
         int month = ConsumptionData.getCurrentMonth();
-        double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycled(month) * 100;
+        double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycledCY(month) * 100;
         double wastedPieSliceSize = 100 - recycledPieSliceSize;
         drawString((Graphics2D) g, "Where did January's Waste go?", x, y - 40, 56);
         drawString((Graphics2D) g, "Recycled: " + (int) recycledPieSliceSize + "%", x + 220, y + 180, 48);
-        drawString((Graphics2D) g, "Sent to incinerator: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
+        drawString((Graphics2D) g, "Sent to landfill: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
     }
 }
 public class ConsumptionData {
@@ -252,44 +253,129 @@ public class ConsumptionData {
         frame.setVisible(true);
     }
 
-    private static double[] percentageWasteRecycled = new double[12];
-    public static double getPercentageWasteRecycled(int month) {
-        return percentageWasteRecycled[month];
+    private static double[] percentageWasteRecycledCY = new double[12];
+    public static double getPercentageWasteRecycledCY(int month) {
+        return percentageWasteRecycledCY[month];
     }
 
-    private static double[] waterUsage = new double[24];
-    public static double getWaterUsage(int month) { return waterUsage[month];}
+    private static double[] waterUsagePY = new double[12];
+    public static double getWaterUsagePY(int month) { return waterUsagePY[month];}
+    private static double[] waterUsageCY = new double[12];
+    public static double getWaterUsageCY(int month) { return waterUsageCY[month];}
+
+    private static double[] landlordWaterPY = new double[12];
+    public static double getLandlordWaterPY(int month) { return landlordWaterPY[month];}
+    private static double[] landlordWaterCY = new double[12];
+    public static double getLandlordWaterCY(int month) { return landlordWaterCY[month];}
+
+    private static double[] elecUsagePY = new double[12];
+    public static double getElectricityUsagePY(int month) { return elecUsagePY[month];}
+    private static double[] elecUsageCY = new double[12];
+    public static double getElectricityUsageCY(int month) { return elecUsageCY[month];}
+
+    private static double[] carparkElecUsagePY = new double[12];
+    public static double getCarparkElecUsagePY(int month) {return carparkElecUsagePY[month];}
+    private static double[] carparkElecUsageCY = new double[12];
+    public static double getCarparkElecUsageCY(int month) {return carparkElecUsageCY[month];}
+
+    private static double[] gasUsagePY = new double[12];
+    public static double getGasUsagePY(int month) {return gasUsagePY[month];}
+    private static double[] gasUsageCY = new double[12];
+    public static double getGasUsageCY(int month) {return gasUsageCY[month];}
+
 
     // Collate the data for a given data category into its respective memory space
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
         switch (dataCategory) {
             case DATA_WASTE:
-                for (int month = 0; month < 12; month++) {
-                    percentageWasteRecycled[month] = wb.getSheetAt(0)
-                            .getRow(month + 1) // Skip titles in row 1
+                for (int month = 1; month <= 12; month++) {
+                    percentageWasteRecycledCY[month] = wb.getSheetAt(0)
+                            .getRow(month)
                             .getCell(3) // Percentage Recycled column is 3
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_WATER:
-                for (int month = 0; month < 12; month++){
-                    waterUsage[month] = wb.getSheetAt(1)
-                            .getRow(month + 1)
+                for (int month = 1; month <= 12; month++){
+                    waterUsagePY[month] = wb.getSheetAt(1)
+                            .getRow(month)
                             .getCell(2)
                             .getNumericCellValue();
                 }
+
                 for (int month = 0; month < 12; month++) {
-                    waterUsage[month + 12] = wb.getSheetAt(1)
-                            .getRow(month + 1)
+                    waterUsageCY[month] = wb.getSheetAt(1)
+                            .getRow(month)
                             .getCell(4)
                             .getNumericCellValue();
                 }
                 break;
-            case DATA_WATER_LL: // TODO: Implement
-            case DATA_ELEC: // TODO: Implement
-            case DATA_ELEC_CP: // TODO: Implement
-            case DATA_GAS: // TODO: Implement
+
+            case DATA_WATER_LL:
+                for (int month = 1; month <= 12; month++){
+                    landlordWaterPY[month] = wb.getSheetAt(2)
+                            .getRow(month)
+                            .getCell(2)
+                            .getNumericCellValue();
+                }
+
+                for (int month = 1; month <= 12; month++){
+                    landlordWaterCY[month] = wb.getSheetAt(2)
+                            .getRow(month)
+                            .getCell(4)
+                            .getNumericCellValue();
+                }
+                break;
+
+            case DATA_ELEC:
+                for (int month = 1; month<=12; month++){
+                    elecUsagePY[month] = wb.getSheetAt(3)
+                            .getRow(month)
+                            .getCell(2)
+                            .getNumericCellValue();
+                }
+
+                for (int month = 1; month<=12; month++){
+                    elecUsageCY[month] = wb.getSheetAt(3)
+                            .getRow(month)
+                            .getCell(4)
+                            .getNumericCellValue();
+                }
+                break;
+
+            case DATA_ELEC_CP:
+                for (int month = 1; month<=12; month++){
+                    carparkElecUsagePY[month] = wb.getSheetAt(4)
+                            .getRow(month)
+                            .getCell(2)
+                            .getNumericCellValue();
+                }
+
+                for (int month = 1; month<=12; month++){
+                    carparkElecUsageCY[month] = wb.getSheetAt(4)
+                            .getRow(month)
+                            .getCell(4)
+                            .getNumericCellValue();
+                }
+                break;
+
+            case DATA_GAS:
+                for (int month = 1; month<=12; month++){
+                    gasUsagePY[month] = wb.getSheetAt(4)
+                            .getRow(month)
+                            .getCell(2)
+                            .getNumericCellValue();
+                }
+
+                for (int month = 1; month<=12; month++){
+                    gasUsageCY[month] = wb.getSheetAt(4)
+                            .getRow(month)
+                            .getCell(4)
+                            .getNumericCellValue();
+                }
+                break;
+
             default:
                 System.out.print("Unexpected data category.");
                 break;
@@ -299,14 +385,14 @@ public class ConsumptionData {
     // Take in the Excel file and create a workbook to read from
     // TODO: Let the user specify Excel file path at run-time
     private static XSSFWorkbook getWorkbookFromExcelFile() throws IOException {
-        return new XSSFWorkbook(new FileInputStream("..\\data.xlsx")); // For now, hardcode the path
+        return new XSSFWorkbook(new FileInputStream("/home/fe17/kb17034/linux/Repos/Green-Credentials/data.xlsx")); // For now, hardcode the path
     }
 
     // Main
     public static void main(String [] args) throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
-        printDataCategoryToConsole(wb, DATA_WASTE);
+        printDataCategoryToConsole(wb, DATA_GAS);
         collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
         display();
