@@ -10,7 +10,12 @@
   <head>
     <title>$Title$</title>
   </head>
+  <style>
+    p {
+      color:green;
+    }
+  </style>
   <body>
-  Green Credentials
+  <p>Credentials</p>
   </body>
 </html>
