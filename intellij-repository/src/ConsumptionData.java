@@ -109,7 +109,7 @@ class GUIComponent extends JComponent {
         double wastedPieSliceSize = 100 - recycledPieSliceSize;
         drawString((Graphics2D) g, "Where did January's Waste go?", x, y - 40, 56);
         drawString((Graphics2D) g, "Recycled: " + (int) recycledPieSliceSize + "%", x + 220, y + 180, 48);
-        drawString((Graphics2D) g, "Sent to landfill: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
+        drawString((Graphics2D) g, "Sent to incinerator: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
     }
 }
 public class ConsumptionData {
@@ -306,7 +306,7 @@ public class ConsumptionData {
     public static void main(String [] args) throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
 
-        printDataCategoryToConsole(wb, DATA_GAS);
+        printDataCategoryToConsole(wb, DATA_WASTE);
         collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
         display();
