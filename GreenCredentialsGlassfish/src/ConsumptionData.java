@@ -288,89 +288,89 @@ public class ConsumptionData {
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
         switch (dataCategory) {
             case DATA_WASTE:
-                for (int month = 1; month <= 12; month++) {
+                for (int month = 0; month < 12; month++) {
                     percentageWasteRecycledCY[month] = wb.getSheetAt(0)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(3) // Percentage Recycled column is 3
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_WATER:
-                for (int month = 1; month <= 12; month++){
+                for (int month = 0; month < 12; month++){
                     waterUsagePY[month] = wb.getSheetAt(1)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(2)
                             .getNumericCellValue();
                 }
 
                 for (int month = 0; month < 12; month++) {
                     waterUsageCY[month] = wb.getSheetAt(1)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(4)
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_WATER_LL:
-                for (int month = 1; month <= 12; month++){
+                for (int month = 0; month < 12; month++){
                     landlordWaterPY[month] = wb.getSheetAt(2)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(2)
                             .getNumericCellValue();
                 }
 
-                for (int month = 1; month <= 12; month++){
+                for (int month = 0; month < 12; month++){
                     landlordWaterCY[month] = wb.getSheetAt(2)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(4)
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_ELEC:
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     elecUsagePY[month] = wb.getSheetAt(3)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(2)
                             .getNumericCellValue();
                 }
 
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     elecUsageCY[month] = wb.getSheetAt(3)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(4)
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_ELEC_CP:
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     carparkElecUsagePY[month] = wb.getSheetAt(4)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(2)
                             .getNumericCellValue();
                 }
 
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     carparkElecUsageCY[month] = wb.getSheetAt(4)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(4)
                             .getNumericCellValue();
                 }
                 break;
 
             case DATA_GAS:
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     gasUsagePY[month] = wb.getSheetAt(4)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(2)
                             .getNumericCellValue();
                 }
 
-                for (int month = 1; month<=12; month++){
+                for (int month = 0; month < 12; month++){
                     gasUsageCY[month] = wb.getSheetAt(4)
-                            .getRow(month)
+                            .getRow(month + 1)
                             .getCell(4)
                             .getNumericCellValue();
                 }
