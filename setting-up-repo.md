@@ -1,0 +1,25 @@
+Setting up the GreenCredentialsGlassfish IntelliJ project:
+============================================================
+- Open IntelliJ, close any projects you have open, and click Open
+- Navigate to the GreenCredentialsGlassfish directory and click OK
+- A Framework Detected popup should show, click Configure and then OK
+-- If the popup fades, you should be able to access it by clicking Event Log in the bottom left corner, then click Configure
+- Go to File -> Project Structure
+- Specify a Project SDK
+- Change the Project language level to "8 - Lambdas, type annotations etc."
+- Click the folder symbol for Project compiler output and navigate to GreenCredentialsGlassfish/out and click OK, then click Apply
+- Click the Modules tab
+- Right click the src directory and click Sources, then click Apply
+- Click the Libraries tab
+- Click the + sign, then Java, then navigate to intellij-repository/lib and select all of the files inside this directory, then click OK, OK, and Apply
+- Click the Artifacts tab
+- Click the + sign, then Web Application: Exploded, then From Modules..., then OK, then Apply
+- Click OK to exit the Project Structure window
+- Click Add Configuration
+- Click the + sign, then 34 more items (irrelevant).., then Glassfish Server, then Local
+- If the Application server field is empty, click Configure and then navigate to where you've installed and extracted Glassfish
+- Replace the URL field with "http://localhost:8080/GreenCredentialsGlassfish_war_exploded"
+- Replace the Server Domain field with "domain1"
+- A warning for No artifacts marked for deployment should show up, click Fix
+- Click Apply, then OK
+- Run the configuration you just set up to test
