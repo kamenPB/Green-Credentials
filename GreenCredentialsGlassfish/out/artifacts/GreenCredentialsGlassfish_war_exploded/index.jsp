@@ -6,7 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>$Title$</title>
   </head>
@@ -21,6 +22,8 @@
 
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+  <div> th:with="recycled=80" </div>
+
   <script type="text/javascript">
       // Load google charts
       google.charts.load('current', {'packages':['corechart']});
@@ -28,10 +31,11 @@
 
       // Draw the chart and set the chart values
       function drawChart() {
+
           var data = google.visualization.arrayToDataTable([
               ['Task', 'Hours per Day'],
-              ['Recycled', 80],
-              ['Sent to landfill', 20]
+              ['Recycled', recycled],
+              ['Sent to landfill', 10]
           ]);
 
           // Optional; add a title and set the width and height of the chart
@@ -43,4 +47,3 @@
       }
   </script>
   </body>
-</html>
