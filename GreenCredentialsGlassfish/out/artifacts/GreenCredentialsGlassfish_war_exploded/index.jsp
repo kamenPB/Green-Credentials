@@ -30,8 +30,8 @@
       function drawChart() {
           var data = google.visualization.arrayToDataTable([
               ['Task', 'Hours per Day'],
-              ['Recycled', 90],
-              ['Sent to landfill', 10]
+              ['Recycled', 80],
+              ['Sent to landfill', 20]
           ]);
 
           // Optional; add a title and set the width and height of the chart

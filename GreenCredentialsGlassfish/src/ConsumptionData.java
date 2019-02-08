@@ -391,7 +391,7 @@ public class ConsumptionData {
     // Main
     public static void main(String [] args) throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-
+        int eighty = 80;
         printDataCategoryToConsole(wb, DATA_GAS);
         collateData(wb, DATA_WASTE); // TODO: Implement for other data categories
 
