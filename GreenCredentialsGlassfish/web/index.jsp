@@ -51,10 +51,6 @@
   </div>
 
   <div class="mySlides fade">
-    <div id="water"></div>
-  </div>
-
-  <div class="mySlides fade">
     <div id="electricity"></div>
   </div>
 
@@ -63,8 +59,13 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
+  // Start slideshow at index 0
   var slideIndex = 0;
   showSlides();
+
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
 
   function showSlides() {
     var i;
@@ -75,41 +76,47 @@
     slideIndex++;
     if (slideIndex > slides.length) {slideIndex = 1}
     slides[slideIndex-1].style.display = "block";
-    setTimeout(showSlides, 2000); // Change image every 2 seconds
+    setTimeout(showSlides, 5000);
   }
-  // Load google charts
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
 
   // Draw the chart and set the chart values
   function drawChart() {
     var wasteData = google.visualization.arrayToDataTable([
-      ['Task', 'Hours per Day'],
-      ['Recycled', 149.13],
-      ['Sent to landfill', (165.41 - 149.13)]
+      ['Task', 'Hours per Day', { role: 'style' }],
+      ['Recycled', 149.13, 'color; green'],
+      ['Sent to landfill', (165.41 - 149.13), 'color: red']
     ]);
-    var wasteOptions = {'title':'Where did January\'s waste go?', 'width':800, 'height':800};
+    var wasteOptions = {
+      'title':'Where did January\'s waste go?',
+      'width':800,
+      'height':800
+    };
     var wasteChart = new google.visualization.PieChart(document.getElementById('waste'));
     wasteChart.draw(wasteData, wasteOptions);
 
 
-    var waterData = google.visualization.arrayToDataTable([
-      ['Task', 'Metres cubed'],
-      ['This year', 8273],
-      ['Last year', 6150]
-    ]);
-    var waterOptions = {'title':'How much water was used in January compared to last year?', 'width':800, 'height':800};
-    var waterChart = new google.visualization.BarChart(document.getElementById('water'));
-    waterChart.draw(waterData, waterOptions);
-
-
     var electricityData = google.visualization.arrayToDataTable([
-      ['Task', 'Kilowatt hours'],
-      ['This year', 358709],
-      ['Last year', 381400]
+      ['Year', 'Kilowatt hours', { role: 'style' }],
+      ['2016', 394931, 'color: orange; opacity: 0.2'],
+      ['2017', 381400, 'color: orange; opacity: 0.5'],
+      ['2018', 358709, 'color: orange']
     ]);
-
-    var electricityOptions = {'title':'How much electricity was used in January compared to last year?', 'width':800, 'height':800};
+    var electricityOptions = {
+      'title':'How much electricity was used in January compared to previous years?',
+      'width':800,
+      'height':800,
+      hAxis: {
+        title: 'KwH',
+        format: 'decimal',
+        viewWindow: {
+          min: [7, 30, 0],
+          max: [17, 30, 0]
+        }
+      },
+      vAxis: {
+        format: 'string'
+      }
+    };
     var electricityChart = new google.visualization.ColumnChart(document.getElementById('electricity'));
     electricityChart.draw(electricityData, electricityOptions);
   }
