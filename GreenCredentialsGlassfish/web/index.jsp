@@ -140,7 +140,7 @@
     switch (category) {
       case 'waste':
         return google.visualization.arrayToDataTable([
-          ['Waste destination', 'Tons', { role: 'style' }],
+          ['Use of waste', 'Tons', { role: 'style' }],
           ['Recycled', getWasteRecycled('January', '2018'), 'color; green'],
           ['Incinerated', getWasteIncinerated('January', '2018'), 'color: red']
         ]);
@@ -171,44 +171,36 @@
   // Draw the chart and set the chart values
   function drawChart() {
     var wasteChart = new google.visualization.PieChart(document.getElementById('waste'));
-    wasteChart.draw(
-            getChartData('waste'), {
-              'title': "Where did January's waste go?,
-              'width': 800,
-              'height': 800,
-              vAxis: { format: 'decimal' }
-            }
-    );
+    wasteChart.draw(getChartData('waste'), {
+      'title': 'Where did January\'s waste go?',
+      'width': 800,
+      'height': 800,
+      vAxis: { format: 'decimal' }
+    });
 
     var waterChart = new google.visualization.ColumnChart(document.getElementById('water'));
-    waterChart.draw(
-            getChartData('water'), {
-              'title': "How much water was used in January compared to previous years?,
-              'width': 800,
-              'height': 800,
-              vAxis: { format: 'decimal' }
-            }
-    );
+    waterChart.draw(getChartData('water'), {
+      'title':' How much water was used in January compared to previous years?',
+      'width': 800,
+      'height': 800,
+      vAxis: { format: 'decimal' }
+    });
 
     var electricityChart = new google.visualization.ColumnChart(document.getElementById('electricity'));
-    electricityChart.draw(
-            getChartData('electricity'), {
-              'title': "How much electricity was used in January compared to previous years?,
-              'width': 800,
-              'height': 800,
-              vAxis: { format: 'decimal' }
-            }
-    );
+    electricityChart.draw(getChartData('electricity'), {
+      'title': 'How much electricity was used in January compared to previous years?',
+      'width': 800,
+      'height': 800,
+      vAxis: { format: 'decimal' }
+    });
 
     var gasChart = new google.visualization.ColumnChart(document.getElementById('gas'));
-    gasChart.draw(
-            getChartData('gas'), {
-              'title': "How much gas was used in January compared to previous years?",
-              'width': 800,
-              'height': 800,
-              vAxis: { format: 'decimal' }
-            }
-    );
+    gasChart.draw(getChartData('gas'), {
+      'title': 'How much gas was used in January compared to previous years?',
+      'width': 800,
+      'height': 800,
+      vAxis: { format: 'decimal' }
+    });
   }
 </script>
 

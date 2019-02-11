@@ -135,11 +135,12 @@
   google.charts.setOnLoadCallback(drawChart);
 
   // Define the chart parameters for each data category
+  // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
   function getChartData(category) {
     switch (category) {
       case 'waste':
         return google.visualization.arrayToDataTable([
-          ['Task', 'Hours per Day', { role: 'style' }],
+          ['Use of waste', 'Tons', { role: 'style' }],
           ['Recycled', getWasteRecycled('January', '2018'), 'color; green'],
           ['Incinerated', getWasteIncinerated('January', '2018'), 'color: red']
         ]);
