@@ -11,17 +11,16 @@
 <head>
   <title>Cabot Circus's Green Credentials</title>
   <style>
-    .mySlides {display: none;}
+    /* Hide slides until they are needed */
+    .mySlides {
+      display: none;
+    }
 
-    /* Slideshow container */
+    /* Centre the slideshow container */
     .slideshow-container {
       max-width: 1000px;
       position: relative;
       margin: auto;
-    }
-
-    .active {
-      background-color: #717171;
     }
 
     /* Fading animation */
@@ -31,12 +30,10 @@
       animation-name: fade;
       animation-duration: 1.5s;
     }
-
     @-webkit-keyframes fade {
       from {opacity: .4}
       to {opacity: 1}
     }
-
     @keyframes fade {
       from {opacity: .4}
       to {opacity: 1}
@@ -44,19 +41,16 @@
   </style>
 </head>
 <body>
+
 <div class="slideshow-container">
-
-  <div class="mySlides fade">
-    <div id="waste"></div>
-  </div>
-
-  <div class="mySlides fade">
-    <div id="electricity"></div>
-  </div>
-
+  <div class="mySlides fade" id="waste"></div>
+  <div class="mySlides fade" id="water"></div>
+  <div class="mySlides fade" id="electricity"></div>
+  <div class="mySlides fade" id="gas"></div>
 </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> // Load google charts </script>
 
 <script type="text/javascript">
   // Start slideshow at index 0
@@ -95,6 +89,26 @@
     wasteChart.draw(wasteData, wasteOptions);
 
 
+    var waterData = google.visualization.arrayToDataTable([
+      ['Year', 'Cubic metres', { role: 'style' }],
+      ['2016', 5476, 'color: blue; opacity: 0.2'],
+      ['2017', 6150, 'color: blue; opacity: 0.5'],
+      ['2018', 8273, 'color: blue']
+    ]);
+    var waterOptions = {
+      'title':'How much water was used in January compared to previous years?',
+      'width':800,
+      'height':800,
+      'legend':{ position: 'none' },
+      vAxis: {
+        title: 'Cubic metres',
+        format: 'decimal'
+      }
+    };
+    var waterChart = new google.visualization.ColumnChart(document.getElementById('water'));
+    waterChart.draw(waterData, waterOptions);
+
+
     var electricityData = google.visualization.arrayToDataTable([
       ['Year', 'Kilowatt hours', { role: 'style' }],
       ['2016', 394931, 'color: orange; opacity: 0.2'],
@@ -105,20 +119,34 @@
       'title':'How much electricity was used in January compared to previous years?',
       'width':800,
       'height':800,
-      hAxis: {
-        title: 'KwH',
-        format: 'decimal',
-        viewWindow: {
-          min: [7, 30, 0],
-          max: [17, 30, 0]
-        }
-      },
+      'legend':{ position: 'none' },
       vAxis: {
-        format: 'string'
+        title: 'Kilowatt Hours',
+        format: 'decimal'
       }
     };
     var electricityChart = new google.visualization.ColumnChart(document.getElementById('electricity'));
     electricityChart.draw(electricityData, electricityOptions);
+
+
+    var gasData = google.visualization.arrayToDataTable([
+      ['Year', 'Kilowatt hours', { role: 'style' }],
+      ['2016', 24130, 'color: green; opacity: 0.2'],
+      ['2017', 34036, 'color: green; opacity: 0.5'],
+      ['2018', 41888, 'color: green']
+    ]);
+    var gasOptions = {
+      'title':'How much gas was used in January compared to previous years?',
+      'width':800,
+      'height':800,
+      'legend':{ position: 'none' },
+      vAxis: {
+        title: 'Kilowatt Hours',
+        format: 'decimal'
+      }
+    };
+    var gasChart = new google.visualization.ColumnChart(document.getElementById('gas'));
+    gasChart.draw(gasData, gasOptions);
   }
 </script>
 
