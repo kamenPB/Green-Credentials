@@ -127,7 +127,8 @@
       'title': 'Where did January\'s waste go?',
       colors: ['green', 'red'],
       'width': 800,
-      'height': 800
+      'height': 800,
+      vAxis:{tickLength: 2000}
     });
 
     var waterChart = new google.visualization.ColumnChart(document.getElementById('water'));
