@@ -10,78 +10,17 @@
 <html>
 <head>
   <title>Cabot Circus's Green Credentials</title>
-  <style>
-    /* Hide slides until they are needed */
-    .mySlides {
-      display: none;
-    }
-
-    /* Centre the slideshow container */
-    /*.slideshow-container {*/
-      /*max-width: 1200px;*/
-      /*position: relative;*/
-      /*margin: auto;*/
-    /*}*/
-
-    .slideshow > div {
-        position: absolute;
-        max-width: 100%;
-        width: 100%;
-        height: 240px;
-        max-height: 100%;
-    }
-
-    .slideshow > div > img {
-        height: 100%;
-        width: 100%;
-    }
-
-    /* Fading animation */
-    .fade {
-      -webkit-animation-name: fade;
-      -webkit-animation-duration: 1.5s;
-      animation-name: fade;
-      animation-duration: 1.5s;
-    }
-    @-webkit-keyframes fade {
-      from {opacity: .4}
-      to {opacity: 1}
-    }
-    @keyframes fade {
-      from {opacity: .4}
-      to {opacity: 1}
-    }
-  </style>
 </head>
 <body>
-
-<div class="slideshow-container">
-  <div class="mySlides fade" id="waste"></div>
-  <div class="mySlides fade" id="water"></div>
-  <div class="mySlides fade" id="electricity"></div>
-  <div class="mySlides fade" id="gas"></div>
-</div>
+<div id="waste"></div>
+<div id="water"></div>
+<div id="electricity"></div>
+<div id="gas"></div>
 
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"> // Load google charts </script>
 
 <script type="text/javascript">
-  // Slideshow functions
-  var slideIndex = 0;
-  showSlides();
-
-  function showSlides() {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}
-    slides[slideIndex-1].style.display = "block";
-    setTimeout(showSlides, 5000);
-  }
-
   // Data category functions
   // TODO: Make these actually handle months and years properly
   // TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
@@ -153,30 +92,30 @@
     switch (category) {
       case 'waste':
         return google.visualization.arrayToDataTable([
-          ['Use of waste', 'Tons', { role: 'style' }],
-          ['Recycled', getWasteRecycled('January', '2018'), 'color; green'],
-          ['Incinerated', getWasteIncinerated('January', '2018'), 'color: red']
+          ['Use of waste', 'Tons'],
+          ['Recycled', getWasteRecycled('January', '2018')],
+          ['Incinerated', getWasteIncinerated('January', '2018')]
         ]);
       case 'water':
         return google.visualization.arrayToDataTable([
           ['Year', 'Cubic metres', { role: 'style' }],
-          ['2016', getWaterConsumed('January', '2016'), 'color: blue; opacity: 0.2'],
-          ['2017', getWaterConsumed('January', '2017'), 'color: blue; opacity: 0.5'],
-          ['2018', getWaterConsumed('January', '2018'), 'color: blue']
+          ['2016', getWaterConsumed('January', '2016'), 'opacity: 0.2'],
+          ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
+          ['2018', getWaterConsumed('January', '2018'), 'opacity: 1']
         ]);
       case 'electricity':
         return google.visualization.arrayToDataTable([
           ['Year', 'Kilowatt hours', { role: 'style' }],
-          ['2016', getElectricityConsumed('January', '2016'), 'color: orange; opacity: 0.2'],
-          ['2017', getElectricityConsumed('January', '2017'), 'color: orange; opacity: 0.5'],
-          ['2018', getElectricityConsumed('January', '2018'), 'color: orange']
+          ['2016', getElectricityConsumed('January', '2016'), 'opacity: 0.2'],
+          ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
+          ['2018', getElectricityConsumed('January', '2018'), 'opacity: 1']
         ]);
       case 'gas':
         return google.visualization.arrayToDataTable([
           ['Year', 'Kilowatt hours', { role: 'style' }],
-          ['2016', getGasConsumed('January', '2016'), 'color: green; opacity: 0.2'],
-          ['2017', getGasConsumed('January', '2017'), 'color: green; opacity: 0.5'],
-          ['2018', getGasConsumed('January', '2018'), 'color: green']
+          ['2016', getGasConsumed('January', '2016'), 'opacity: 0.2'],
+          ['2017', getGasConsumed('January', '2017'), 'opacity: 0.5'],
+          ['2018', getGasConsumed('January', '2018'), 'opacity: 1']
         ]);
     }
   }
@@ -186,35 +125,54 @@
     var wasteChart = new google.visualization.PieChart(document.getElementById('waste'));
     wasteChart.draw(getChartData('waste'), {
       'title': 'Where did January\'s waste go?',
+      colors: ['green', 'red'],
       'width': 800,
-      'height': 800,
-      vAxis: { format: 'decimal' }
+      'height': 800
     });
 
     var waterChart = new google.visualization.ColumnChart(document.getElementById('water'));
     waterChart.draw(getChartData('water'), {
       'title':' How much water was used in January compared to previous years?',
+      colors: ['blue'],
       'width': 800,
-      'height': 800,
-      vAxis: { scaleType: 'linear', tickLength: 1000, includeZero: true, minimum: 0, maximum: 9000 }
+      'height': 800
     });
 
     var electricityChart = new google.visualization.ColumnChart(document.getElementById('electricity'));
     electricityChart.draw(getChartData('electricity'), {
       'title': 'How much electricity was used in January compared to previous years?',
+      colors: ['orange'],
       'width': 800,
-      'height': 800,
-      vAxis: { format: 'decimal' }
+      'height': 800
     });
 
     var gasChart = new google.visualization.ColumnChart(document.getElementById('gas'));
     gasChart.draw(getChartData('gas'), {
       'title': 'How much gas was used in January compared to previous years?',
+      colors: ['green'],
       'width': 800,
-      'height': 800,
-      vAxis: { format: 'decimal' }
+      'height': 800
     });
   }
+</script>
+
+<script type="text/javascript">
+  // Slideshow functions
+  /*
+  var slideIndex = 0;
+  showSlides();
+
+  function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}
+    slides[slideIndex-1].style.display = "block";
+    setTimeout(showSlides, 2000);
+  }*/
 </script>
 
 </body>
