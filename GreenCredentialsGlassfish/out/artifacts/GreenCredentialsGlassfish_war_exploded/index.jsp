@@ -10,14 +10,18 @@
 <html>
 <head>
     <title>Cabot Circus's Green Credentials</title>
+    <style>
+        #container {
+            padding: 25px;
+            background: url("https://i.imgur.com/aBfNcoO.png") no-repeat content-box;
+        }
+        .slides {
+            max-width: 1280px;
+            max-height: 720px;
+            margin: auto;
+        }
+    </style>
 </head>
-<body>
-
-    <div class="slides" id="waste"></div>
-    <div class="slides" id="water"></div>
-    <div class="slides" id="electricity"></div>
-    <div class="slides" id="gas"></div>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">  // Load google charts </script>
 
 <script type="text/javascript">
@@ -179,9 +183,9 @@
 
         chartviews[id] = new google.visualization.DataView(data);
         chartviews[id].setColumns([0, 1, { calc: "stringify",
-                sourceColumn: 1,
-                type: "string",
-                role: "annotation" },
+            sourceColumn: 1,
+            type: "string",
+            role: "annotation" },
             2]);
         return chartviews[id];
     }
@@ -210,7 +214,8 @@
                     bold: true,
                     color: 'black'
                 }
-            }
+            },
+            backgroundColor: { fill:'transparent' }
         };
 
         // Set up specifics for current slide
@@ -221,7 +226,6 @@
                 chartOptions.colors = ['green', 'red'];
                 chartOptions.legend = 'labeled';
                 chartOptions.pieSliceText = 'value';
-                chartOptions.pieHole = 0.4;
                 break;
             }
             case 1: { // Water
@@ -263,5 +267,14 @@
         charts[id].draw(getChartData(id), chartOptions);
     }
 </script>
+<body>
+
+<div id="container">
+    <div class="slides" id="waste"></div>
+    <div class="slides" id="water"></div>
+    <div class="slides" id="electricity"></div>
+    <div class="slides" id="gas"></div>
+</div>
+
 </body>
 </html>

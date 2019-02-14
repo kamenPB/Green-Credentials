@@ -10,13 +10,26 @@
 <html>
 <head>
     <title>Cabot Circus's Green Credentials</title>
+    <style>
+        #container {
+            padding: 25px;
+            background: url("https://i.imgur.com/aBfNcoO.png") no-repeat content-box;
+        }
+        .slides {
+            max-width: 1280px;
+            max-height: 720px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
 
+<div id="container">
     <div class="slides" id="waste"></div>
     <div class="slides" id="water"></div>
     <div class="slides" id="electricity"></div>
     <div class="slides" id="gas"></div>
+</div>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">  // Load google charts </script>
 
@@ -210,7 +223,8 @@
                     bold: true,
                     color: 'black'
                 }
-            }
+            },
+            backgroundColor: { fill:'transparent' }
         };
 
         // Set up specifics for current slide
