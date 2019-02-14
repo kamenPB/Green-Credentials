@@ -1,117 +1,8 @@
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-class GUIComponent extends JComponent {
-    /* Pie chart code adapted from:
-     * https://stackoverflow.com/questions/41937664/how-can-we-paint-this-piechart-class
-     * Credits: Paul Schutrups
-     */
-
-    // A pie chart is composed of Slices
-    class Slice {
-        double value;
-        Color color;
-
-        public Slice(double value, Color color) {
-            this.value = value;
-            this.color = color;
-        }
-    }
-
-    // Generate the slices to be used in the pie chart
-    private Slice[] generateSlices() {
-        int month = ConsumptionData.getCurrentMonth();
-        int dataCategory = ConsumptionData.getCurrentDataCategory();
-        switch (dataCategory) {
-            case ConsumptionData.DATA_WASTE:
-                double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycledCY(month) * 100;
-                double wastedPieSliceSize = 100 - recycledPieSliceSize;
-                return new Slice[] { new Slice(recycledPieSliceSize, Color.green), new Slice(wastedPieSliceSize, Color.red)};
-            case ConsumptionData.DATA_WATER:
-                double waterUsageCurrentMonth = ConsumptionData.getWaterUsagePY(month);
-                double waterUsagePreviousMonth = ConsumptionData.getWaterUsageCY(month);
-                double waterPercentageChange = ((waterUsageCurrentMonth / waterUsagePreviousMonth) - 1) * 100;
-                return new Slice[] { new Slice(waterPercentageChange, Color.blue)};
-            case ConsumptionData.DATA_WATER_LL:
-//                double waterLLUsageCurrentMonth = ConsumptionData.getLLWaterUsage(month);
-//                double waterLLUsagePreviousMonth = ConsumptionData.getLLWaterUsage((month - 12)  % 24);
-//                double waterLLPercentageChange = ((waterLLUsageCurrentMonth / waterLLUsagePreviousMonth) - 1) * 100;
-//                return new Slice[] { new Slice(waterLLPercentageChange, Color.lightGray)};
-            case ConsumptionData.DATA_ELEC:
-//                double electricityUsageCurrentMonth = ConsumptionData.getElectricityUsage(month);
-//                double electricityUsagePreviousMonth = ConsumptionData.getElectricityUsage((month - 12)  % 24);
-//                double electricityPercentageChange = ((electricityUsageCurrentMonth / electricityUsagePreviousMonth) - 1) * 100;
-//                return new Slice[] { new Slice(electricityPercentageChange, Color.yellow)};
-            case ConsumptionData.DATA_ELEC_CP:
-//                double electricityCPUsageCurrentMonth = ConsumptionData.getCPElectricityUsage(month);
-//                double electricityCPUsagePreviousMonth = ConsumptionData.getCPElectricityUsage((month - 12)  % 24);
-//                double electricityCPPercentageChange = ((electricityCPUsageCurrentMonth / electricityCPUsagePreviousMonth) - 1) * 100;
-//                return new Slice[] { new Slice(electricityCPPercentageChange, Color.orange)};
-            case ConsumptionData.DATA_GAS:
-//                double gasUsageCurrentMonth = ConsumptionData.getGasUsage(month);
-//                double gasUsagePreviousMonth = ConsumptionData.getGasUsage((month - 12)  % 24);
-//                double gasPercentageChange = ((gasUsageCurrentMonth / gasUsagePreviousMonth) - 1) * 100;
-//                return new Slice[] { new Slice(gasPercentageChange, Color.magenta)};
-            default:
-                System.out.print("Unexpected data category.");
-                return new Slice[0]; // Return an empty array
-        }
-    }
-
-    // Draw the pie chart
-    private void drawPie(Graphics2D g, Rectangle area, Slice[] slices) {
-        double total = 0.0D;
-
-        for (Slice slice : slices) {
-            total += slice.value;
-        }
-
-        double curValue = 0.0D;
-        int startAngle;
-        for (Slice slice : slices) {
-            startAngle = (int) (curValue * 360 / total);
-            int arcAngle = (int) (slice.value * 360 / total);
-            g.setColor(slice.color);
-            g.fillArc(area.x, area.y, area.width, area.height, startAngle, arcAngle);
-            curValue += slice.value;
-        }
-    }
-
-    private void drawString(Graphics2D g, String string, int x, int y, int size) {
-        g.setColor(Color.black);
-        if (g.getFont().getFontName() != "Cabot Font") { // Do not create more than one font
-            Font defaultFont = new Font ("Cabot Font", Font.BOLD, size);
-            g.setFont(defaultFont);
-        }
-        g.drawString(string, x, y);
-    }
-
-    // Overload paint method
-    public void paint(Graphics g) {
-        // Display graph
-        // TODO: Implement switch for different graphs depending on current data category
-        int width = 800;
-        int height = 800;
-        int x = 1920 / 2 - width / 2; // N.B. These co-ordinates are not cartesian
-        int y = 150; //      Instead, they are offsets from the top-left corner of the JFrame
-        drawPie((Graphics2D) g, new Rectangle(x,y,width,height), generateSlices());
-
-        // Display text to explain the above graph
-        // TODO: Actually implement this
-        //       (This is just a mock-up with hardcoded strings, positions, etc.).
-        int month = ConsumptionData.getCurrentMonth();
-        double recycledPieSliceSize = ConsumptionData.getPercentageWasteRecycledCY(month) * 100;
-        double wastedPieSliceSize = 100 - recycledPieSliceSize;
-        drawString((Graphics2D) g, "Where did January's Waste go?", x, y - 40, 56);
-        drawString((Graphics2D) g, "Recycled: " + (int) recycledPieSliceSize + "%", x + 220, y + 180, 48);
-        drawString((Graphics2D) g, "Sent to landfill: " + (int) wastedPieSliceSize + "%", x + 580, y + 450, 20);
-    }
-}
 
 public class ConsumptionData {
     // N.B. The Excel workbook's sheets MUST be in this order!
@@ -245,12 +136,7 @@ public class ConsumptionData {
 
     // Initialize and display the GUI
     private static void display() {
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(new GUIComponent());
-        frame.setTitle("Cabot Circus Green Credentials");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080); // Assume the Smart TV display is 1080p, for now
-        frame.setVisible(true);
+        // TODO: Interface with frontend here
     }
 
     private static double[] percentageWasteRecycledCY = new double[12];
