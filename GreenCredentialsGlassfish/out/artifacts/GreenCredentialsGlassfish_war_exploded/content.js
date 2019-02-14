@@ -122,7 +122,7 @@ function getChartData(id) {
                 ['Year', 'Cubic metres', { role: 'style' }],
                 ['2016', getWaterConsumed('January', '2016'), 'opacity: 0.2'],
                 ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getWaterConsumed('January', '2018'), 'opacity: 1']
+                ['2018', getWaterConsumed('January', '2018'), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### m³'
@@ -135,7 +135,7 @@ function getChartData(id) {
                 ['Year', 'Kilowatt hours', { role: 'style' }],
                 ['2016', getElectricityConsumed('January', '2016'), 'opacity: 0.2'],
                 ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getElectricityConsumed('January', '2018'), 'opacity: 1']
+                ['2018', getElectricityConsumed('January', '2018'), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### KwH'
@@ -147,7 +147,7 @@ function getChartData(id) {
                 ['Year', 'Kilowatt hours', { role: 'style' }],
                 ['2016', getGasConsumed('January', '2016'), 'opacity: 0.2'],
                 ['2017', getGasConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getGasConsumed('January', '2018'), 'opacity: 1']
+                ['2018', getGasConsumed('January', '2018'), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### KwH'
@@ -189,7 +189,8 @@ function drawChart(id) {
                 color: 'black'
             }
         },
-        backgroundColor: { fill:'transparent' }
+        backgroundColor: { fill:'transparent' },
+        tooltip: { trigger: 'none' }
     };
 
     // Set up specifics for current slide
