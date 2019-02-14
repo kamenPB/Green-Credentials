@@ -1,0 +1,10 @@
+#container {
+    padding: 25px;
+    background: url("https://i.imgur.com/aBfNcoO.png") no-repeat content-box;
+}
+
+.slides {
+    max-width: 1280px;
+    max-height: 720px;
+    margin: auto;
+}
