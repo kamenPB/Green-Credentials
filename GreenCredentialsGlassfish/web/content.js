@@ -172,14 +172,13 @@ function drawChart(id) {
 
     // Share common chart options
     let chartOptions = {
-        width: 1280, // px
+        width: 1050, // px
         height: 720, // px
         animation: {
             duration: 1000, // ms
             easing: 'out',
             startup: true
         },
-        legend: { position: "none" },
         annotations: {
             alwaysOutside: true,
             textStyle: {
@@ -210,6 +209,7 @@ function drawChart(id) {
             charts[id] = new google.visualization.ColumnChart(document.getElementById('water'));
             chartOptions.title = "How much water was used in January compared to previous years?";
             chartOptions.colors = ['blue'];
+            chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 0,
                 maxValue: 10000,
@@ -221,6 +221,7 @@ function drawChart(id) {
             charts[id] = new google.visualization.ColumnChart(document.getElementById('electricity'));
             chartOptions.title = "How much electricity was used in January compared to previous years?";
             chartOptions.colors = ['orange'];
+            chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 0,
                 maxValue: 450000,
@@ -232,6 +233,7 @@ function drawChart(id) {
             charts[id] = new google.visualization.ColumnChart(document.getElementById('gas'));
             chartOptions.title = "How much gas was used in January compared to previous years?";
             chartOptions.colors = ['green'];
+            chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 0,
                 maxValue: 45000,
