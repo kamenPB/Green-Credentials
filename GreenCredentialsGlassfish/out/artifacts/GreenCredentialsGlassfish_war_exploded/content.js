@@ -87,10 +87,12 @@ function carousel() {
     if (slideIndex > slides.length) {
         slideIndex = 1
     }
+    var id = slideIndex - 1;
 
     // Display the new slide
-    slides[slideIndex-1].style.display = "block";
-    drawChart(slideIndex-1);
+    slides[id].style.display = "block";
+    drawChart(id);
+    updateAnnotations(id);
 
     // After the slide's delay has elapsed, recur
     var delay = 3; // Delay between slide changes in seconds
@@ -245,4 +247,25 @@ function drawChart(id) {
 
     // Draw the chart
     charts[id].draw(getChartData(id), chartOptions);
+}
+
+// Update the annotations to match the chart changes
+// TODO: Actually implement this
+function updateAnnotations(id) {
+    var annotationString;
+    switch (id) {
+        case 0: // Waste
+            annotationString = "This is an annotation for the waste category.";
+            break;
+        case 1: // Water
+            annotationString = "This is an annotation for the water category.";
+            break;
+        case 2: // Electricity
+            annotationString = "This is an annotation for the electricity category.";
+            break;
+        case 3: // Gas
+            annotationString = "This is an annotation for the gas category.";
+            break;
+    }
+    document.getElementById('annotations').innerText = annotationString;
 }

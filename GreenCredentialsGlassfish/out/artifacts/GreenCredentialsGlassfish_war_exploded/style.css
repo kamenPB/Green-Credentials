@@ -1,3 +1,6 @@
+* {
+}
+
 #container {
     padding: 25px;
     background: url("https://i.imgur.com/aBfNcoO.png") no-repeat content-box;
@@ -7,4 +10,12 @@
     max-width: 1050px;
     max-height: 720px;
     margin: auto;
+}
+
+#annotations {
+    font: bold 24pt "Futura", "Calibri", serif;
+    float: right;
+    padding: 50px;
+    max-width: 500px;
+    margin-top: -800px;
 }
