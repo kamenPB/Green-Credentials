@@ -21,6 +21,10 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js">  // Load google charts </script>
 
 <script type="text/javascript">
+    // Global variables
+    var charts = []; // Store all charts in a global array to avoid memory leak
+    var slideIndex = 0;
+
     // Data category functions
     // TODO: Make these actually handle months and years properly
     // TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
@@ -83,30 +87,35 @@
                 return 24130;
         }
     }
-
     // Chart functions
     google.charts.load('current', {
         'packages': ['corechart']
     });
-
-    var slideIndex = 0;
     google.charts.setOnLoadCallback(carousel);
-    function carousel() {
-        var i;
-        var x = document.getElementsByClassName("slides");
 
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
+    // Slideshow callback
+    function carousel() {
+        // Find all slides
+        var slides = document.getElementsByClassName("slides");
+
+        // Hide them
+        for (var currentSlide = 0; currentSlide < slides.length; currentSlide++) {
+            slides[currentSlide].style.display = "none";
         }
+
+        // Increment the slide index
         slideIndex++;
 
-        if (slideIndex > x.length) {
+        // Loop back around after the final slide
+        if (slideIndex > slides.length) {
             slideIndex = 1
         }
 
-        x[slideIndex-1].style.display = "block";
+        // Display the new slide
+        slides[slideIndex-1].style.display = "block";
         drawChart(slideIndex-1);
 
+        // After the slide's delay has elapsed, recur
         var delay = 3; // Delay between slide changes in seconds
         setTimeout(carousel, delay * 1000);
     }
@@ -123,27 +132,21 @@
                 ]);
             case 1: // Water
                 return google.visualization.arrayToDataTable([
-                    ['Year', 'Cubic metres', {
-                        role: 'style'
-                    }],
+                    ['Year', 'Cubic metres', { role: 'style' }],
                     ['2016', getWaterConsumed('January', '2016'), 'opacity: 0.2'],
                     ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
                     ['2018', getWaterConsumed('January', '2018'), 'opacity: 1']
                 ]);
             case 2: // Electricity
                 return google.visualization.arrayToDataTable([
-                    ['Year', 'Kilowatt hours', {
-                        role: 'style'
-                    }],
+                    ['Year', 'Kilowatt hours', { role: 'style' }],
                     ['2016', getElectricityConsumed('January', '2016'), 'opacity: 0.2'],
                     ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
                     ['2018', getElectricityConsumed('January', '2018'), 'opacity: 1']
                 ]);
             case 3: // Gas
                 return google.visualization.arrayToDataTable([
-                    ['Year', 'Kilowatt hours', {
-                        role: 'style'
-                    }],
+                    ['Year', 'Kilowatt hours', { role: 'style' }],
                     ['2016', getGasConsumed('January', '2016'), 'opacity: 0.2'],
                     ['2017', getGasConsumed('January', '2017'), 'opacity: 0.5'],
                     ['2018', getGasConsumed('January', '2018'), 'opacity: 1']
@@ -151,45 +154,48 @@
         }
     }
 
-    //Store all chart objects in a global array to avoid memory leak
-    var charts = [];
-    var chartOptions =  {
-        vAxis: { minValue: 0 },
-        width: 1280,
-        height: 720,
-        animation:{
-            duration: 1000,
-            easing: 'out',
-            startup: true
-        }
-    };
-
     // Draw the chart and set the chart values
     function drawChart(id) {
+        // If the chart exists already from a previous loop, clear it to avoid memory leak
         if (!(charts[id] === undefined || charts[id] === null)) {
             charts[id].clearChart();
         }
 
+        // Share common chart options
+        var chartOptions =  {
+            vAxis: {
+                minValue: 0
+            },
+            width: 1280, // px
+            height: 720, // px
+            animation: {
+                duration: 1000, // ms
+                easing: 'out',
+                startup: true
+            }
+        };
+
+        // Set up specifics for current slide
         switch (id) {
-            case 0: {
+            case 0: { // Waste
                 charts[id] = new google.visualization.PieChart(document.getElementById('waste'));
                 chartOptions.title = "Where did January's waste go?";
                 chartOptions.colors = ['green', 'red'];
                 break;
             }
-            case 1: {
+            case 1: { // Water
                 charts[id] = new google.visualization.ColumnChart(document.getElementById('water'));
                 chartOptions.title = "How much water was used in January compared to previous years?";
                 chartOptions.colors = ['blue'];
                 break;
             }
-            case 2: {
+            case 2: { // Electricity
                 charts[id] = new google.visualization.ColumnChart(document.getElementById('electricity'));
                 chartOptions.title = "How much electricity was used in January compared to previous years?";
                 chartOptions.colors = ['orange'];
                 break;
             }
-            case 3: {
+            case 3: { // Gas
                 charts[id] = new google.visualization.ColumnChart(document.getElementById('gas'));
                 chartOptions.title = "How much gas was used in January compared to previous years?";
                 chartOptions.colors = ['green'];
@@ -197,6 +203,7 @@
             }
         }
 
+        // Draw the chart
         charts[id].draw(getChartData(id), chartOptions);
     }
 </script>
