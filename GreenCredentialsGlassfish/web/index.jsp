@@ -94,27 +94,34 @@
     function carousel() {
         var i;
         var x = document.getElementsByClassName("slides");
+
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
         slideIndex++;
-        if (slideIndex > x.length) {slideIndex = 1}
+
+        if (slideIndex > x.length) {
+            slideIndex = 1
+        }
+
         x[slideIndex-1].style.display = "block";
-        drawChart();
-        setTimeout(carousel, 2000);
+        drawChart(slideIndex-1);
+
+        var delay = 3; // Delay between slide changes in seconds
+        setTimeout(carousel, delay * 1000);
     }
 
     // Define the chart parameters for each data category
     // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
-    function getChartData(category) {
-        switch (category) {
-            case 'waste':
+    function getChartData(id) {
+        switch (id) {
+            case 0: // Waste
                 return google.visualization.arrayToDataTable([
                     ['Use of waste', 'Tons'],
                     ['Recycled', getWasteRecycled('January', '2018')],
                     ['Incinerated', getWasteIncinerated('January', '2018')]
                 ]);
-            case 'water':
+            case 1: // Water
                 return google.visualization.arrayToDataTable([
                     ['Year', 'Cubic metres', {
                         role: 'style'
@@ -123,7 +130,7 @@
                     ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
                     ['2018', getWaterConsumed('January', '2018'), 'opacity: 1']
                 ]);
-            case 'electricity':
+            case 2: // Electricity
                 return google.visualization.arrayToDataTable([
                     ['Year', 'Kilowatt hours', {
                         role: 'style'
@@ -132,7 +139,7 @@
                     ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
                     ['2018', getElectricityConsumed('January', '2018'), 'opacity: 1']
                 ]);
-            case 'gas':
+            case 3: // Gas
                 return google.visualization.arrayToDataTable([
                     ['Year', 'Kilowatt hours', {
                         role: 'style'
@@ -144,33 +151,53 @@
         }
     }
 
+    //Store all chart objects in a global array to avoid memory leak
+    var charts = [];
+    var chartOptions =  {
+        vAxis: { minValue: 0 },
+        width: 1280,
+        height: 720,
+        animation:{
+            duration: 1000,
+            easing: 'out',
+            startup: true
+        }
+    };
+
     // Draw the chart and set the chart values
-    function drawChart() {
-        var chartOptions =  {
-            vAxis: { minValue: 0 },
-            width: 1280,
-            height: 720
-        };
+    function drawChart(id) {
+        if (!(charts[id] === undefined || charts[id] === null)) {
+            charts[id].clearChart();
+        }
 
-        var wasteChart = new google.visualization.PieChart(document.getElementById('waste'));
-        chartOptions.title = "Where did January's waste go?";
-        chartOptions.colors = ['green', 'red'];
-        wasteChart.draw(getChartData('waste'), chartOptions);
+        switch (id) {
+            case 0: {
+                charts[id] = new google.visualization.PieChart(document.getElementById('waste'));
+                chartOptions.title = "Where did January's waste go?";
+                chartOptions.colors = ['green', 'red'];
+                break;
+            }
+            case 1: {
+                charts[id] = new google.visualization.ColumnChart(document.getElementById('water'));
+                chartOptions.title = "How much water was used in January compared to previous years?";
+                chartOptions.colors = ['blue'];
+                break;
+            }
+            case 2: {
+                charts[id] = new google.visualization.ColumnChart(document.getElementById('electricity'));
+                chartOptions.title = "How much electricity was used in January compared to previous years?";
+                chartOptions.colors = ['orange'];
+                break;
+            }
+            case 3: {
+                charts[id] = new google.visualization.ColumnChart(document.getElementById('gas'));
+                chartOptions.title = "How much gas was used in January compared to previous years?";
+                chartOptions.colors = ['green'];
+                break;
+            }
+        }
 
-        var waterChart = new google.visualization.ColumnChart(document.getElementById('water'));
-        chartOptions.title = "How much water was used in January compared to previous years?";
-        chartOptions.colors = ['blue'];
-        waterChart.draw(getChartData('water'), chartOptions);
-
-        var electricityChart = new google.visualization.ColumnChart(document.getElementById('electricity'));
-        chartOptions.title = "How much electricity was used in January compared to previous years?";
-        chartOptions.colors = ['orange'];
-        electricityChart.draw(getChartData('electricity'), chartOptions);
-
-        var gasChart = new google.visualization.ColumnChart(document.getElementById('gas'));
-        chartOptions.title = "How much gas was used in January compared to previous years?";
-        chartOptions.colors = ['green'];
-        gasChart.draw(getChartData('gas'), chartOptions);
+        charts[id].draw(getChartData(id), chartOptions);
     }
 </script>
 </body>
