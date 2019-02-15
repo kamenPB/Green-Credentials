@@ -99,7 +99,7 @@ function slideshow() {
     updateAnnotations(id);
 
     // After the slide's delay has elapsed, recur
-    var delay = 10; // Delay between slide changes in seconds
+    var delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
 
@@ -296,30 +296,69 @@ function createWasteAnnotation(){
     let recycledTons = getWasteRecycled('January','2018');
     let elephants = (recycledTons / 7).toFixed(0);
 
-    html += "<b>CABOT CIRCUS</b> recycled ";
+    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
+    html += "In January 2018, we consumed ";
     html += recycledTons.toFixed(0);
-    html += " tons of waste in January 2018.";
+    html += " tons of waste!";
     html += "<br/><br/>";
 
     // Only brag if it's an impressive number
-    if (elephants > 1) {
+    if (elephants >= 2) {
         html += "That's roughly the weight of <b>";
         html += elephants;
         html += " elephants</b>!";
         html += "<br/>";
         for (let i = 0; i < elephants; i++) {
-            html += "<img src='http://thecraftchop.com/files/others/baby-elephant.svg' class='icons' alt='Elephant' /> ";
+            if (i == 34) i = elephants; // Limit the amount added
+            html += "<img src='icons/elephant.svg' class='icons' alt='Elephant' /> ";
         }
     }
-    
+
     return html;
 }
 
 // Create an annotation for the water category's chart
 function createWaterAnnotation(){
     let html = "";
+    let waterSaved = getWaterConsumed('January', '2017') - getWaterConsumed('January', '2018');
+    let olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
+    let swimmingPools = (waterSaved / 900).toFixed(0);
+    let baths = (waterSaved / 0.08).toFixed(0);
 
-    html += "This is an annotation for the water category.";
+    // Prefer the most impressive stat
+    let comparisonPoint = baths;
+    if (swimmingPools >= 2) {
+        comparisonPoint = swimmingPools;
+        if (olympicSwimmingPools >= 2) {
+            comparisonPoint = olympicSwimmingPools;
+        }
+    }
+
+    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
+    html += "In January 2018, we consumed ";
+    html += addCommas(waterSaved.toFixed(0));
+    html += " m³ less water than last year.";
+    html += "<br/><br/>";
+
+    var src = '';
+    // Only brag if it's an impressive number
+    if (comparisonPoint >= 2) {
+        html += "That's enough to fill roughly <b>";
+        html += comparisonPoint;
+        if (olympicSwimmingPools >= 2) html += " Olympic-sized";
+        if (swimmingPools >= 2) {
+            html += " swimming pools";
+            src = 'icons/pool.svg';
+        } else {
+            html += " bath tubs";
+            src = 'icons/bathtub.svg';
+        }
+        html += "</b>!<br/>";
+        for (let i = 0; i < comparisonPoint; i++) {
+            if (i == 34) i = comparisonPoint; // Limit the amount added
+            html += "<img src='" + src + "' class='icons' alt='Water' /> ";
+        }
+    }
 
     return html;
 }
@@ -330,19 +369,20 @@ function createElectricityAnnotation(){
     let electricitySaved = getElectricityConsumed('January', '2017') - getElectricityConsumed('January', '2018');
     let homes = (electricitySaved / 4150).toFixed(0);
 
+    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     html += "In January 2018, we consumed ";
     html += addCommas(electricitySaved.toFixed(0));
     html += " kWhs less electricity than last year.";
     html += "<br/><br/>";
 
     // Only brag if it's an impressive number
-    if (homes > 1) {
+    if (homes >= 2) {
         html += "That's enough to power <b>";
         html += homes;
         html += " homes</b>!";
         html += "<br/>";
         for (let i = 0; i < homes; i++) {
-            html += "<img src='http://thecraftchop.com/files/images/home_2.svg' class='icons' alt='Home' /> ";
+            html += "<img src='icons/home.svg' class='icons' alt='Home' /> ";
         }
     }
 
