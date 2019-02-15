@@ -71,7 +71,7 @@ function getGasConsumed(month, year) {
 }
 
 //
-// CHART FUNCTIONS
+// SLIDESHOW FUNCTIONS
 //
 
 // Slideshow callback
@@ -99,9 +99,13 @@ function slideshow() {
     updateAnnotations(id);
 
     // After the slide's delay has elapsed, recur
-    var delay = 3; // Delay between slide changes in seconds
+    var delay = 10; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
+
+//
+// CHART FUNCTIONS
+//
 
 // Pair charts with their given data category's HTML <div>
 function createChart(id) {
@@ -210,12 +214,16 @@ function getChartOptions(id) {
             }
         },
         backgroundColor: { fill:'transparent' },
-        tooltip: { trigger: 'none' }
+        tooltip: { trigger: 'none' },
+        titleTextStyle: {
+            fontSize: 24, // px
+            bold: true,
+        }
     };
 
     switch (id) {
         case 0: { // Waste
-            chartOptions.title = "Where did January's waste go?";
+            chartOptions.title = "How we dealt with our waste in January:";
             chartOptions.colors = ['green', 'red'];
             chartOptions.legend = 'labeled';
             chartOptions.pieSliceText = 'value';
@@ -227,7 +235,7 @@ function getChartOptions(id) {
             break;
         }
         case 1: { // Water
-            chartOptions.title = "How much water was used in January compared to previous years?";
+            chartOptions.title = "Our water consumption in January, compared to previous years:";
             chartOptions.colors = ['blue'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -238,7 +246,7 @@ function getChartOptions(id) {
             break;
         }
         case 2: { // Electricity
-            chartOptions.title = "How much electricity was used in January compared to previous years?";
+            chartOptions.title = "Our electricity consumption in January, compared to previous years:";
             chartOptions.colors = ['orange'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -249,7 +257,7 @@ function getChartOptions(id) {
             break;
         }
         case 3: { // Gas
-            chartOptions.title = "How much gas was used in January compared to previous years?";
+            chartOptions.title = "Our gas consumption in January, compared to previous years:";
             chartOptions.colors = ['green'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -277,31 +285,83 @@ function drawChart(id) {
     charts[id].draw(getChartData(id), getChartOptions(id));
 }
 
+//
+// ANNOTATION FUNCTIONS
+//
+// TODO: Replace hardcoded months/years with the current month, and years relative to the current year
+
+// Create an annotation for the waste category's chart
+function createWasteAnnotation(){
+    let html = "";
+    let recycledTons = getWasteRecycled('January','2018');
+    let elephants = (recycledTons / 7).toFixed(0);
+
+    html += "<b>CABOT CIRCUS</b> recycled ";
+    html += recycledTons.toString();
+    html += " tons of waste in January 2018.";
+    html += "<br/><br/>";
+
+    html += "That's roughly the weight of <b>";
+    html += elephants;
+    html += " elephants</b>!";
+    html += "<br/>";
+    for (let i = 0; i < elephants; i++) {
+        html += "<img src='http://thecraftchop.com/files/others/baby-elephant.svg' class='elephants' /> ";
+    }
+
+    return html;
+}
+
+// Create an annotation for the water category's chart
+function createWaterAnnotation(){
+    let html = "";
+
+    html += "This is an annotation for the water category.";
+
+    return html;
+}
+
+// Create an annotation for the electricity category's chart
+function createElectricityAnnotation(){
+    let html = "";
+
+    html += "This is an annotation for the electricity category.";
+
+    return html;
+}
+
+// Create an annotation for the gas category's chart
+function createGasAnnotation(){
+    let html = "";
+
+    html += "This is an annotation for the gas category.";
+
+    return html;
+}
+
 // Update the annotations to match the chart changes
 // TODO: Actually implement this
 function updateAnnotations(id) {
-    var annotationString;
+    var annotationHTML;
     switch (id) {
         case 0: // Waste
-            annotationString = "This is an annotation for the waste category.";
+            annotationHTML = createWasteAnnotation();
             break;
         case 1: // Water
-            annotationString = "This is an annotation for the water category.";
+            annotationHTML = createWaterAnnotation();
             break;
         case 2: // Electricity
-            annotationString = "This is an annotation for the electricity category.";
+            annotationHTML = createElectricityAnnotation();
             break;
         case 3: // Gas
-            annotationString = "This is an annotation for the gas category.";
+            annotationHTML = createGasAnnotation();
             break;
     }
-    document.getElementById('annotations').innerText = annotationString;
+    document.getElementById('annotations').innerHTML = annotationHTML;
 }
 
 //
 // MAIN
 //
-google.charts.load('current', {
-    'packages': ['corechart']
-});
+google.charts.load('current', { 'packages': ['corechart'] });
 google.charts.setOnLoadCallback(slideshow);
