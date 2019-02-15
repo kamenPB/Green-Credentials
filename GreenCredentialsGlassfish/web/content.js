@@ -1,8 +1,13 @@
-// Global variables
+//
+// GLOBAL VARIABLES
+//
 var charts = []; // Store all charts in a global array to avoid memory leak
+var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0;
 
-// Data category functions
+//
+// DATA CATEGORY FUNCTIONS
+//
 // TODO: Make these actually handle months and years properly
 // TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
 
@@ -64,14 +69,13 @@ function getGasConsumed(month, year) {
             return 24130;
     }
 }
-// Chart functions
-google.charts.load('current', {
-    'packages': ['corechart']
-});
-google.charts.setOnLoadCallback(carousel);
+
+//
+// CHART FUNCTIONS
+//
 
 // Slideshow callback
-function carousel() {
+function slideshow() {
     // Find all slides
     var slides = document.getElementsByClassName("slides");
 
@@ -96,12 +100,33 @@ function carousel() {
 
     // After the slide's delay has elapsed, recur
     var delay = 3; // Delay between slide changes in seconds
-    setTimeout(carousel, delay * 1000);
+    setTimeout(slideshow, delay * 1000);
 }
 
-// Define the chart parameters for each data category
+// Pair charts with their given data category's HTML <div>
+function createChart(id) {
+    switch (id) {
+        case 0: { // Waste
+            charts[id] = new google.visualization.PieChart(document.getElementById('waste'));
+            break;
+        }
+        case 1: { // Water
+            charts[id] = new google.visualization.ColumnChart(document.getElementById('water'));
+            break;
+        }
+        case 2: { // Electricity
+            charts[id] = new google.visualization.ColumnChart(document.getElementById('electricity'));
+            break;
+        }
+        case 3: { // Gas
+            charts[id] = new google.visualization.ColumnChart(document.getElementById('gas'));
+            break;
+        }
+    }
+}
+
+// Populate the chart's data for the given data category ID
 // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
-var chartViews = [];
 function getChartData(id) {
     var data;
     var format;
@@ -165,13 +190,8 @@ function getChartData(id) {
     return chartViews[id];
 }
 
-// Draw the chart and set the chart values
-function drawChart(id) {
-    // If the chart exists already from a previous loop, clear it to avoid memory leak
-    if (!(charts[id] === undefined || charts[id] === null)) {
-        charts[id].clearChart();
-    }
-
+// Populate the chart's options for the given data category ID
+function getChartOptions(id) {
     // Share common chart options
     let chartOptions = {
         width: 1050, // px
@@ -193,10 +213,8 @@ function drawChart(id) {
         tooltip: { trigger: 'none' }
     };
 
-    // Set up specifics for current slide
     switch (id) {
         case 0: { // Waste
-            charts[id] = new google.visualization.PieChart(document.getElementById('waste'));
             chartOptions.title = "Where did January's waste go?";
             chartOptions.colors = ['green', 'red'];
             chartOptions.legend = 'labeled';
@@ -209,7 +227,6 @@ function drawChart(id) {
             break;
         }
         case 1: { // Water
-            charts[id] = new google.visualization.ColumnChart(document.getElementById('water'));
             chartOptions.title = "How much water was used in January compared to previous years?";
             chartOptions.colors = ['blue'];
             chartOptions.legend = { position: "none" };
@@ -221,7 +238,6 @@ function drawChart(id) {
             break;
         }
         case 2: { // Electricity
-            charts[id] = new google.visualization.ColumnChart(document.getElementById('electricity'));
             chartOptions.title = "How much electricity was used in January compared to previous years?";
             chartOptions.colors = ['orange'];
             chartOptions.legend = { position: "none" };
@@ -233,7 +249,6 @@ function drawChart(id) {
             break;
         }
         case 3: { // Gas
-            charts[id] = new google.visualization.ColumnChart(document.getElementById('gas'));
             chartOptions.title = "How much gas was used in January compared to previous years?";
             chartOptions.colors = ['green'];
             chartOptions.legend = { position: "none" };
@@ -245,9 +260,21 @@ function drawChart(id) {
             break;
         }
     }
+    return chartOptions;
+}
+
+// Chart drawing callback function
+function drawChart(id) {
+    // If the chart exists already from a previous loop, clear it to avoid memory leak
+    if (!(charts[id] === undefined || charts[id] === null)) {
+        charts[id].clearChart();
+    }
+
+    // Create correct type of chart in given ID's div
+    createChart(id);
 
     // Draw the chart
-    charts[id].draw(getChartData(id), chartOptions);
+    charts[id].draw(getChartData(id), getChartOptions(id));
 }
 
 // Update the annotations to match the chart changes
@@ -270,3 +297,11 @@ function updateAnnotations(id) {
     }
     document.getElementById('annotations').innerText = annotationString;
 }
+
+//
+// MAIN
+//
+google.charts.load('current', {
+    'packages': ['corechart']
+});
+google.charts.setOnLoadCallback(slideshow);
