@@ -38,7 +38,7 @@ b {
 
 #container {
     padding: 25px;
-    background: url("https://i.imgur.com/aBfNcoO.png") no-repeat content-box;
+    background: url("logos/cabotcircus.png") no-repeat content-box;
 }
 
 .slides {
@@ -49,7 +49,7 @@ b {
 
 #annotations {
     font-weight: bold;
-    font-size: 16pt;
+    font-size: 24pt;
     float: right;
     padding: 50px;
     max-width: 500px;
