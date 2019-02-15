@@ -56,8 +56,11 @@ b {
     margin-top: -800px;
 }
 
-.elephants {
+.icons {
     width: 80px;
     height: 80px;
+    max-width: 80px;
+    max-height: 80px;
     display: inline-block;
+    margin: 5px;
 }

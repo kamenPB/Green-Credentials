@@ -167,7 +167,7 @@ function getChartData(id) {
                 ['2018', getElectricityConsumed('January', '2018'), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
-                pattern: '#,### KwH'
+                pattern: '#,### kWh'
             });
             format.format(data, 1);
             break;
@@ -179,7 +179,7 @@ function getChartData(id) {
                 ['2018', getGasConsumed('January', '2018'), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
-                pattern: '#,### KwH'
+                pattern: '#,### kWh'
             });
             format.format(data, 1);
             break;
@@ -252,7 +252,7 @@ function getChartOptions(id) {
             chartOptions.vAxis = {
                 minValue: 0,
                 maxValue: 450000,
-                format: "#,### KwH"
+                format: "#,### kWh"
             };
             break;
         }
@@ -263,7 +263,7 @@ function getChartOptions(id) {
             chartOptions.vAxis = {
                 minValue: 0,
                 maxValue: 45000,
-                format: "#,### KwH"
+                format: "#,### kWh"
             };
             break;
         }
@@ -297,7 +297,7 @@ function createWasteAnnotation(){
     let elephants = (recycledTons / 7).toFixed(0);
 
     html += "<b>CABOT CIRCUS</b> recycled ";
-    html += recycledTons.toString();
+    html += recycledTons.toFixed(0);
     html += " tons of waste in January 2018.";
     html += "<br/><br/>";
 
@@ -306,7 +306,7 @@ function createWasteAnnotation(){
     html += " elephants</b>!";
     html += "<br/>";
     for (let i = 0; i < elephants; i++) {
-        html += "<img src='http://thecraftchop.com/files/others/baby-elephant.svg' class='elephants' /> ";
+        html += "<img src='http://thecraftchop.com/files/others/baby-elephant.svg' class='icons' alt='Elephant' /> ";
     }
 
     return html;
@@ -324,8 +324,21 @@ function createWaterAnnotation(){
 // Create an annotation for the electricity category's chart
 function createElectricityAnnotation(){
     let html = "";
+    let electricitySaved = getElectricityConsumed('January', '2017') - getElectricityConsumed('January', '2018');
+    let homes = (electricitySaved / 4150).toFixed(0);
 
-    html += "This is an annotation for the electricity category.";
+    html += "In January 2018, we consumed ";
+    html += addCommas(electricitySaved.toFixed(0));
+    html += " kWhs less electricity than last year.";
+    html += "<br/><br/>";
+
+    html += "That's enough to power <b>";
+    html += homes;
+    html += " homes</b>!";
+    html += "<br/>";
+    for (let i = 0; i < homes; i++) {
+        html += "<img src='http://thecraftchop.com/files/images/home_2.svg' class='icons' alt='Home' /> ";
+    }
 
     return html;
 }
@@ -358,6 +371,22 @@ function updateAnnotations(id) {
             break;
     }
     document.getElementById('annotations').innerHTML = annotationHTML;
+}
+
+//
+// MISC FUNCTIONS
+//
+
+// Add commas to a number string
+function addCommas(string) {
+    // Function taken from Stack Overflow answer:
+    // https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    // Written by Elias Zamaria
+    // Accessed 2019-02-15
+
+    let parts = string.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
 }
 
 //
