@@ -1,9 +1,9 @@
 //
 // GLOBAL VARIABLES
 //
-var charts = []; // Store all charts in a global array to avoid memory leak
-var chartViews = []; // Store all chart views in a global array to avoid memory leak
-var slideIndex = 0;
+let charts = []; // Store all charts in a global array to avoid memory leak
+let chartViews = []; // Store all chart views in a global array to avoid memory leak
+let slideIndex = 0;
 
 //
 // DATA CATEGORY FUNCTIONS
