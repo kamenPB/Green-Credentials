@@ -301,7 +301,7 @@ function createWasteAnnotation(){
     if (recycledTons > getWasteIncinerated(month, year)) {
         let elephants = (recycledTons / 7).toFixed(0);
 
-        html += "In January 2018, we consumed ";
+        html += "In January 2018, we recycled ";
         html += recycledTons.toFixed(0);
         html += " tons of waste!";
         html += "<br/><br/>";
@@ -314,7 +314,7 @@ function createWasteAnnotation(){
             html += "<br/>";
             for (let i = 0; i < elephants; i++) {
                 if (i == 34) i = elephants; // Limit the amount added
-                html += "<img src='icons/elephant.svg' class='icons' alt='Elephant' /> ";
+                html += "<img src='icons/elephant.svg' class='icons' /> ";
             }
         }
     } else {
@@ -365,7 +365,7 @@ function createWaterAnnotation(){
             html += "</b>!<br/>";
             for (let i = 0; i < comparisonPoint; i++) {
                 if (i == 34) i = comparisonPoint; // Limit the amount added
-                html += "<img src='" + src + "' class='icons' alt='Water' /> ";
+                html += "<img src='" + src + "' class='icons' /> ";
             }
         }
     } else {
@@ -396,7 +396,7 @@ function createElectricityAnnotation(){
             html += " homes</b>!";
             html += "<br/>";
             for (let i = 0; i < homes; i++) {
-                html += "<img src='icons/home.svg' class='icons' alt='Home' /> ";
+                html += "<img src='icons/home.svg' class='icons' /> ";
             }
         }
     } else {

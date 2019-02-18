@@ -301,7 +301,7 @@ function createWasteAnnotation(){
     if (recycledTons > getWasteIncinerated(month, year)) {
         let elephants = (recycledTons / 7).toFixed(0);
 
-        html += "In January 2018, we consumed ";
+        html += "In January 2018, we recycled ";
         html += recycledTons.toFixed(0);
         html += " tons of waste!";
         html += "<br/><br/>";
