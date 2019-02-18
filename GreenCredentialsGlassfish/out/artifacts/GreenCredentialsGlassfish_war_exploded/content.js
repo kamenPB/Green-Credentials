@@ -91,14 +91,14 @@ function slideshow() {
     if (slideIndex > slides.length) {
         slideIndex = 1
     }
-    var id = slideIndex - 1;
 
     // Display the new slide
+    var id = slideIndex - 1;
     slides[id].style.display = "block";
     drawChart(id);
-    updateAnnotations(id);
+    updateAnnotation(id);
 
-    // After the slide's delay has elapsed, recur
+    // Loop after time has passed
     var delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
@@ -107,7 +107,7 @@ function slideshow() {
 // CHART FUNCTIONS
 //
 
-// Pair charts with their given data category's HTML <div>
+// Pair charts with their HTML <div>
 function createChart(id) {
     switch (id) {
         case 0: { // Waste
@@ -129,17 +129,29 @@ function createChart(id) {
     }
 }
 
+function getCurrentMonth() {
+    return 'January';
+}
+
+function getCurrentYear() {
+    return '2018';
+}
+
 // Populate the chart's data for the given data category ID
 // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 function getChartData(id) {
     var data;
     var format;
+    var currentMonth = getCurrentMonth();
+    var currentYear = getCurrentYear();
+    var lastYear = (parseInt(currentYear) - 1).toString();
+    var twoYearsAgo = (parseInt(lastYear) - 1).toString();
     switch (id) {
         case 0: // Waste
             data = google.visualization.arrayToDataTable([
                 ['Use of waste', 'Tons'],
-                ['Recycled', getWasteRecycled('January', '2018')],
-                ['Incinerated', getWasteIncinerated('January', '2018')]
+                ['Recycled', getWasteRecycled(currentMonth, lastYear)],
+                ['Incinerated', getWasteIncinerated(currentMonth, currentYear)]
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#.# tons'
@@ -149,9 +161,9 @@ function getChartData(id) {
         case 1: { // Water
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Cubic metres', { role: 'style' }],
-                ['2016', getWaterConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getWaterConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getWaterConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getWaterConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getWaterConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### m³'
@@ -162,9 +174,9 @@ function getChartData(id) {
         case 2: // Electricity
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getElectricityConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getElectricityConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getElectricityConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getElectricityConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getElectricityConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -174,9 +186,9 @@ function getChartData(id) {
         case 3: // Gas
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getGasConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getGasConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getGasConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getGasConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getGasConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getGasConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -291,6 +303,8 @@ function drawChart(id) {
 // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 
 // Create an annotation for the waste category's chart
+// Display the waste recycled in terms of elephants
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWasteAnnotation(){
     let html = "";
     let month = 'January';
@@ -325,6 +339,10 @@ function createWasteAnnotation(){
 }
 
 // Create an annotation for the water category's chart
+// Display the water saved in terms of Olympic swimming pools
+// If there isn't enough for 2, then display in terms of normal swimming pools
+// If there isn't enough for 2, then display in terms of bath tubs
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWaterAnnotation(){
     let html = "";
     let waterSaved = getWaterConsumed('January', '2017') - getWaterConsumed('January', '2018');
@@ -376,6 +394,8 @@ function createWaterAnnotation(){
 }
 
 // Create an annotation for the electricity category's chart
+// Display the electricity saved in terms of homes it could power
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createElectricityAnnotation(){
     let html = "";
     let electricitySaved = getElectricityConsumed('January', '2017') - getElectricityConsumed('January', '2018');
@@ -407,6 +427,7 @@ function createElectricityAnnotation(){
 }
 
 // Create an annotation for the gas category's chart
+// TODO: Come up with an appropriate comparison point for gas kWhs saved
 function createGasAnnotation(){
     let html = "";
     let gasSaved = getGasConsumed('January', '2017') - getGasConsumed('January', '2018');
@@ -424,11 +445,11 @@ function createGasAnnotation(){
     return html;
 }
 
-// Update the annotations to match the chart changes
-// TODO: Actually implement this
-function updateAnnotations(id) {
+// Update the annotation to match the chart changes
+function updateAnnotation(id) {
     var annotationHTML;
     switch (id) {
+        default:
         case 0: // Waste
             annotationHTML = createWasteAnnotation();
             break;

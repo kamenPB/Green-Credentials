@@ -91,23 +91,49 @@ function slideshow() {
     if (slideIndex > slides.length) {
         slideIndex = 1
     }
-    var id = slideIndex - 1;
 
     // Display the new slide
+    var id = slideIndex - 1;
     slides[id].style.display = "block";
     drawChart(id);
-    updateAnnotations(id);
+    updateAnnotation(id);
 
-    // After the slide's delay has elapsed, recur
+    // Loop after time has passed
     var delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
+}
+
+
+//
+// DATE FUNCTIONS
+//
+// TODO: Replace hardcoded months/years with actual current months/years
+
+// Return the string value of the current month
+function getCurrentMonth() {
+    return 'January';
+}
+
+// Return the string value of the current year
+function getCurrentYear() {
+    return '2018';
+}
+
+// Return the string value of the year 1 year before the current year
+function getLastYear() {
+    return (parseInt(getCurrentYear()) - 1).toString();
+}
+
+// Return the string value of the year 2 years before the current year
+function getTwoYearsAgo() {
+    return (parseInt(getLastYear()) - 1).toString();
 }
 
 //
 // CHART FUNCTIONS
 //
 
-// Pair charts with their given data category's HTML <div>
+// Pair charts with their HTML <div>
 function createChart(id) {
     switch (id) {
         case 0: { // Waste
@@ -130,16 +156,22 @@ function createChart(id) {
 }
 
 // Populate the chart's data for the given data category ID
-// TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 function getChartData(id) {
     var data;
     var format;
+
+    // Get date values
+    var currentMonth = getCurrentMonth();
+    var currentYear = getCurrentYear();
+    var lastYear = getLastYear();
+    var twoYearsAgo = getTwoYearsAgo();
+
     switch (id) {
         case 0: // Waste
             data = google.visualization.arrayToDataTable([
                 ['Use of waste', 'Tons'],
-                ['Recycled', getWasteRecycled('January', '2018')],
-                ['Incinerated', getWasteIncinerated('January', '2018')]
+                ['Recycled', getWasteRecycled(currentMonth, lastYear)],
+                ['Incinerated', getWasteIncinerated(currentMonth, currentYear)]
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#.# tons'
@@ -149,9 +181,9 @@ function getChartData(id) {
         case 1: { // Water
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Cubic metres', { role: 'style' }],
-                ['2016', getWaterConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getWaterConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getWaterConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getWaterConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getWaterConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getWaterConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### m³'
@@ -162,9 +194,9 @@ function getChartData(id) {
         case 2: // Electricity
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getElectricityConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getElectricityConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getElectricityConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getElectricityConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getElectricityConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getElectricityConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -174,9 +206,9 @@ function getChartData(id) {
         case 3: // Gas
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getGasConsumed('January', '2016'), 'opacity: 0.2'],
-                ['2017', getGasConsumed('January', '2017'), 'opacity: 0.5'],
-                ['2018', getGasConsumed('January', '2018'), 'opacity: 0.9']
+                ['2016', getGasConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
+                ['2017', getGasConsumed(currentMonth, lastYear), 'opacity: 0.5'],
+                ['2018', getGasConsumed(currentMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -221,9 +253,11 @@ function getChartOptions(id) {
         }
     };
 
+    var currentMonth = getCurrentMonth();
+
     switch (id) {
         case 0: { // Waste
-            chartOptions.title = "How we dealt with our waste in January:";
+            chartOptions.title = "How we dealt with our waste in " + currentMonth + ":";
             chartOptions.colors = ['green', 'red'];
             chartOptions.legend = 'labeled';
             chartOptions.pieSliceText = 'value';
@@ -235,7 +269,7 @@ function getChartOptions(id) {
             break;
         }
         case 1: { // Water
-            chartOptions.title = "Our water consumption in January, compared to previous years:";
+            chartOptions.title = "Our water consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['blue'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -246,7 +280,7 @@ function getChartOptions(id) {
             break;
         }
         case 2: { // Electricity
-            chartOptions.title = "Our electricity consumption in January, compared to previous years:";
+            chartOptions.title = "Our electricity consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['orange'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -257,7 +291,7 @@ function getChartOptions(id) {
             break;
         }
         case 3: { // Gas
-            chartOptions.title = "Our gas consumption in January, compared to previous years:";
+            chartOptions.title = "Our gas consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['green'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -291,17 +325,19 @@ function drawChart(id) {
 // TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 
 // Create an annotation for the waste category's chart
+// Display the waste recycled in terms of elephants
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWasteAnnotation(){
     let html = "";
-    let month = 'January';
-    let year = '2018';
-    let recycledTons = getWasteRecycled(month,year);
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let recycledTons = getWasteRecycled(currentMonth,currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (recycledTons > getWasteIncinerated(month, year)) {
+    if (recycledTons > getWasteIncinerated(currentMonth, currentYear)) {
         let elephants = (recycledTons / 7).toFixed(0);
 
-        html += "In January 2018, we recycled ";
+        html += "In " + currentMonth + " " + currentYear + ", we recycled ";
         html += recycledTons.toFixed(0);
         html += " tons of waste!";
         html += "<br/><br/>";
@@ -325,9 +361,16 @@ function createWasteAnnotation(){
 }
 
 // Create an annotation for the water category's chart
+// Display the water saved in terms of Olympic swimming pools
+// If there isn't enough for 2, then display in terms of normal swimming pools
+// If there isn't enough for 2, then display in terms of bath tubs
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWaterAnnotation(){
     let html = "";
-    let waterSaved = getWaterConsumed('January', '2017') - getWaterConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let waterSaved = getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (waterSaved > 0) {
@@ -344,7 +387,7 @@ function createWaterAnnotation(){
             }
         }
 
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(waterSaved.toFixed(0));
         html += " m³ less water than last year.";
         html += "<br/><br/>";
@@ -376,15 +419,20 @@ function createWaterAnnotation(){
 }
 
 // Create an annotation for the electricity category's chart
+// Display the electricity saved in terms of homes it could power
+// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createElectricityAnnotation(){
     let html = "";
-    let electricitySaved = getElectricityConsumed('January', '2017') - getElectricityConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (electricitySaved > 0) {
         let homes = (electricitySaved / 4150).toFixed(0);
 
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(electricitySaved.toFixed(0));
         html += " kWhs less electricity than last year.";
         html += "<br/><br/>";
@@ -407,13 +455,17 @@ function createElectricityAnnotation(){
 }
 
 // Create an annotation for the gas category's chart
+// TODO: Come up with an appropriate comparison point for gas kWhs saved
 function createGasAnnotation(){
     let html = "";
-    let gasSaved = getGasConsumed('January', '2017') - getGasConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (gasSaved > 0) {
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + \", we consumed ";
         html += addCommas(gasSaved.toFixed(0));
         html += " kWhs less gas than last year.";
         html += "<br/><br/>";
@@ -424,11 +476,11 @@ function createGasAnnotation(){
     return html;
 }
 
-// Update the annotations to match the chart changes
-// TODO: Actually implement this
-function updateAnnotations(id) {
-    var annotationHTML;
+// Update the annotation to match the chart changes
+function updateAnnotation(id) {
+    let annotationHTML = "";
     switch (id) {
+        default:
         case 0: // Waste
             annotationHTML = createWasteAnnotation();
             break;
