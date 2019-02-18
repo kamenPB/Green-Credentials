@@ -1,14 +1,13 @@
 //
 // GLOBAL VARIABLES
 //
-var charts = []; // Store all charts in a global array to avoid memory leak
-var chartViews = []; // Store all chart views in a global array to avoid memory leak
-var slideIndex = 0;
+let charts = []; // Store all charts in a global array to avoid memory leak
+let chartViews = []; // Store all chart views in a global array to avoid memory leak
+let slideIndex = 0;
 
 //
 // DATA CATEGORY FUNCTIONS
 //
-// TODO: Make these actually handle months and years properly
 // TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
 
 // Waste functions
@@ -77,10 +76,10 @@ function getGasConsumed(month, year) {
 // Slideshow callback
 function slideshow() {
     // Find all slides
-    var slides = document.getElementsByClassName("slides");
+    let slides = document.getElementsByClassName("slides");
 
     // Hide them
-    for (var currentSlide = 0; currentSlide < slides.length; currentSlide++) {
+    for (let currentSlide = 0; currentSlide < slides.length; currentSlide++) {
         slides[currentSlide].style.display = "none";
     }
 
@@ -93,14 +92,40 @@ function slideshow() {
     }
 
     // Display the new slide
-    var id = slideIndex - 1;
+    let id = slideIndex - 1;
     slides[id].style.display = "block";
     drawChart(id);
     updateAnnotation(id);
 
     // Loop after time has passed
-    var delay = 3; // Delay between slide changes in seconds
+    let delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
+}
+
+
+//
+// DATE FUNCTIONS
+//
+// TODO: Replace hardcoded months/years with actual current months/years
+
+// Return the string value of the current month
+function getCurrentMonth() {
+    return 'January';
+}
+
+// Return the string value of the current year
+function getCurrentYear() {
+    return '2018';
+}
+
+// Return the string value of the year 1 year before the current year
+function getLastYear() {
+    return (parseInt(getCurrentYear()) - 1).toFixed(0);
+}
+
+// Return the string value of the year 2 years before the current year
+function getTwoYearsAgo() {
+    return (parseInt(getLastYear()) - 1).toFixed(0);
 }
 
 //
@@ -129,23 +154,17 @@ function createChart(id) {
     }
 }
 
-function getCurrentMonth() {
-    return 'January';
-}
-
-function getCurrentYear() {
-    return '2018';
-}
-
 // Populate the chart's data for the given data category ID
-// TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 function getChartData(id) {
-    var data;
-    var format;
-    var currentMonth = getCurrentMonth();
-    var currentYear = getCurrentYear();
-    var lastYear = (parseInt(currentYear) - 1).toString();
-    var twoYearsAgo = (parseInt(lastYear) - 1).toString();
+    let data;
+    let format;
+
+    // Get date values
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let twoYearsAgo = getTwoYearsAgo();
+
     switch (id) {
         case 0: // Waste
             data = google.visualization.arrayToDataTable([
@@ -233,9 +252,12 @@ function getChartOptions(id) {
         }
     };
 
+    // Charts show comparisons of consumption between different years for the same month
+    let currentMonth = getCurrentMonth();
+
     switch (id) {
         case 0: { // Waste
-            chartOptions.title = "How we dealt with our waste in January:";
+            chartOptions.title = "How we dealt with our waste in " + currentMonth + ":";
             chartOptions.colors = ['green', 'red'];
             chartOptions.legend = 'labeled';
             chartOptions.pieSliceText = 'value';
@@ -247,7 +269,7 @@ function getChartOptions(id) {
             break;
         }
         case 1: { // Water
-            chartOptions.title = "Our water consumption in January, compared to previous years:";
+            chartOptions.title = "Our water consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['blue'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -258,7 +280,7 @@ function getChartOptions(id) {
             break;
         }
         case 2: { // Electricity
-            chartOptions.title = "Our electricity consumption in January, compared to previous years:";
+            chartOptions.title = "Our electricity consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['orange'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -269,7 +291,7 @@ function getChartOptions(id) {
             break;
         }
         case 3: { // Gas
-            chartOptions.title = "Our gas consumption in January, compared to previous years:";
+            chartOptions.title = "Our gas consumption in " + currentMonth + ", compared to previous years:";
             chartOptions.colors = ['green'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
@@ -307,15 +329,15 @@ function drawChart(id) {
 // If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWasteAnnotation(){
     let html = "";
-    let month = 'January';
-    let year = '2018';
-    let recycledTons = getWasteRecycled(month,year);
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let recycledTons = getWasteRecycled(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (recycledTons > getWasteIncinerated(month, year)) {
+    if (recycledTons > getWasteIncinerated(currentMonth, currentYear)) {
         let elephants = (recycledTons / 7).toFixed(0);
 
-        html += "In January 2018, we recycled ";
+        html += "In " + currentMonth + " " + currentYear + ", we recycled ";
         html += recycledTons.toFixed(0);
         html += " tons of waste!";
         html += "<br/><br/>";
@@ -327,8 +349,8 @@ function createWasteAnnotation(){
             html += " elephants</b>!";
             html += "<br/>";
             for (let i = 0; i < elephants; i++) {
-                if (i == 34) i = elephants; // Limit the amount added
-                html += "<img src='icons/elephant.svg' class='icons' /> ";
+                if (i === 34) i = parseInt(elephants); // Limit the amount added
+                html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
             }
         }
     } else {
@@ -345,7 +367,10 @@ function createWasteAnnotation(){
 // If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWaterAnnotation(){
     let html = "";
-    let waterSaved = getWaterConsumed('January', '2017') - getWaterConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let waterSaved = getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (waterSaved > 0) {
@@ -362,7 +387,7 @@ function createWaterAnnotation(){
             }
         }
 
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(waterSaved.toFixed(0));
         html += " m³ less water than last year.";
         html += "<br/><br/>";
@@ -382,8 +407,8 @@ function createWaterAnnotation(){
             }
             html += "</b>!<br/>";
             for (let i = 0; i < comparisonPoint; i++) {
-                if (i == 34) i = comparisonPoint; // Limit the amount added
-                html += "<img src='" + src + "' class='icons' /> ";
+                if (i === 34) i = comparisonPoint; // Limit the amount added
+                html += "<img src='" + src + "' class='icons' alt='icon' /> ";
             }
         }
     } else {
@@ -398,13 +423,16 @@ function createWaterAnnotation(){
 // If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createElectricityAnnotation(){
     let html = "";
-    let electricitySaved = getElectricityConsumed('January', '2017') - getElectricityConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (electricitySaved > 0) {
         let homes = (electricitySaved / 4150).toFixed(0);
 
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(electricitySaved.toFixed(0));
         html += " kWhs less electricity than last year.";
         html += "<br/><br/>";
@@ -430,11 +458,14 @@ function createElectricityAnnotation(){
 // TODO: Come up with an appropriate comparison point for gas kWhs saved
 function createGasAnnotation(){
     let html = "";
-    let gasSaved = getGasConsumed('January', '2017') - getGasConsumed('January', '2018');
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (gasSaved > 0) {
-        html += "In January 2018, we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(gasSaved.toFixed(0));
         html += " kWhs less gas than last year.";
         html += "<br/><br/>";
@@ -447,7 +478,7 @@ function createGasAnnotation(){
 
 // Update the annotation to match the chart changes
 function updateAnnotation(id) {
-    var annotationHTML;
+    let annotationHTML = "";
     switch (id) {
         default:
         case 0: // Waste

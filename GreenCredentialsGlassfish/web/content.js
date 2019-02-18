@@ -120,12 +120,12 @@ function getCurrentYear() {
 
 // Return the string value of the year 1 year before the current year
 function getLastYear() {
-    return (parseInt(getCurrentYear()) - 1).toString();
+    return (parseInt(getCurrentYear()) - 1).toFixed(0);
 }
 
 // Return the string value of the year 2 years before the current year
 function getTwoYearsAgo() {
-    return (parseInt(getLastYear()) - 1).toString();
+    return (parseInt(getLastYear()) - 1).toFixed(0);
 }
 
 //
@@ -331,7 +331,7 @@ function createWasteAnnotation(){
     let html = "";
     let currentMonth = getCurrentMonth();
     let currentYear = getCurrentYear();
-    let recycledTons = getWasteRecycled(currentMonth,currentYear);
+    let recycledTons = getWasteRecycled(currentMonth, currentYear);
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (recycledTons > getWasteIncinerated(currentMonth, currentYear)) {
@@ -465,7 +465,7 @@ function createGasAnnotation(){
 
     // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
     if (gasSaved > 0) {
-        html += "In " + currentMonth + " " + currentYear + \", we consumed ";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
         html += addCommas(gasSaved.toFixed(0));
         html += " kWhs less gas than last year.";
         html += "<br/><br/>";
