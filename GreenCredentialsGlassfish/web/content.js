@@ -8,7 +8,6 @@ var slideIndex = 0;
 //
 // DATA CATEGORY FUNCTIONS
 //
-// TODO: Make these actually handle months and years properly
 // TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
 
 // Waste functions
@@ -77,10 +76,10 @@ function getGasConsumed(month, year) {
 // Slideshow callback
 function slideshow() {
     // Find all slides
-    var slides = document.getElementsByClassName("slides");
+    let slides = document.getElementsByClassName("slides");
 
     // Hide them
-    for (var currentSlide = 0; currentSlide < slides.length; currentSlide++) {
+    for (let currentSlide = 0; currentSlide < slides.length; currentSlide++) {
         slides[currentSlide].style.display = "none";
     }
 
@@ -93,13 +92,13 @@ function slideshow() {
     }
 
     // Display the new slide
-    var id = slideIndex - 1;
+    let id = slideIndex - 1;
     slides[id].style.display = "block";
     drawChart(id);
     updateAnnotation(id);
 
     // Loop after time has passed
-    var delay = 3; // Delay between slide changes in seconds
+    let delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
 
@@ -157,14 +156,14 @@ function createChart(id) {
 
 // Populate the chart's data for the given data category ID
 function getChartData(id) {
-    var data;
-    var format;
+    let data;
+    let format;
 
     // Get date values
-    var currentMonth = getCurrentMonth();
-    var currentYear = getCurrentYear();
-    var lastYear = getLastYear();
-    var twoYearsAgo = getTwoYearsAgo();
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+    let twoYearsAgo = getTwoYearsAgo();
 
     switch (id) {
         case 0: // Waste
@@ -253,7 +252,8 @@ function getChartOptions(id) {
         }
     };
 
-    var currentMonth = getCurrentMonth();
+    // Charts show comparisons of consumption between different years for the same month
+    let currentMonth = getCurrentMonth();
 
     switch (id) {
         case 0: { // Waste
@@ -349,8 +349,8 @@ function createWasteAnnotation(){
             html += " elephants</b>!";
             html += "<br/>";
             for (let i = 0; i < elephants; i++) {
-                if (i == 34) i = elephants; // Limit the amount added
-                html += "<img src='icons/elephant.svg' class='icons' /> ";
+                if (i === 34) i = parseInt(elephants); // Limit the amount added
+                html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
             }
         }
     } else {
@@ -407,8 +407,8 @@ function createWaterAnnotation(){
             }
             html += "</b>!<br/>";
             for (let i = 0; i < comparisonPoint; i++) {
-                if (i == 34) i = comparisonPoint; // Limit the amount added
-                html += "<img src='" + src + "' class='icons' /> ";
+                if (i === 34) i = comparisonPoint; // Limit the amount added
+                html += "<img src='" + src + "' class='icons' alt='icon' /> ";
             }
         }
     } else {
