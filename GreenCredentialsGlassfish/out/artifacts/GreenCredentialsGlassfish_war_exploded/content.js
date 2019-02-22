@@ -35,7 +35,7 @@ function getWaterConsumed(month, year) {
         case '2018':
             return 8273;
         case '2017':
-            return 6150;
+            return 9150;
         case '2016':
             return 5476;
     }
@@ -99,7 +99,7 @@ function slideshow() {
     let id = slideIndex - 1;
 
     // Set the delay between slide changes, in seconds
-    let delay = 3;
+    let delay = 10;
 
     if (slideShouldDisplay(id)) {
         slides[id].style.display = "block";

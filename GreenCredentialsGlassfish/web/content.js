@@ -99,7 +99,7 @@ function slideshow() {
     let id = slideIndex - 1;
 
     // Set the delay between slide changes, in seconds
-    let delay = 3;
+    let delay = 10;
 
     if (slideShouldDisplay(id)) {
         slides[id].style.display = "block";
@@ -404,7 +404,7 @@ function createWasteAnnotation(){
         html += " elephants</b>!";
         html += "<br/>";
         for (let i = 0; i < elephants; i++) {
-            if (i === 34) i = parseInt(elephants); // Limit the amount added
+            if (i === 24) i = parseInt(elephants); // Limit the amount added
             html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
         }
     }
@@ -458,7 +458,7 @@ function createWaterAnnotation(){
         }
         html += "</b>!<br/>";
         for (let i = 0; i < comparisonPoint; i++) {
-            if (i === 34) i = comparisonPoint; // Limit the amount added
+            if (i === 24) i = comparisonPoint; // Limit the amount added
             html += "<img src='" + src + "' class='icons' alt='icon' /> ";
         }
     }
@@ -491,6 +491,7 @@ function createElectricityAnnotation(){
         html += " homes</b>!";
         html += "<br/>";
         for (let i = 0; i < homes; i++) {
+            if (i === 24) i = comparisonPoint; // Limit the amount added
             html += "<img src='icons/home.svg' class='icons' /> ";
         }
     }

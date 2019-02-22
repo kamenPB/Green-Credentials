@@ -126,8 +126,6 @@ public class ConsumptionData {
         return 0; // 0 = January, 1 = February, etc.
     }
 
-
-
     // Return the data category currently being displayed
     public static int getCurrentDataCategory() {
         // TODO: Implement
@@ -168,7 +166,6 @@ public class ConsumptionData {
     public static double getGasUsagePY(int month) {return gasUsagePY[month];}
     private static double[] gasUsageCY = new double[12];
     public static double getGasUsageCY(int month) {return gasUsageCY[month];}
-
 
     // Collate the data for a given data category into its respective memory space
     private static void collateData(XSSFWorkbook wb, int dataCategory) {
