@@ -382,35 +382,31 @@ function drawChart(id) {
 
 // Create an annotation for the waste category's chart
 // Display the waste recycled in terms of elephants
-// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createWasteAnnotation(){
     let html = "";
+
     let currentMonth = getCurrentMonth();
     let currentYear = getCurrentYear();
+
     let recycledTons = getWasteRecycled(currentMonth, currentYear);
 
-    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (recycledTons > getWasteIncinerated(currentMonth, currentYear)) {
-        let elephants = (recycledTons / 7).toFixed(0);
+    let elephants = (recycledTons / 7).toFixed(0);
 
-        html += "In " + currentMonth + " " + currentYear + ", we recycled ";
-        html += recycledTons.toFixed(0);
-        html += " tons of waste!";
-        html += "<br/><br/>";
+    html += "In " + currentMonth + " " + currentYear + ", we recycled ";
+    html += recycledTons.toFixed(0);
+    html += " tons of waste!";
+    html += "<br/><br/>";
 
-        // Only brag if it's an impressive number
-        if (elephants >= 2) {
-            html += "That's roughly the weight of <b>";
-            html += elephants;
-            html += " elephants</b>!";
-            html += "<br/>";
-            for (let i = 0; i < elephants; i++) {
-                if (i === 34) i = parseInt(elephants); // Limit the amount added
-                html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
-            }
+    // Only brag if it's an impressive number
+    if (elephants >= 2) {
+        html += "That's roughly the weight of <b>";
+        html += elephants;
+        html += " elephants</b>!";
+        html += "<br/>";
+        for (let i = 0; i < elephants; i++) {
+            if (i === 34) i = parseInt(elephants); // Limit the amount added
+            html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
         }
-    } else {
-        html += "This slide should not be displayed.";
     }
 
     return html;
@@ -418,57 +414,53 @@ function createWasteAnnotation(){
 
 // Create an annotation for the water category's chart
 // Display the water saved in terms of Olympic swimming pools
-// If there isn't enough for 2, then display in terms of normal swimming pools
-// If there isn't enough for 2, then display in terms of bath tubs
-// If there isn't enough for 2, the slide shouldn't be displayed to begin with
+// If there isn't enough, then display in terms of normal swimming pools
+// If there isn't enough, then display in terms of bath tubs
 function createWaterAnnotation(){
     let html = "";
+
     let currentMonth = getCurrentMonth();
     let currentYear = getCurrentYear();
     let lastYear = getLastYear();
+
     let waterSaved = getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear);
 
-    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (waterSaved > 0) {
-        let olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
-        let swimmingPools = (waterSaved / 900).toFixed(0);
-        let baths = (waterSaved / 0.08).toFixed(0);
+    let olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
+    let swimmingPools = (waterSaved / 900).toFixed(0);
+    let baths = (waterSaved / 0.08).toFixed(0);
 
-        // Prefer the most impressive stat
-        let comparisonPoint = baths;
+    // Prefer the most impressive stat
+    let comparisonPoint = baths;
+    if (swimmingPools >= 2) {
+        comparisonPoint = swimmingPools;
+        if (olympicSwimmingPools >= 2) {
+            comparisonPoint = olympicSwimmingPools;
+        }
+    }
+
+    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+    html += addCommas(waterSaved.toFixed(0));
+    html += " m³ less water than last year.";
+    html += "<br/><br/>";
+
+    let src = '';
+    // Only brag if it's an impressive number
+    if (comparisonPoint >= 2) {
+        html += "That's enough to fill roughly <b>";
+        html += comparisonPoint;
+        if (olympicSwimmingPools >= 2) html += " Olympic-sized";
         if (swimmingPools >= 2) {
-            comparisonPoint = swimmingPools;
-            if (olympicSwimmingPools >= 2) {
-                comparisonPoint = olympicSwimmingPools;
-            }
+            html += " swimming pools";
+            src = 'icons/pool.svg';
+        } else {
+            html += " bath tubs";
+            src = 'icons/bathtub.svg';
         }
-
-        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-        html += addCommas(waterSaved.toFixed(0));
-        html += " m³ less water than last year.";
-        html += "<br/><br/>";
-
-        var src = '';
-        // Only brag if it's an impressive number
-        if (comparisonPoint >= 2) {
-            html += "That's enough to fill roughly <b>";
-            html += comparisonPoint;
-            if (olympicSwimmingPools >= 2) html += " Olympic-sized";
-            if (swimmingPools >= 2) {
-                html += " swimming pools";
-                src = 'icons/pool.svg';
-            } else {
-                html += " bath tubs";
-                src = 'icons/bathtub.svg';
-            }
-            html += "</b>!<br/>";
-            for (let i = 0; i < comparisonPoint; i++) {
-                if (i === 34) i = comparisonPoint; // Limit the amount added
-                html += "<img src='" + src + "' class='icons' alt='icon' /> ";
-            }
+        html += "</b>!<br/>";
+        for (let i = 0; i < comparisonPoint; i++) {
+            if (i === 34) i = comparisonPoint; // Limit the amount added
+            html += "<img src='" + src + "' class='icons' alt='icon' /> ";
         }
-    } else {
-        html += "This slide should not be displayed.";
     }
 
     return html;
@@ -476,35 +468,31 @@ function createWaterAnnotation(){
 
 // Create an annotation for the electricity category's chart
 // Display the electricity saved in terms of homes it could power
-// If there isn't enough for 2, the slide shouldn't be displayed to begin with
 function createElectricityAnnotation(){
     let html = "";
+
     let currentMonth = getCurrentMonth();
     let currentYear = getCurrentYear();
     let lastYear = getLastYear();
+
     let electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
-    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (electricitySaved > 0) {
-        let homes = (electricitySaved / 4150).toFixed(0);
+    let homes = (electricitySaved / 4150).toFixed(0);
 
-        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-        html += addCommas(electricitySaved.toFixed(0));
-        html += " kWhs less electricity than last year.";
-        html += "<br/><br/>";
+    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+    html += addCommas(electricitySaved.toFixed(0));
+    html += " kWhs less electricity than last year.";
+    html += "<br/><br/>";
 
-        // Only brag if it's an impressive number
-        if (homes >= 2) {
-            html += "That's enough to power <b>";
-            html += homes;
-            html += " homes</b>!";
-            html += "<br/>";
-            for (let i = 0; i < homes; i++) {
-                html += "<img src='icons/home.svg' class='icons' /> ";
-            }
+    // Only brag if it's an impressive number
+    if (homes >= 2) {
+        html += "That's enough to power <b>";
+        html += homes;
+        html += " homes</b>!";
+        html += "<br/>";
+        for (let i = 0; i < homes; i++) {
+            html += "<img src='icons/home.svg' class='icons' /> ";
         }
-    } else {
-        html += "This slide should not be displayed.";
     }
 
     return html;
@@ -514,20 +502,17 @@ function createElectricityAnnotation(){
 // TODO: Come up with an appropriate comparison point for gas kWhs saved
 function createGasAnnotation(){
     let html = "";
+
     let currentMonth = getCurrentMonth();
     let currentYear = getCurrentYear();
     let lastYear = getLastYear();
+
     let gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
 
-    // This assumes that the chart is only displayed when it actually reflects well on Cabot's green credentials
-    if (gasSaved > 0) {
-        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-        html += addCommas(gasSaved.toFixed(0));
-        html += " kWhs less gas than last year.";
-        html += "<br/><br/>";
-    } else {
-        html += "This slide should not be displayed.";
-    }
+    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+    html += addCommas(gasSaved.toFixed(0));
+    html += " kWhs less gas than last year.";
+    html += "<br/><br/>";
 
     return html;
 }
