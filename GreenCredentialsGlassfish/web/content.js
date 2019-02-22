@@ -101,7 +101,6 @@ function slideshow() {
     // Set the delay between slide changes, in seconds
     let delay = 3;
 
-    // Evaluate whether the slide is suitable to display
     if (slideShouldDisplay(id)) {
         slides[id].style.display = "block";
         drawChart(id);
@@ -126,22 +125,30 @@ function slideShouldDisplay(id) {
     switch (id) {
         case 0: { // Waste
             // Only display if we recycled more than we incinerated
-            if (getWasteRecycled(currentMonth, currentYear) > getWasteIncinerated(currentMonth, currentYear)) return true;
+            if (getWasteRecycled(currentMonth, currentYear) > getWasteIncinerated(currentMonth, currentYear)) {
+                return true;
+            }
             break;
         }
         case 1: { // Water
             // Only display if we consumed less than last year in the same month
-            if ((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) return true;
+            if ((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) {
+                return true;
+            }
             break;
         }
         case 2: { // Electricity
             // Only display if we consumed less than last year in the same month
-            if ((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) return true;
+            if ((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) {
+                return true;
+            }
             break;
         }
         case 3: { // Gas
             // Only display if we consumed less than last year in the same month
-            if ((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) return true;
+            if ((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) {
+                return true;
+            }
             break;
         }
     }
@@ -351,11 +358,15 @@ function getChartOptions(id) {
     return chartOptions;
 }
 
+// Verify the chart for the given data category ID has been created already
+function chartExists(id) {
+    return (!(charts[id] === undefined || charts[id] === null));
+}
+
 // Chart drawing callback function
 function drawChart(id) {
-    // If the chart exists already from a previous loop, clear it to avoid memory leak
-    if (!(charts[id] === undefined || charts[id] === null)) {
-        charts[id].clearChart();
+    if (chartExists(id)) {
+        charts[id].clearChart(); // Clear to avoid memory leak
     }
 
     // Create correct type of chart in given ID's div
