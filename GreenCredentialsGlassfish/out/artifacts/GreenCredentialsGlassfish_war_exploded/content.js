@@ -112,20 +112,31 @@ function slideshow() {
 // Evaluate whether the slide is suitable to display
 // TODO: Implement
 function slideShouldDisplay(id) {
+    // Get the relevant date information
+    let currentMonth = getCurrentMonth();
+    let currentYear = getCurrentYear();
+    let lastYear = getLastYear();
+
     switch (id) {
         case 0: { // Waste
-            return true;
+            if (getWasteRecycled(currentMonth, currentYear) > getWasteIncinerated(currentMonth, currentYear)) return true;
+            break;
         }
         case 1: { // Water
-            return true;
+            if ((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) return true;
+            break;
         }
         case 2: { // Electricity
-            return true;
+            if ((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) return true;
+            break;
         }
         case 3: { // Gas
-            return false;
+            if ((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) return true;
+            break;
         }
     }
+    
+    return false;
 }
 
 //
