@@ -305,6 +305,12 @@ function getChartOptions(id) {
     return chartOptions;
 }
 
+// Evaluate whether the chart is suitable to display
+// TODO: Implement
+function chartShouldDisplay(data, options) {
+    return true;
+}
+
 // Chart drawing callback function
 function drawChart(id) {
     // If the chart exists already from a previous loop, clear it to avoid memory leak
@@ -315,8 +321,15 @@ function drawChart(id) {
     // Create correct type of chart in given ID's div
     createChart(id);
 
-    // Draw the chart
-    charts[id].draw(getChartData(id), getChartOptions(id));
+    // Get the chart's data and options
+    var data = getChartData(id);
+    var options = getChartOptions(id);
+
+    // Evaluate whether the chart is suitable to display
+    if (chartShouldDisplay(data, options)) {
+        // Draw the chart
+        charts[id].draw(data, options);
+    }
 }
 
 //
