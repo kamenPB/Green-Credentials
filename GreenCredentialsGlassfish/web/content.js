@@ -91,17 +91,23 @@ function slideshow() {
         slideIndex = 1
     }
 
-    let delay = 3; // Delay between slide changes in seconds
+    // Data category identifier, used to unify slides, charts and their data category:
+    // 0 = Waste
+    // 1 = Water
+    // 2 = Electricity
+    // 3 = Gas
     let id = slideIndex - 1;
+
+    // Set the delay between slide changes, in seconds
+    let delay = 3;
 
     // Evaluate whether the slide is suitable to display
     if (slideShouldDisplay(id)) {
-        // If it is, display it
         slides[id].style.display = "block";
         drawChart(id);
         updateAnnotation(id);
     } else {
-        // Otherwise, instantly iterate the slideshow callback
+        // Skip this slide if it is not suitable to display
         delay = 0;
     }
 
