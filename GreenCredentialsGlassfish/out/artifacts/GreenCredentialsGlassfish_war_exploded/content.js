@@ -91,17 +91,42 @@ function slideshow() {
         slideIndex = 1
     }
 
-    // Display the new slide
+    let delay = 3; // Delay between slide changes in seconds
     let id = slideIndex - 1;
-    slides[id].style.display = "block";
-    drawChart(id);
-    updateAnnotation(id);
+
+    // Evaluate whether the slide is suitable to display
+    if (slideShouldDisplay(id)) {
+        // If it is, display it
+        slides[id].style.display = "block";
+        drawChart(id);
+        updateAnnotation(id);
+    } else {
+        // Otherwise, instantly iterate the slideshow callback
+        delay = 0;
+    }
 
     // Loop after time has passed
-    let delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
 
+// Evaluate whether the slide is suitable to display
+// TODO: Implement
+function slideShouldDisplay(id) {
+    switch (id) {
+        case 0: { // Waste
+            return true;
+        }
+        case 1: { // Water
+            return true;
+        }
+        case 2: { // Electricity
+            return true;
+        }
+        case 3: { // Gas
+            return false;
+        }
+    }
+}
 
 //
 // DATE FUNCTIONS
@@ -315,7 +340,6 @@ function drawChart(id) {
     // Create correct type of chart in given ID's div
     createChart(id);
 
-    // Draw the chart
     charts[id].draw(getChartData(id), getChartOptions(id));
 }
 

@@ -91,17 +91,42 @@ function slideshow() {
         slideIndex = 1
     }
 
-    // Display the new slide
+    let delay = 3; // Delay between slide changes in seconds
     let id = slideIndex - 1;
-    slides[id].style.display = "block";
-    drawChart(id);
-    updateAnnotation(id);
+
+    // Evaluate whether the slide is suitable to display
+    if (slideShouldDisplay(id)) {
+        // If it is, display it
+        slides[id].style.display = "block";
+        drawChart(id);
+        updateAnnotation(id);
+    } else {
+        // Otherwise, instantly iterate the slideshow callback
+        delay = 0;
+    }
 
     // Loop after time has passed
-    let delay = 3; // Delay between slide changes in seconds
     setTimeout(slideshow, delay * 1000);
 }
 
+// Evaluate whether the slide is suitable to display
+// TODO: Implement
+function slideShouldDisplay(id) {
+    switch (id) {
+        case 0: { // Waste
+            return true;
+        }
+        case 1: { // Water
+            return true;
+        }
+        case 2: { // Electricity
+            return true;
+        }
+        case 3: { // Gas
+            return true;
+        }
+    }
+}
 
 //
 // DATE FUNCTIONS
@@ -305,12 +330,6 @@ function getChartOptions(id) {
     return chartOptions;
 }
 
-// Evaluate whether the chart is suitable to display
-// TODO: Implement
-function chartShouldDisplay(data, options) {
-    return true;
-}
-
 // Chart drawing callback function
 function drawChart(id) {
     // If the chart exists already from a previous loop, clear it to avoid memory leak
@@ -321,15 +340,7 @@ function drawChart(id) {
     // Create correct type of chart in given ID's div
     createChart(id);
 
-    // Get the chart's data and options
-    var data = getChartData(id);
-    var options = getChartOptions(id);
-
-    // Evaluate whether the chart is suitable to display
-    if (chartShouldDisplay(data, options)) {
-        // Draw the chart
-        charts[id].draw(data, options);
-    }
+    charts[id].draw(getChartData(id), getChartOptions(id));
 }
 
 //
