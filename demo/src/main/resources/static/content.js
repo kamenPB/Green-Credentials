@@ -99,7 +99,7 @@ function slideshow() {
     var id = slideIndex - 1;
 
     // Set the delay between slide changes, in seconds
-    var delay = 10;
+    var delay = 4;
 
     if (slideShouldDisplay(id)) {
         slides[id].style.display = "block";
@@ -299,7 +299,7 @@ function getChartOptions(id) {
         },
         backgroundColor: { fill:'transparent' },
         tooltip: { trigger: 'none' },
-        titvarextStyle: {
+        titleTextStyle: {
             fontSize: 24, // px
             bold: true,
         }
@@ -326,7 +326,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['blue'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 0,
+                minValue: 5000,
                 maxValue: 10000,
                 format: "#,### m³"
             };
@@ -337,7 +337,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['orange'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 0,
+                minValue: 300000,
                 maxValue: 450000,
                 format: "#,### kWh"
             };
@@ -348,7 +348,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['green'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 0,
+                minValue: 20000,
                 maxValue: 45000,
                 format: "#,### kWh"
             };
