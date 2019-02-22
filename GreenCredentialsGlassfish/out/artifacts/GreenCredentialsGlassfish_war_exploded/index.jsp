@@ -15,12 +15,13 @@
         <script type="text/javascript" src="content.js"></script>
     </head>
     <body>
+        <div id="logo"><img src="logos/cabotcircus.png" alt="Cabot Circus logo" /></div>
         <div id="container">
             <div class="slides" id="waste"></div>
             <div class="slides" id="water"></div>
             <div class="slides" id="electricity"></div>
             <div class="slides" id="gas"></div>
         </div>
-        <div id="annotations"></div>
+        <div id="annotation"></div>
     </body>
 </html>

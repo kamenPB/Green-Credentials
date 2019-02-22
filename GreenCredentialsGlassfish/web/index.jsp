@@ -15,6 +15,7 @@
         <script type="text/javascript" src="content.js"></script>
     </head>
     <body>
+        <div id="logo"><img src="logos/cabotcircus.png" alt="Cabot Circus logo" /></div>
         <div id="container">
             <div class="slides" id="waste"></div>
             <div class="slides" id="water"></div>

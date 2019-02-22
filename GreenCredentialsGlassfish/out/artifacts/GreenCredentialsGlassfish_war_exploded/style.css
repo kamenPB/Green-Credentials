@@ -36,9 +36,12 @@ b {
     font-family: 'futura-heavy', sans-serif;
 }
 
+#logo {
+    position: fixed;
+}
+
 #container {
     padding: 25px;
-    background: url("logos/cabotcircus.png") no-repeat content-box;
 }
 
 .slides {
@@ -47,7 +50,7 @@ b {
     margin: auto;
 }
 
-#annotations {
+#annotation {
     font-weight: bold;
     font-size: 24pt;
     float: right;
