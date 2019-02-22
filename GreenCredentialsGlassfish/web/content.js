@@ -3,7 +3,7 @@
 //
 let charts = []; // Store all charts in a global array to avoid memory leak
 let chartViews = []; // Store all chart views in a global array to avoid memory leak
-let slideIndex = 0;
+let slideIndex = 0; // Keep track of the current slide being displayed
 
 //
 // DATA CATEGORY FUNCTIONS
@@ -73,7 +73,7 @@ function getGasConsumed(month, year) {
 // SLIDESHOW FUNCTIONS
 //
 
-// Slideshow callback
+// Function which controls the slideshow
 function slideshow() {
     // Find all slides
     let slides = document.getElementsByClassName("slides");
@@ -110,7 +110,7 @@ function slideshow() {
         delay = 0;
     }
 
-    // Loop after time has passed
+    // Callback after delay has elapsed
     setTimeout(slideshow, delay * 1000);
 }
 
@@ -535,7 +535,7 @@ function updateAnnotation(id) {
             annotationHTML = createGasAnnotation();
             break;
     }
-    document.getElementById('annotations').innerHTML = annotationHTML;
+    document.getElementById('annotation').innerHTML = annotationHTML;
 }
 
 //

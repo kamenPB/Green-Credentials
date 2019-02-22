@@ -21,6 +21,6 @@
             <div class="slides" id="electricity"></div>
             <div class="slides" id="gas"></div>
         </div>
-        <div id="annotations"></div>
+        <div id="annotation"></div>
     </body>
 </html>
