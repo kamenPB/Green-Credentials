@@ -18,9 +18,8 @@ function getWasteTotal(month, year) {
 }
 
 function getWasteRecycled(month, year) {
-    // Fake it til you make it, this only works for January 2018
-    // Just get the respective month and year from the Java
-    return 149.13;
+    // The Thymeleaf will populate hidden variable <div>s with the values we need
+    return parseFloat(document.getElementById('waste_recycled').innerText);
 }
 
 function getWasteIncinerated(month, year) {
