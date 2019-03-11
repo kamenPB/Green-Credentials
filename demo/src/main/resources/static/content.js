@@ -8,17 +8,20 @@ var slideIndex = 0; // Keep track of the current slide being displayed
 //
 // DATA CATEGORY FUNCTIONS
 //
-// TODO; Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
+// TODO: Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
+
+// The Thymeleaf will populate hidden variable <span>s with the values we need
+function parseHTML(elementId) {
+    return parseFloat(document.getElementById(elementId.toLowerCase()).innerText);
+}
 
 // Waste functions
 function getWasteTotal(month, year) {
-    // The Thymeleaf will populate hidden variable <span>s with the values we need
-    return parseFloat(document.getElementById('waste_total').innerText);
+    return parseHTML("waste_total" + "_" + month + "_" + year);
 }
 
 function getWasteRecycled(month, year) {
-    // The Thymeleaf will populate hidden variable <span>s with the values we need
-    return parseFloat(document.getElementById('waste_recycled').innerText);
+    return parseHTML("waste_recycled" + "_" + month + "_" + year);
 }
 
 function getWasteIncinerated(month, year) {
@@ -27,23 +30,17 @@ function getWasteIncinerated(month, year) {
 
 // Water functions
 function getWaterConsumed(month, year) {
-    // The Thymeleaf will populate hidden variable <span>s with the values we need
-    var elementId = 'water_consumed_' + year;
-    return parseFloat(document.getElementById(elementId).innerText);
+    return parseHTML("water_consumed" + "_" + month + "_" + year);
 }
 
 // Electricity functions
 function getElectricityConsumed(month, year) {
-    // The Thymeleaf will populate hidden variable <span>s with the values we need
-    var elementId = 'electricity_consumed_' + year;
-    return parseFloat(document.getElementById(elementId).innerText);
+    return parseHTML("electricity_consumed" + "_" + month + "_" + year);
 }
 
 // Gas functions
 function getGasConsumed(month, year) {
-    // The Thymeleaf will populate hidden variable <span>s with the values we need
-    var elementId = 'gas_consumed_' + year;
-    return parseFloat(document.getElementById(elementId).innerText);
+    return parseHTML('gas_consumed' + '_' + month + '_' + year);
 }
 
 //
@@ -140,12 +137,12 @@ function slideShouldDisplay(id) {
 
 // Return the string value of the current month
 function getCurrentMonth() {
-    return 'January';
+    return "jan";
 }
 
 // Return the string value of the current year
 function getCurrentYear() {
-    return '2018';
+    return "2018";
 }
 
 // Return the string value of the year 1 year before the current year
@@ -199,7 +196,7 @@ function getChartData(id) {
         case 0: // Waste
             data = google.visualization.arrayToDataTable([
                 ['Use of waste', 'Tons'],
-                ['Recycled', getWasteRecycled(currentMonth, lastYear)],
+                ['Recycled', getWasteRecycled(currentMonth, currentYear)],
                 ['Incinerated', getWasteIncinerated(currentMonth, currentYear)]
             ]);
             format = new google.visualization.NumberFormat({
