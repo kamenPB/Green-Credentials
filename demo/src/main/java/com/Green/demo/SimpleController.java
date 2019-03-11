@@ -27,11 +27,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SimpleController extends ConsumptionData{
     int eighty = 80;
-    @GetMapping("/greeting")
+    @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
         model.addAttribute("eighty", getWasteTotal(1, 2));
-        return "greeting";
+//        model.addAttribute("");
+        return "home";
     }
 
 }

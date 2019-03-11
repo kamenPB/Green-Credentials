@@ -14,6 +14,7 @@ public class ConsumptionData {
         // Just get the respective month and year from the Java
         return 165.41;
     }
+
 }
 
 
