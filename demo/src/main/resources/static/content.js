@@ -12,13 +12,12 @@ var slideIndex = 0; // Keep track of the current slide being displayed
 
 // Waste functions
 function getWasteTotal(month, year) {
-    // Fake it til you make it, this only works for January 2018
-    // Just get the respective month and year from the Java
-    return 165.41;
+    // The Thymeleaf will populate hidden variable <span>s with the values we need
+    return parseFloat(document.getElementById('waste_total').innerText);
 }
 
 function getWasteRecycled(month, year) {
-    // The Thymeleaf will populate hidden variable <div>s with the values we need
+    // The Thymeleaf will populate hidden variable <span>s with the values we need
     return parseFloat(document.getElementById('waste_recycled').innerText);
 }
 
@@ -28,44 +27,23 @@ function getWasteIncinerated(month, year) {
 
 // Water functions
 function getWaterConsumed(month, year) {
-    // Fake it til you make it, this only works for January
-    // In reality, we won't need switch statements... just get the respective month and year from the Java
-    switch (year) {
-        case '2018':
-            return 8273;
-        case '2017':
-            return 6150;
-        case '2016':
-            return 5476;
-    }
+    // The Thymeleaf will populate hidden variable <span>s with the values we need
+    var elementId = 'water_consumed_' + year;
+    return parseFloat(document.getElementById(elementId).innerText);
 }
 
 // Electricity functions
 function getElectricityConsumed(month, year) {
-    // Fake it til you make it, this only works for January
-    // In reality, we won't need switch statements... just get the respective month and year from the Java
-    switch (year) {
-        case '2018':
-            return 358709;
-        case '2017':
-            return 381400;
-        case '2016':
-            return 394931;
-    }
+    // The Thymeleaf will populate hidden variable <span>s with the values we need
+    var elementId = 'electricity_consumed_' + year;
+    return parseFloat(document.getElementById(elementId).innerText);
 }
 
 // Gas functions
 function getGasConsumed(month, year) {
-    // Fake it til you make it, this only works for January
-    // In reality, we won't need switch statements... just get the respective month and year from the Java
-    switch (year) {
-        case '2018':
-            return 41888;
-        case '2017':
-            return 40365;
-        case '2016':
-            return 24130;
-    }
+    // The Thymeleaf will populate hidden variable <span>s with the values we need
+    var elementId = 'gas_consumed_' + year;
+    return parseFloat(document.getElementById(elementId).innerText);
 }
 
 //
