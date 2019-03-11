@@ -398,7 +398,7 @@ function createWaterAnnotation(){
     var lastYear = getLastYear();
 
     var waterSaved = getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear);
-
+    
     var olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
     var swimmingPools = (waterSaved / 900).toFixed(0);
     var baths = (waterSaved / 0.08).toFixed(0);
@@ -441,7 +441,7 @@ function createWaterAnnotation(){
 }
 
 // Create an annotation for the electricity category's chart
-// TODO: Come up with an appropriate comparison point for electricity kWhs saved
+// Display the electricity saved in terms of homes it could power for a year
 function createElectricityAnnotation(){
     var html = "";
 
@@ -451,30 +451,13 @@ function createElectricityAnnotation(){
 
     var electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
+    // From https://smarterbusiness.co.uk/average-gas-electricity-usage-uk/
+    // The average home uses 3100 kWh of electricity in a year
+    var homes = (electricitySaved / 3100).toFixed(0);
+
     html += "In " + currentMonth + " " + currentYear + ", we consumed ";
     html += addCommas(electricitySaved.toFixed(0));
     html += " kWhs less electricity than last year.";
-    html += "<br/><br/>";
-
-    return html;
-}
-
-// Create an annotation for the gas category's chart
-// Display the electricity saved in terms of homes it could power
-function createGasAnnotation(){
-    var html = "";
-
-    var currentMonth = getCurrentMonth();
-    var currentYear = getCurrentYear();
-    var lastYear = getLastYear();
-
-    var gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
-
-    var homes = (gasSaved / 8000).toFixed(0);
-
-    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-    html += addCommas(gasSaved.toFixed(0));
-    html += " kWhs less gas than last year.";
     html += "<br/><br/>";
 
     // Only brag if it's an impressive number
@@ -486,6 +469,42 @@ function createGasAnnotation(){
         for (var i = 0; i < homes; i++) {
             if (i === 24) i = comparisonPoint; // Limit the amount added
             html += "<img src='icons/home.svg' class='icons' /> ";
+        }
+    }
+
+    return html;
+}
+
+// Create an annotation for the gas category's chart
+// Display the gas saved in terms of cars it could power for a year
+function createGasAnnotation(){
+    var html = "";
+
+    var currentMonth = getCurrentMonth();
+    var currentYear = getCurrentYear();
+    var lastYear = getLastYear();
+
+    var gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
+
+    // The average car uses 975 litres of gasoline in a year
+    // The average car gets 1.76 kWhs out of 1 litre of gasoline
+    // 975 * 1.76 = 1716
+    var cars = (gasSaved / 1716).toFixed(0);
+
+    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+    html += addCommas(gasSaved.toFixed(0));
+    html += " kWhs less gas than last year.";
+    html += "<br/><br/>";
+
+    // Only brag if it's an impressive number
+    if (cars >= 2) {
+        html += "That's enough to power roughly <b>";
+        html += cars;
+        html += " cars</b> for a year!";
+        html += "<br/>";
+        for (var i = 0; i < cars; i++) {
+            if (i === 24) i = comparisonPoint; // Limit the amount added
+            html += "<img src='icons/car.svg' class='icons' /> ";
         }
     }
 
