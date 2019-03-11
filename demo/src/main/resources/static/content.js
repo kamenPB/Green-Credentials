@@ -12,7 +12,7 @@ var slideIndex = 0; // Keep track of the current slide being displayed
 
 // The Thymeleaf will populate hidden variable <span>s with the values we need
 function parseHTML(elementId) {
-    return parseFloat(document.getElementById(elementId.toLowerCase()).innerText);
+    return parseFloat(document.getElementById(elementId).innerText);
 }
 
 // Waste functions
@@ -137,7 +137,7 @@ function slideShouldDisplay(id) {
 
 // Return the string value of the current month
 function getCurrentMonth() {
-    return "jan";
+    return "January";
 }
 
 // Return the string value of the current year

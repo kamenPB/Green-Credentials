@@ -30,8 +30,11 @@ public class SimpleController extends ConsumptionData{
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        model.addAttribute("eighty", getWasteTotal(1, 2));
-//        model.addAttribute("");
+        model.addAttribute("wasteTotal", wasteTotal(1, 2));
+        model.addAttribute("wasteRecycled", wasteRecycled(1, 2));
+        model.addAttribute("waterConsumed", waterConsumed(1, 2));
+        model.addAttribute("electricityConsumed", electricityConsumed(1, 2));
+        model.addAttribute("gasConsumed", gasConsumed(1, 2));
         return "home";
     }
 
