@@ -12,7 +12,7 @@ var slideIndex = 0; // Keep track of the current slide being displayed
 
 // The Thymeleaf will populate hidden variable <span>s with the values we need
 function parseHTML(elementId) {
-    return parseFloat(document.getElementById(elementId).innerText);
+    return parseFloat(document.getElementById(elementId.toLowerCase()).innerText);
 }
 
 // Waste functions
@@ -137,7 +137,7 @@ function slideShouldDisplay(id) {
 
 // Return the string value of the current month
 function getCurrentMonth() {
-    return "January";
+    return "jan";
 }
 
 // Return the string value of the current year
@@ -441,7 +441,7 @@ function createWaterAnnotation(){
 }
 
 // Create an annotation for the electricity category's chart
-// TODO: Come up with an appropriate comparison point for electricity kWhs saved
+// Display the electricity saved in terms of homes it could power
 function createElectricityAnnotation(){
     var html = "";
 
@@ -451,16 +451,29 @@ function createElectricityAnnotation(){
 
     var electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
+    var homes = (electricitySaved / 4150).toFixed(0);
+
     html += "In " + currentMonth + " " + currentYear + ", we consumed ";
     html += addCommas(electricitySaved.toFixed(0));
     html += " kWhs less electricity than last year.";
     html += "<br/><br/>";
 
+    // Only brag if it's an impressive number
+    if (homes >= 2) {
+        html += "That's enough to power <b>";
+        html += homes;
+        html += " homes</b>!";
+        html += "<br/>";
+        for (var i = 0; i < homes; i++) {
+            if (i === 24) i = comparisonPoint; // Limit the amount added
+            html += "<img src='icons/home.svg' class='icons' /> ";
+        }
+    }
+
     return html;
 }
 
 // Create an annotation for the gas category's chart
-// Display the electricity saved in terms of homes it could power
 function createGasAnnotation(){
     var html = "";
 
@@ -470,7 +483,7 @@ function createGasAnnotation(){
 
     var gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
 
-    var homes = (gasSaved / 8000).toFixed(0);
+    var homes = (gasSaved / 12500).toFixed(0);
 
     html += "In " + currentMonth + " " + currentYear + ", we consumed ";
     html += addCommas(gasSaved.toFixed(0));
@@ -479,9 +492,9 @@ function createGasAnnotation(){
 
     // Only brag if it's an impressive number
     if (homes >= 2) {
-        html += "That's enough to power roughly <b>";
+        html += "That's enough to power <b>";
         html += homes;
-        html += " homes</b> for a year!";
+        html += " homes</b>!";
         html += "<br/>";
         for (var i = 0; i < homes; i++) {
             if (i === 24) i = comparisonPoint; // Limit the amount added

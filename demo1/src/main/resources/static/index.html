@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Cabot Circus's Green Credentials</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="content.js"></script>
+</head>
+<body>
+<div id="logo"><img src="logos/cabotcircus.png" alt="Cabot Circus logo" /></div>
+<div id="container">
+    <div class="slides" id="waste"></div>
+    <div class="slides" id="water"></div>
+    <div class="slides" id="electricity"></div>
+    <div class="slides" id="gas"></div>
+</div>
+<div id="annotation"></div>
+
+<div class="hidden">
+    <!-- Replace with Thymeleaf: -->
+    <!-- th:id to replace month and year dynamically using Thymeleaf -->
+    <!-- th:value (maybe th:data) to replace actual value inside the <span>s -->
+
+    <!-- Waste -->
+    <span id="waste_total_jan_2018">165.41</span>
+    <span id="waste_recycled_jan_2018">149.13</span>
+
+    <!-- Water -->
+    <span id="water_consumed_jan_2018">8273</span>
+    <span id="water_consumed_jan_2017">6150</span>
+    <span id="water_consumed_jan_2016">5476</span>
+
+    <!-- Electricity -->
+    <span id="electricity_consumed_jan_2018">358709</span>
+    <span id="electricity_consumed_jan_2017">381400</span>
+    <span id="electricity_consumed_jan_2016">394931</span>
+
+    <!-- Gas -->
+    <span id="gas_consumed_jan_2018">41888</span>
+    <span id="gas_consumed_jan_2017">40365</span>
+    <span id="gas_consumed_jan_2016">24130</span>
+</div>
+
+</body>
+</html>
