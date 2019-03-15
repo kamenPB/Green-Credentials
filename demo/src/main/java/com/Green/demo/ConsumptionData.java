@@ -30,10 +30,13 @@ public class ConsumptionData {
         double rec = cell.getNumericCellValue();
         return rec;
     }
-    public double waterConsumed(int month, int year) {
+    public double waterConsumed(int month, int year) throws IOException {
         // Fake it til you make it, this only works for January 2018
         // Just get the respective month and year from the Java
-        return 8273;
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        XSSFCell cell = wb.getSheetAt(1).getRow(month).getCell(year);
+        double rec = cell.getNumericCellValue();
+        return rec;
     }
     public double electricityConsumed(int month, int year) {
         // Fake it til you make it, this only works for January 2018

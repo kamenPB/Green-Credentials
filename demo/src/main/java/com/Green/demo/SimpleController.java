@@ -24,15 +24,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
+
 @Controller
 public class SimpleController extends ConsumptionData{
     int eighty = 80;
     @GetMapping("/home")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) throws IOException {
         model.addAttribute("name", name);
         model.addAttribute("wasteTotal", wasteTotal(1, 2));
         model.addAttribute("wasteRecycled", wasteRecycled(1, 2));
-        model.addAttribute("waterConsumed", waterConsumed(1, 2));
+        model.addAttribute("waterConsumedCurr", waterConsumed(1, 3));
+        model.addAttribute("waterConsumedPrev1", waterConsumed(1, 2));
+        model.addAttribute("waterConsumedPrev2", waterConsumed(1, 1));
         model.addAttribute("electricityConsumed", electricityConsumed(1, 2));
         model.addAttribute("gasConsumed", gasConsumed(1, 2));
         return "home";
