@@ -5,8 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Locale;
+import java.time.LocalDate;
 
 public class ConsumptionData {
     private static XSSFWorkbook getWorkbookFromExcelFile() throws IOException {
@@ -44,27 +43,45 @@ public class ConsumptionData {
         return cell.getNumericCellValue();
     }
 
+    public static String toDisplayCase(String s) {
+
+        final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
+        // to be capitalized
+
+        StringBuilder sb = new StringBuilder();
+        boolean capNext = true;
+
+        for (char c : s.toCharArray()) {
+            c = (capNext)
+                    ? Character.toUpperCase(c)
+                    : Character.toLowerCase(c);
+            sb.append(c);
+            capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
+        }
+        return sb.toString();
+    }
+
     // These functions assume the spreadsheet is up-to-date for the dates to match
-    // returns {0 - 11}
-    public int getCurrentMonth() {
-        return Calendar.getInstance().get(Calendar.MONTH) + 1;
+    // returns {1 - 12}
+    public int getLastMonth() {
+        return LocalDate.now().minusMonths(1).getMonthValue();
     }
 
     // returns "January", "February", etc.
-    public String getCurrentMonthName() {
-        return Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+    public String getLastMonthName() {
+        return toDisplayCase(LocalDate.now().minusMonths(1).getMonth().toString());
     }
 
     public String getCurrentYear() {
-        return Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+        return Integer.toString(LocalDate.now().getYear());
     }
 
     public String getLastYear() {
-        return Integer.toString((Integer.parseInt(getCurrentYear()) - 1));
+        return Integer.toString(LocalDate.now().minusYears(1).getYear());
     }
 
     public String getTwoYearsAgo() {
-        return Integer.toString((Integer.parseInt(getLastYear()) - 1));
+        return Integer.toString(LocalDate.now().minusYears(2).getYear());
     }
 }
 

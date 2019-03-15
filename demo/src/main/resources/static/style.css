@@ -38,32 +38,45 @@ b {
 
 #logo {
     position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+}
+
+#logo_img {
+    height: auto;
+    width: auto;
+    max-width: 500px;
+    max-height: 500px;
 }
 
 #container {
-    padding: 25px;
 }
 
 .slides {
     max-width: 1050px;
     max-height: 720px;
-    margin: auto;
+    position: fixed;
+    width: 1050px;
+    height: 720px;
+    margin: 5% auto; /* Will not center vertically and won't work in IE6/7. */
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 #annotation {
     font-weight: bold;
     font-size: 24pt;
-    float: right;
-    padding: 50px;
-    max-width: 500px;
-    margin-top: -800px;
+    padding: 10px;
+    max-width: 450px;
 }
 
 .icons {
-    width: 80px;
-    height: 80px;
-    max-width: 80px;
-    max-height: 80px;
+    width: 70px;
+    height: 70px;
+    max-width: 70px;
+    max-height: 70px;
     display: inline-block;
     margin: 5px;
 }

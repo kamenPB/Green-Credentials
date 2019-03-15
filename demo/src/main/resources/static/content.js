@@ -4,6 +4,7 @@
 var charts = []; // Store all charts in a global array to avoid memory leak
 var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0; // Keep track of the current slide being displayed
+var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
 
 //
 // HTML GETTER FUNCTIONS
@@ -11,7 +12,7 @@ var slideIndex = 0; // Keep track of the current slide being displayed
 // The Thymeleaf will populate hidden variable <span>s with the values we need
 
 // Return the string value of the current month
-function getCurrentMonth() {
+function getLastMonth() {
     return document.getElementById("monthName").innerText;
 }
 
@@ -44,7 +45,7 @@ function getWasteRecycled(month, year) {
     return parseHTML("wasteRecycled" + month + year);
 }
 
-function getWasteIncinerated(month, year) {
+function getWasteConverted(month, year) {
     return getWasteTotal(month, year) - getWasteRecycled(month, year);
 }
 
@@ -111,36 +112,36 @@ function slideshow() {
 // Evaluate whether the slide is suitable to display
 function slideShouldDisplay(id) {
     // Get the relevant date information
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
     var currentYear = getCurrentYear();
     var lastYear = getLastYear();
 
     // Decide based on the data category ID
     switch (id) {
         case 0: { // Waste
-            // Only display if we recycled more than we incinerated
-            if (getWasteRecycled(currentMonth, currentYear) > getWasteIncinerated(currentMonth, currentYear)) {
+            // Only display if we recycled more than we converted into energy
+            if ((getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) || displayOverride) {
                 return true;
             }
             break;
         }
         case 1: { // Water
             // Only display if we consumed less than last year in the same month
-            if ((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) {
+            if (((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
                 return true;
             }
             break;
         }
         case 2: { // Electricity
             // Only display if we consumed less than last year in the same month
-            if ((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) {
+            if (((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
                 return true;
             }
             break;
         }
         case 3: { // Gas
             // Only display if we consumed less than last year in the same month
-            if ((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) {
+            if (((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
                 return true;
             }
             break;
@@ -182,7 +183,7 @@ function getChartData(id) {
     var format;
 
     // Get date values
-    var currentMonth = getCurrentMonth();
+    var lastMonth = getLastMonth();
     var currentYear = getCurrentYear();
     var lastYear = getLastYear();
     var twoYearsAgo = getTwoYearsAgo();
@@ -191,8 +192,8 @@ function getChartData(id) {
         case 0: // Waste
             data = google.visualization.arrayToDataTable([
                 ['Use of waste', 'Tons'],
-                ['Recycled', getWasteRecycled(currentMonth, currentYear)],
-                ['Incinerated', getWasteIncinerated(currentMonth, currentYear)]
+                ['Recycled', getWasteRecycled(lastMonth, currentYear)],
+                ['Converted into energy', getWasteConverted(lastMonth, currentYear)]
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#.# tons'
@@ -202,9 +203,9 @@ function getChartData(id) {
         case 1: { // Water
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Cubic metres', { role: 'style' }],
-                ['2016', getWaterConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
-                ['2017', getWaterConsumed(currentMonth, lastYear), 'opacity: 0.5'],
-                ['2018', getWaterConsumed(currentMonth, currentYear), 'opacity: 0.9']
+                [getTwoYearsAgo(), getWaterConsumed(lastMonth, twoYearsAgo), 'opacity: 0.2'],
+                [getLastYear(), getWaterConsumed(lastMonth, lastYear), 'opacity: 0.5'],
+                [getCurrentYear(), getWaterConsumed(lastMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### m³'
@@ -215,9 +216,9 @@ function getChartData(id) {
         case 2: // Electricity
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getElectricityConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
-                ['2017', getElectricityConsumed(currentMonth, lastYear), 'opacity: 0.5'],
-                ['2018', getElectricityConsumed(currentMonth, currentYear), 'opacity: 0.9']
+                [getTwoYearsAgo(), getElectricityConsumed(lastMonth, twoYearsAgo), 'opacity: 0.2'],
+                [getLastYear(), getElectricityConsumed(lastMonth, lastYear), 'opacity: 0.5'],
+                [getCurrentYear(), getElectricityConsumed(lastMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -227,9 +228,9 @@ function getChartData(id) {
         case 3: // Gas
             data = google.visualization.arrayToDataTable([
                 ['Year', 'Kilowatt hours', { role: 'style' }],
-                ['2016', getGasConsumed(currentMonth, twoYearsAgo), 'opacity: 0.2'],
-                ['2017', getGasConsumed(currentMonth, lastYear), 'opacity: 0.5'],
-                ['2018', getGasConsumed(currentMonth, currentYear), 'opacity: 0.9']
+                [getTwoYearsAgo(), getGasConsumed(lastMonth, twoYearsAgo), 'opacity: 0.2'],
+                [getLastYear(), getGasConsumed(lastMonth, lastYear), 'opacity: 0.5'],
+                [getCurrentYear(), getGasConsumed(lastMonth, currentYear), 'opacity: 0.9']
             ]);
             format = new google.visualization.NumberFormat({
                 pattern: '#,### kWh'
@@ -270,17 +271,17 @@ function getChartOptions(id) {
         tooltip: { trigger: 'none' },
         titleTextStyle: {
             fontSize: 24, // px
-            bold: true,
+            bold: true
         }
     };
 
     // Charts show comparisons of consumption between different years for the same month
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
 
     switch (id) {
         case 0: { // Waste
             chartOptions.title = "How we dealt with our waste in " + currentMonth + ":";
-            chartOptions.colors = ['green', 'red'];
+            chartOptions.colors = ['rgb(61,127,224)', 'rgb(78,193,224)'];
             chartOptions.legend = 'labeled';
             chartOptions.pieSliceText = 'value';
             chartOptions.pieSliceTextStyle = {
@@ -292,7 +293,7 @@ function getChartOptions(id) {
         }
         case 1: { // Water
             chartOptions.title = "Our water consumption in " + currentMonth + ", compared to previous years:";
-            chartOptions.colors = ['blue'];
+            chartOptions.colors = ['rgb(51,217,195)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 5000,
@@ -303,7 +304,7 @@ function getChartOptions(id) {
         }
         case 2: { // Electricity
             chartOptions.title = "Our electricity consumption in " + currentMonth + ", compared to previous years:";
-            chartOptions.colors = ['orange'];
+            chartOptions.colors = ['rgb(244,152,0)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 300000,
@@ -314,7 +315,7 @@ function getChartOptions(id) {
         }
         case 3: { // Gas
             chartOptions.title = "Our gas consumption in " + currentMonth + ", compared to previous years:";
-            chartOptions.colors = ['green'];
+            chartOptions.colors = ['rgb(207,222,0)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
                 minValue: 20000,
@@ -354,7 +355,7 @@ function drawChart(id) {
 function createWasteAnnotation(){
     var html = "";
 
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
     var currentYear = getCurrentYear();
 
     var recycledTons = getWasteRecycled(currentMonth, currentYear);
@@ -388,7 +389,7 @@ function createWasteAnnotation(){
 function createWaterAnnotation(){
     var html = "";
 
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
     var currentYear = getCurrentYear();
     var lastYear = getLastYear();
 
@@ -440,7 +441,7 @@ function createWaterAnnotation(){
 function createElectricityAnnotation(){
     var html = "";
 
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
     var currentYear = getCurrentYear();
     var lastYear = getLastYear();
 
@@ -475,7 +476,7 @@ function createElectricityAnnotation(){
 function createGasAnnotation(){
     var html = "";
 
-    var currentMonth = getCurrentMonth();
+    var currentMonth = getLastMonth();
     var currentYear = getCurrentYear();
     var lastYear = getLastYear();
 
