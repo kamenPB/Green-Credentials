@@ -4,7 +4,7 @@
 var charts = []; // Store all charts in a global array to avoid memory leak
 var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0; // Keep track of the current slide being displayed
-var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
+var displayOverride = false; // Set to true if you want all slides to show even if they are undesired
 
 //
 // HTML GETTER FUNCTIONS
