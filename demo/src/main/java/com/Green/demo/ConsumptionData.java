@@ -19,34 +19,32 @@ public class ConsumptionData {
         // Just get the respective month and year from the Java
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(1);
-        double total = cell.getNumericCellValue();
-        return total;
+        return cell.getNumericCellValue();
     }
     public double wasteRecycled(int month, int year) throws IOException {
         // Fake it til you make it, this only works for January 2018
         // Just get the respective month and year from the Java
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(2);
-        double rec = cell.getNumericCellValue();
-        return rec;
+        return cell.getNumericCellValue();
+
     }
     public double waterConsumed(int month, int year) throws IOException {
         // Fake it til you make it, this only works for January 2018
         // Just get the respective month and year from the Java
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(1).getRow(month).getCell(year);
-        double rec = cell.getNumericCellValue();
-        return rec;
+        return cell.getNumericCellValue();
     }
-    public double electricityConsumed(int month, int year) {
-        // Fake it til you make it, this only works for January 2018
-        // Just get the respective month and year from the Java
-        return 358709;
+    public double electricityConsumed(int month, int year) throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        XSSFCell cell = wb.getSheetAt(3).getRow(month).getCell(year);
+        return cell.getNumericCellValue();
     }
-    public double gasConsumed(int month, int year) {
-        // Fake it til you make it, this only works for January 2018
-        // Just get the respective month and year from the Java
-        return 41888;
+    public double gasConsumed(int month, int year) throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        XSSFCell cell = wb.getSheetAt(5).getRow(month).getCell(year);
+        return cell.getNumericCellValue();
     }
 }
 

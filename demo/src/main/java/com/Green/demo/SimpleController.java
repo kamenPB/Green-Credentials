@@ -37,8 +37,12 @@ public class SimpleController extends ConsumptionData{
         model.addAttribute("waterConsumedCurr", waterConsumed(1, 3));
         model.addAttribute("waterConsumedPrev1", waterConsumed(1, 2));
         model.addAttribute("waterConsumedPrev2", waterConsumed(1, 1));
-        model.addAttribute("electricityConsumed", electricityConsumed(1, 2));
-        model.addAttribute("gasConsumed", gasConsumed(1, 2));
+        model.addAttribute("electricityConsumedCurr", electricityConsumed(1, 3));
+        model.addAttribute("electricityConsumedPrev1", electricityConsumed(1, 2));
+        model.addAttribute("electricityConsumedPrev2", electricityConsumed(1, 1));
+        model.addAttribute("gasConsumedCurr", gasConsumed(1, 3));
+        model.addAttribute("gasConsumedPrev1", gasConsumed(1, 2));
+        model.addAttribute("gasConsumedPrev2", gasConsumed(1, 1));
         return "home";
     }
 
