@@ -6,22 +6,42 @@ var chartViews = []; // Store all chart views in a global array to avoid memory 
 var slideIndex = 0; // Keep track of the current slide being displayed
 
 //
-// DATA CATEGORY FUNCTIONS
+// HTML GETTER FUNCTIONS
 //
-// TODO: Make these actually read the correct data from the spreadsheet via Java / Thymeleaf
-
 // The Thymeleaf will populate hidden variable <span>s with the values we need
+
+// Return the string value of the current month
+function getCurrentMonth() {
+    return document.getElementById("monthName").innerText;
+}
+
+// Return the string value of the current year
+function getCurrentYear() {
+    return document.getElementById("currentYear").innerText;
+}
+
+// Return the string value of the year 1 year before the current year
+function getLastYear() {
+    return document.getElementById("lastYear").innerText;
+}
+
+// Return the string value of the year 2 years before the current year
+function getTwoYearsAgo() {
+    return document.getElementById("twoYearsAgo").innerText;
+}
+
+// Retrieve floats from HTML elements
 function parseHTML(elementId) {
     return parseFloat(document.getElementById(elementId).innerText);
 }
 
 // Waste functions
 function getWasteTotal(month, year) {
-    return parseHTML("waste_total" + "_" + month + "_" + year);
+    return parseHTML("wasteTotal" + month + year);
 }
 
 function getWasteRecycled(month, year) {
-    return parseHTML("waste_recycled" + "_" + month + "_" + year);
+    return parseHTML("wasteRecycled" + month + year);
 }
 
 function getWasteIncinerated(month, year) {
@@ -30,17 +50,17 @@ function getWasteIncinerated(month, year) {
 
 // Water functions
 function getWaterConsumed(month, year) {
-    return parseHTML("water_consumed" + "_" + month + "_" + year);
+    return parseHTML("waterConsumed" + month + year);
 }
 
 // Electricity functions
 function getElectricityConsumed(month, year) {
-    return parseHTML("electricity_consumed" + "_" + month + "_" + year);
+    return parseHTML("electricityConsumed" + month + year);
 }
 
 // Gas functions
 function getGasConsumed(month, year) {
-    return parseHTML('gas_consumed' + '_' + month + '_' + year);
+    return parseHTML("gasConsumed" + month + year);
 }
 
 //
@@ -128,31 +148,6 @@ function slideShouldDisplay(id) {
     }
 
     return false;
-}
-
-//
-// DATE FUNCTIONS
-//
-// TODO: Replace hardcoded months/years with actual current months/years
-
-// Return the string value of the current month
-function getCurrentMonth() {
-    return "January";
-}
-
-// Return the string value of the current year
-function getCurrentYear() {
-    return "2018";
-}
-
-// Return the string value of the year 1 year before the current year
-function getLastYear() {
-    return (parseInt(getCurrentYear()) - 1).toFixed(0);
-}
-
-// Return the string value of the year 2 years before the current year
-function getTwoYearsAgo() {
-    return (parseInt(getLastYear()) - 1).toFixed(0);
 }
 
 //

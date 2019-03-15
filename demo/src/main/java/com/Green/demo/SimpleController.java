@@ -28,21 +28,31 @@ import java.io.IOException;
 
 @Controller
 public class SimpleController extends ConsumptionData{
-    int eighty = 80;
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) throws IOException {
         model.addAttribute("name", name);
+
+        model.addAttribute("monthName", getCurrentMonthName());
+
+        model.addAttribute("currentYear", getCurrentYear());
+        model.addAttribute("lastYear", getLastYear());
+        model.addAttribute("twoYearsAgo", getTwoYearsAgo());
+
         model.addAttribute("wasteTotal", wasteTotal(getCurrentMonth(), 2));
         model.addAttribute("wasteRecycled", wasteRecycled(getCurrentMonth(), 2));
-        model.addAttribute("waterConsumedCurr", waterConsumed(getCurrentMonth(), 3));
-        model.addAttribute("waterConsumedPrev1", waterConsumed(getCurrentMonth(), 2));
-        model.addAttribute("waterConsumedPrev2", waterConsumed(getCurrentMonth(), 1));
-        model.addAttribute("electricityConsumedCurr", electricityConsumed(getCurrentMonth(), 3));
-        model.addAttribute("electricityConsumedPrev1", electricityConsumed(getCurrentMonth(), 2));
-        model.addAttribute("electricityConsumedPrev2", electricityConsumed(getCurrentMonth(), 1));
-        model.addAttribute("gasConsumedCurr", gasConsumed(getCurrentMonth(), 3));
-        model.addAttribute("gasConsumedPrev1", gasConsumed(getCurrentMonth(), 2));
-        model.addAttribute("gasConsumedPrev2", gasConsumed(getCurrentMonth(), 1));
+
+        model.addAttribute("waterConsumedCurrentYear", waterConsumed(getCurrentMonth(), 3));
+        model.addAttribute("waterConsumedLastYear", waterConsumed(getCurrentMonth(), 2));
+        model.addAttribute("waterConsumedTwoYearsAgo", waterConsumed(getCurrentMonth(), 1));
+
+        model.addAttribute("electricityConsumedCurrentYear", electricityConsumed(getCurrentMonth(), 3));
+        model.addAttribute("electricityConsumedLastYear", electricityConsumed(getCurrentMonth(), 2));
+        model.addAttribute("electricityConsumedTwoYearsAgo", electricityConsumed(getCurrentMonth(), 1));
+
+        model.addAttribute("gasConsumedCurrentYear", gasConsumed(getCurrentMonth(), 3));
+        model.addAttribute("gasConsumedLastYear", gasConsumed(getCurrentMonth(), 2));
+        model.addAttribute("gasConsumedTwoYearsAgo", gasConsumed(getCurrentMonth(), 1));
+
         return "home";
     }
 

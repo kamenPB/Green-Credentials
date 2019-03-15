@@ -17,21 +17,27 @@
 <div id="annotation"></div>
 
 <div class="hidden">
-    <!-- Replace with Thymeleaf -->
-    <span id="waste_total_January_2018" th:text="${wasteTotal}"></span>
-    <span id="waste_recycled_January_2018" th:text="${wasteRecycled}"></span>
+    <!-- These hidden fields will be populated with Thymeleaf, and used by the JavaScript -->
+    <span id="monthName" th:text="${monthName}"></span>
 
-    <span id="water_consumed_January_2018" th:text="${waterConsumedCurr}"></span>
-    <span id="water_consumed_January_2017" th:text="${waterConsumedPrev1}"></span>
-    <span id="water_consumed_January_2016" th:text="${waterConsumedPrev2}"></span>
+    <span id="currentYear" th:text="${currentYear}"></span>
+    <span id="lastYear" th:text="${lastYear}"></span>
+    <span id="twoYearsAgo" th:text="${twoYearsAgo}"></span>
 
-    <span id="electricity_consumed_January_2018" th:text="${electricityConsumedCurr}"></span>
-    <span id="electricity_consumed_January_2017" th:text="${electricityConsumedPrev1}"></span>
-    <span id="electricity_consumed_January_2016" th:text="${electricityConsumedPrev2}">394931</span>
+    <span th:id="'wasteTotal' + ${monthName} + ${currentYear}" th:text="${wasteTotal}"></span>
+    <span th:id="'wasteRecycled' + ${monthName} + ${currentYear}" th:text="${wasteRecycled}"></span>
 
-    <span id="gas_consumed_January_2018" th:text="${gasConsumedCurr}"></span>
-    <span id="gas_consumed_January_2017" th:text="${gasConsumedPrev1}"></span>
-    <span id="gas_consumed_January_2016" th:text="${gasConsumedPrev2}"></span>
+    <span th:id="'waterConsumed' + ${monthName} + ${currentYear}" th:text="${waterConsumedCurrentYear}"></span>
+    <span th:id="'waterConsumed' + ${monthName} + ${lastYear}" th:text="${waterConsumedLastYear}"></span>
+    <span th:id="'waterConsumed' + ${monthName} + ${twoYearsAgo}" th:text="${waterConsumedTwoYearsAgo}"></span>
+
+    <span th:id="'electricityConsumed' + ${monthName} + ${currentYear}" th:text="${electricityConsumedCurrentYear}"></span>
+    <span th:id="'electricityConsumed' + ${monthName} + ${lastYear}" th:text="${electricityConsumedLastYear}"></span>
+    <span th:id="'electricityConsumed' + ${monthName} + ${twoYearsAgo}" th:text="${electricityConsumedTwoYearsAgo}"></span>
+
+    <span th:id="'gasConsumed' + ${monthName} + ${currentYear}" th:text="${gasConsumedCurrentYear}"></span>
+    <span th:id="'gasConsumed' + ${monthName} + ${lastYear}" th:text="${gasConsumedLastYear}"></span>
+    <span th:id="'gasConsumed' + ${monthName} + ${twoYearsAgo}" th:text="${gasConsumedTwoYearsAgo}"></span>
 </div>
 
 </body>
