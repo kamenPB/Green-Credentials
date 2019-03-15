@@ -32,7 +32,7 @@ public class SimpleController extends ConsumptionData{
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) throws IOException {
         model.addAttribute("name", name);
-        model.addAttribute("wasteTotal", wasteTotal(1, 2));
+        model.addAttribute("wasteTotal", wasteTotal(getCurrentMonth() - 1, 2));
         model.addAttribute("wasteRecycled", wasteRecycled(1, 2));
         model.addAttribute("waterConsumedCurr", waterConsumed(1, 3));
         model.addAttribute("waterConsumedPrev1", waterConsumed(1, 2));

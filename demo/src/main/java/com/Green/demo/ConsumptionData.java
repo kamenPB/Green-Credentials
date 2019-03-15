@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 public class ConsumptionData {
     double waste;
@@ -45,6 +46,12 @@ public class ConsumptionData {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(5).getRow(month).getCell(year);
         return cell.getNumericCellValue();
+    }
+
+    // returns {0 - 11}
+    public int getCurrentMonth() {
+        Calendar cal = Calendar.getInstance();
+        return cal.get(Calendar.MONTH);
     }
 }
 
