@@ -32,17 +32,17 @@ public class SimpleController extends ConsumptionData{
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) throws IOException {
         model.addAttribute("name", name);
-        model.addAttribute("wasteTotal", wasteTotal(getCurrentMonth() - 1, 2));
-        model.addAttribute("wasteRecycled", wasteRecycled(1, 2));
-        model.addAttribute("waterConsumedCurr", waterConsumed(1, 3));
-        model.addAttribute("waterConsumedPrev1", waterConsumed(1, 2));
-        model.addAttribute("waterConsumedPrev2", waterConsumed(1, 1));
-        model.addAttribute("electricityConsumedCurr", electricityConsumed(1, 3));
-        model.addAttribute("electricityConsumedPrev1", electricityConsumed(1, 2));
-        model.addAttribute("electricityConsumedPrev2", electricityConsumed(1, 1));
-        model.addAttribute("gasConsumedCurr", gasConsumed(1, 3));
-        model.addAttribute("gasConsumedPrev1", gasConsumed(1, 2));
-        model.addAttribute("gasConsumedPrev2", gasConsumed(1, 1));
+        model.addAttribute("wasteTotal", wasteTotal(getCurrentMonth(), 2));
+        model.addAttribute("wasteRecycled", wasteRecycled(getCurrentMonth(), 2));
+        model.addAttribute("waterConsumedCurr", waterConsumed(getCurrentMonth(), 3));
+        model.addAttribute("waterConsumedPrev1", waterConsumed(getCurrentMonth(), 2));
+        model.addAttribute("waterConsumedPrev2", waterConsumed(getCurrentMonth(), 1));
+        model.addAttribute("electricityConsumedCurr", electricityConsumed(getCurrentMonth(), 3));
+        model.addAttribute("electricityConsumedPrev1", electricityConsumed(getCurrentMonth(), 2));
+        model.addAttribute("electricityConsumedPrev2", electricityConsumed(getCurrentMonth(), 1));
+        model.addAttribute("gasConsumedCurr", gasConsumed(getCurrentMonth(), 3));
+        model.addAttribute("gasConsumedPrev1", gasConsumed(getCurrentMonth(), 2));
+        model.addAttribute("gasConsumedPrev2", gasConsumed(getCurrentMonth(), 1));
         return "home";
     }
 
