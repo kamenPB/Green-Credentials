@@ -28,6 +28,10 @@
     font-style: normal;
 }
 
+body {
+    background-color: #F0F8FF;
+}
+
 * {
     font-family: 'futura-book', sans-serif;
 }
@@ -54,6 +58,8 @@ b {
 }
 
 .slides {
+    z-index: -1;
+    background-color:#F0F8FF;
     max-width: 1050px;
     max-height: 720px;
     position: fixed;
