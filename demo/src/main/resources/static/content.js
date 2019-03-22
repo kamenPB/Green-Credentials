@@ -5,6 +5,7 @@ var charts = []; // Store all charts in a global array to avoid memory leak
 var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0; // Keep track of the current slide being displayed
 var displayOverride = false; // Set to true if you want all slides to show even if they are undesired
+var maxNumberOfIcons = 25; // Maximum number of icons to display (so we dont have 100,000,000 elephants on screen)
 
 //
 // HTML GETTER FUNCTIONS
@@ -348,7 +349,6 @@ function drawChart(id) {
 //
 // ANNOTATION FUNCTIONS
 //
-// TODO: Replace hardcoded months/years with the current month, and years relative to the current year
 
 // Create an annotation for the waste category's chart
 // Display the waste recycled in terms of elephants
@@ -374,10 +374,16 @@ function createWasteAnnotation(){
         html += " elephants</b>!";
         html += "<br/>";
         for (var i = 0; i < elephants; i++) {
-            if (i === 24) i = parseInt(elephants); // Limit the amount added
+            if (i === maxNumberOfIcons - 1) i = parseInt(elephants); // Limit the amount added
             html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
         }
     }
+
+    // Additional facts
+    html += "<br/>";
+    html += "<b>Did you know?</b>";
+    html += "<br/>";
+    html += "Every week, we donate leftover clothes hangers to you, our customers! Find them by the <b>Customer Service Desk</b>.";
 
     return html;
 }
@@ -428,10 +434,16 @@ function createWaterAnnotation(){
         }
         html += "</b>!<br/>";
         for (var i = 0; i < comparisonPoint; i++) {
-            if (i === 24) i = comparisonPoint; // Limit the amount added
+            if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
             html += "<img src='" + src + "' class='icons' alt='icon' /> ";
         }
     }
+
+    // Additional facts
+    html += "<br/>";
+    html += "<b>Did you know?</b>";
+    html += "<br/>";
+    html += "Cabot Circus uses state-of-the-art <b>rainwater harvesting</b> technology, which helps reduce water waste!";
 
     return html;
 }
@@ -463,10 +475,18 @@ function createElectricityAnnotation(){
         html += " homes</b> for a year!";
         html += "<br/>";
         for (var i = 0; i < homes; i++) {
-            if (i === 24) i = comparisonPoint; // Limit the amount added
+            if (i === maxNumberOfIcons - 1) i = homes; // Limit the amount added
             html += "<img src='icons/home.svg' class='icons' /> ";
         }
     }
+
+    // Additional facts
+    html += "<br/>";
+    html += "<b>Did you know?</b>";
+    html += "<br/>";
+    html += "In 2018, we replaced our car park's lights with <b>LEDs</b>.";
+    html += "<br/>";
+    html += "This will save around <b>1,500,000 kWh a year</b>!";
 
     return html;
 }
@@ -499,7 +519,7 @@ function createGasAnnotation(){
         html += " cars</b> for a year!";
         html += "<br/>";
         for (var i = 0; i < cars; i++) {
-            if (i === 24) i = comparisonPoint; // Limit the amount added
+            if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
             html += "<img src='icons/car.svg' class='icons' /> ";
         }
     }
