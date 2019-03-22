@@ -75,10 +75,11 @@ public class ConsumptionData {
         return (int) cell.getNumericCellValue();
     }
 
+    private String[] monthNames = {"January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"};
+
     // returns "January", "February", etc.
-    public String getLastMonthName() {
-        return toDisplayCase(LocalDate.now().minusMonths(1).getMonth().toString());
-    }
+    public String getLastMonthName() throws IOException { return monthNames[getLastMonth()];}
 
     public String getCurrentYear() {
         return Integer.toString(LocalDate.now().getYear());
