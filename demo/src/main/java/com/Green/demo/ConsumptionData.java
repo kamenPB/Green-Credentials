@@ -70,7 +70,7 @@ public class ConsumptionData {
 
     public int getLastMonth() throws IOException {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(6); // cell 1G in elec
+        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
         //casting from double
         return (int) cell.getNumericCellValue();
     }
