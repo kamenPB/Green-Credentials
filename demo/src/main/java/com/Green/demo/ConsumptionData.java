@@ -63,8 +63,16 @@ public class ConsumptionData {
 
     // These functions assume the spreadsheet is up-to-date for the dates to match
     // returns {1 - 12}
-    public int getLastMonth() {
-        return LocalDate.now().minusMonths(1).getMonthValue();
+
+    //public int getLastMonth() {
+    //    return LocalDate.now().minusMonths(1).getMonthValue();
+    //}
+
+    public int getLastMonth() throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
+        //casting from double
+        return (int) cell.getNumericCellValue();
     }
 
     // returns "January", "February", etc.
