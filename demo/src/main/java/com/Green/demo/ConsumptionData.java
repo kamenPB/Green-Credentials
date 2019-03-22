@@ -43,23 +43,23 @@ public class ConsumptionData {
         return cell.getNumericCellValue();
     }
 
-    public static String toDisplayCase(String s) {
-
-        final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
-        // to be capitalized
-
-        StringBuilder sb = new StringBuilder();
-        boolean capNext = true;
-
-        for (char c : s.toCharArray()) {
-            c = (capNext)
-                    ? Character.toUpperCase(c)
-                    : Character.toLowerCase(c);
-            sb.append(c);
-            capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
-        }
-        return sb.toString();
-    }
+//    public static String toDisplayCase(String s) {
+//
+//        final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
+//        // to be capitalized
+//
+//        StringBuilder sb = new StringBuilder();
+//        boolean capNext = true;
+//
+//        for (char c : s.toCharArray()) {
+//            c = (capNext)
+//                    ? Character.toUpperCase(c)
+//                    : Character.toLowerCase(c);
+//            sb.append(c);
+//            capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
+//        }
+//        return sb.toString();
+//    }
 
     // These functions assume the spreadsheet is up-to-date for the dates to match
     // returns {1 - 12}
@@ -72,7 +72,7 @@ public class ConsumptionData {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
         //casting from double
-        return (int) cell.getNumericCellValue();
+        return (int) cell.getNumericCellValue() - 1;
     }
 
     private String[] monthNames = {"January", "February", "March", "April", "May", "June",
