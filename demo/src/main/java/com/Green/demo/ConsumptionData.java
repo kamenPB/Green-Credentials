@@ -3,6 +3,7 @@ package com.Green.demo;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.swing.text.html.HTML;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -43,8 +44,7 @@ public class ConsumptionData {
         return cell.getNumericCellValue();
     }
 
-    public String comment(String category) throws IOException {
-        XSSFWorkbook wb = getWorkbookFromExcelFile();
+    private int getSheetFromCategory(String category) {
         int sheet;
         switch (category) {
             case "waste":
@@ -61,6 +61,19 @@ public class ConsumptionData {
                 sheet = 5;
                 break;
         }
+        return sheet;
+    }
+
+    public String commentHeader(String category) throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        int sheet = getSheetFromCategory(category);
+        XSSFCell cell = wb.getSheetAt(sheet).getRow(0).getCell(13);
+        return cell.getStringCellValue();
+    }
+
+    public String comment(String category) throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        int sheet = getSheetFromCategory(category);
         XSSFCell cell = wb.getSheetAt(sheet).getRow(1).getCell(13);
         return cell.getStringCellValue();
     }

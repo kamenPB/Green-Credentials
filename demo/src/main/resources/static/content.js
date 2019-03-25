@@ -113,44 +113,48 @@ function slideshow() {
 
 // Evaluate whether the slide is suitable to display
 function slideShouldDisplay(id) {
-    // Get the relevant date information
-    var currentMonth = getLastMonth();
-    var currentYear = getCurrentYear();
-    var lastYear = getLastYear();
+    // // Get the relevant date information
+    // var currentMonth = getLastMonth();
+    // var currentYear = getCurrentYear();
+    // var lastYear = getLastYear();
+    //
+    // // Decide based on the data category ID
+    // switch (id) {
+    //     case 0: { // Waste
+    //         // Only display if we recycled more than we converted into energy
+    //         if ((getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) || displayOverride) {
+    //             return true;
+    //         }
+    //         break;
+    //     }
+    //     case 1: { // Water
+    //         // Only display if we consumed less than last year in the same month
+    //         if (((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+    //             return true;
+    //         }
+    //         break;
+    //     }
+    //     case 2: { // Electricity
+    //         // Only display if we consumed less than last year in the same month
+    //         if (((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+    //             return true;
+    //         }
+    //         break;
+    //     }
+    //     case 3: { // Gas
+    //         // Only display if we consumed less than last year in the same month
+    //         if (((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+    //             return true;
+    //         }
+    //         break;
+    //     }
+    // }
+    //
+    // return false;
 
-    // Decide based on the data category ID
-    switch (id) {
-        case 0: { // Waste
-            // Only display if we recycled more than we converted into energy
-            if ((getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) || displayOverride) {
-                return true;
-            }
-            break;
-        }
-        case 1: { // Water
-            // Only display if we consumed less than last year in the same month
-            if (((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-                return true;
-            }
-            break;
-        }
-        case 2: { // Electricity
-            // Only display if we consumed less than last year in the same month
-            if (((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-                return true;
-            }
-            break;
-        }
-        case 3: { // Gas
-            // Only display if we consumed less than last year in the same month
-            if (((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-                return true;
-            }
-            break;
-        }
-    }
-
-    return false;
+    // Beth doesn't want us to hide data that shows them up in usage
+    // We'll keep this function, commented out, just in case.
+    return true;
 }
 
 //
@@ -363,21 +367,24 @@ function createWasteAnnotation(){
 
     var elephants = (recycledTons / 7).toFixed(0);
 
-    html += "In " + currentMonth + " " + currentYear + ", we recycled ";
-    html += recycledTons.toFixed(0);
-    html += " tons of waste!";
-    html += "<br/><br/>";
+    if (getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) {
+        html += "In " + currentMonth + " " + currentYear + ", we recycled ";
+        html += recycledTons.toFixed(0) + " tons of waste!";
+        html += "<br/><br/>";
 
-    // Only brag if it's an impressive number
-    if (elephants >= 2) {
-        html += "That's roughly the weight of <b>";
-        html += elephants;
-        html += " elephants</b>!";
-        html += "<br/>";
-        for (var i = 0; i < elephants; i++) {
-            if (i === maxNumberOfIcons - 1) i = parseInt(elephants); // Limit the amount added
-            html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
+        // Only brag if it's an impressive number
+        if (elephants >= 2) {
+            html += "That's roughly the weight of <b>";
+            html += elephants;
+            html += " elephants</b>!";
+            html += "<br/>";
+            for (var i = 0; i < elephants; i++) {
+                if (i === maxNumberOfIcons - 1) i = parseInt(elephants); // Limit the amount added
+                html += "<img src='icons/elephant.svg' class='icons' alt='icon' /> ";
+            }
         }
+    } else {
+        html += "This month, we only recycled" + recycledTons.toFixed(0) + " tons of waste.";
     }
 
     return html;
@@ -395,45 +402,54 @@ function createWaterAnnotation(){
     var lastYear = getLastYear();
 
     var waterSaved = getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear);
-    
-    var olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
-    var swimmingPools = (waterSaved / 900).toFixed(0);
-    var baths = (waterSaved / 0.08).toFixed(0);
 
-    // Prefer the most impressive stat
-    var comparisonPoint = baths;
-    if (swimmingPools >= 2) {
-        comparisonPoint = swimmingPools;
-        if (olympicSwimmingPools >= 2) {
-            comparisonPoint = olympicSwimmingPools;
-        }
-    }
+    if (waterSaved > 0) {
+        var olympicSwimmingPools = (waterSaved / 2500).toFixed(0);
+        var swimmingPools = (waterSaved / 900).toFixed(0);
+        var baths = (waterSaved / 0.08).toFixed(0);
 
-    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-    html += addCommas(waterSaved.toFixed(0));
-    html += " m³ less water than last year.";
-    html += "<br/><br/>";
-
-    var src = '';
-    // Only brag if it's an impressive number
-    if (comparisonPoint >= 2) {
-        html += "That's enough to fill roughly <b>";
-        html += comparisonPoint;
-        if (olympicSwimmingPools >= 2) html += " Olympic-sized";
+        // Prefer the most impressive stat
+        var comparisonPoint = baths;
         if (swimmingPools >= 2) {
-            html += " swimming pools";
-            src = 'icons/pool.svg';
-        } else {
-            html += " bath tubs";
-            src = 'icons/bathtub.svg';
+            comparisonPoint = swimmingPools;
+            if (olympicSwimmingPools >= 2) {
+                comparisonPoint = olympicSwimmingPools;
+            }
         }
-        html += "</b>!<br/>";
-        for (var i = 0; i < comparisonPoint; i++) {
-            if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
-            html += "<img src='" + src + "' class='icons' alt='icon' /> ";
-        }
-    }
 
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(waterSaved.toFixed(0));
+        html += " m³ less water than the same month last year.";
+        html += "<br/><br/>";
+
+        var src = '';
+        // Only brag if it's an impressive number
+        if (comparisonPoint >= 2) {
+            html += "That's enough to fill roughly <b>";
+            html += comparisonPoint;
+            if (olympicSwimmingPools >= 2) html += " Olympic-sized";
+            if (swimmingPools >= 2) {
+                html += " swimming pools";
+                src = 'icons/pool.svg';
+            } else {
+                html += " bath tubs";
+                src = 'icons/bathtub.svg';
+            }
+            html += "</b>!<br/>";
+            for (var i = 0; i < comparisonPoint; i++) {
+                if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
+                html += "<img src='" + src + "' class='icons' alt='icon' /> ";
+            }
+        }
+    } else {
+        var waterOverused = getWaterConsumed(currentMonth, currentYear) - getWaterConsumed(currentMonth, lastYear);
+
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(waterOverused.toFixed(0));
+        html += " m³ more water than the same month last year.";
+        html += "<br/><br/>";
+
+    }
     return html;
 }
 
@@ -448,27 +464,35 @@ function createElectricityAnnotation(){
 
     var electricitySaved = getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear);
 
-    // From https://smarterbusiness.co.uk/average-gas-electricity-usage-uk/
-    // The average home uses 3100 kWh of electricity in a year
-    var homes = (electricitySaved / 3100).toFixed(0);
+    if (electricitySaved > 0) {
+        // From https://smarterbusiness.co.uk/average-gas-electricity-usage-uk/
+        // The average home uses 3100 kWh of electricity in a year
+        var homes = (electricitySaved / 3100).toFixed(0);
 
-    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-    html += addCommas(electricitySaved.toFixed(0));
-    html += " kWhs less electricity than last year.";
-    html += "<br/><br/>";
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(electricitySaved.toFixed(0));
+        html += " kWhs less electricity than the same month last year.";
+        html += "<br/><br/>";
 
-    // Only brag if it's an impressive number
-    if (homes >= 2) {
-        html += "That's enough to power roughly <b>";
-        html += homes;
-        html += " homes</b> for a year!";
-        html += "<br/>";
-        for (var i = 0; i < homes; i++) {
-            if (i === maxNumberOfIcons - 1) i = homes; // Limit the amount added
-            html += "<img src='icons/home.svg' class='icons' /> ";
+        // Only brag if it's an impressive number
+        if (homes >= 2) {
+            html += "That's enough to power roughly <b>";
+            html += homes;
+            html += " homes</b> for a year!";
+            html += "<br/>";
+            for (var i = 0; i < homes; i++) {
+                if (i === maxNumberOfIcons - 1) i = homes; // Limit the amount added
+                html += "<img src='icons/home.svg' class='icons' /> ";
+            }
         }
-    }
+    } else {
+        var electricityOverused = getElectricityConsumed(currentMonth, currentYear) - getElectricityConsumed(currentMonth, lastYear);
 
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(electricityOverused.toFixed(0));
+        html += " kWhs more electricity than the same month last year.";
+        html += "<br/><br/>";
+    }
     return html;
 }
 
@@ -482,29 +506,36 @@ function createGasAnnotation(){
     var lastYear = getLastYear();
 
     var gasSaved = getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear);
+    if (gasSaved > 0) {
+        // The average car uses 975 litres of gasoline in a year
+        // The average car gets 1.76 kWhs out of 1 litre of gasoline
+        // 975 * 1.76 = 1716
+        var cars = (gasSaved / 1716).toFixed(0);
 
-    // The average car uses 975 litres of gasoline in a year
-    // The average car gets 1.76 kWhs out of 1 litre of gasoline
-    // 975 * 1.76 = 1716
-    var cars = (gasSaved / 1716).toFixed(0);
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(gasSaved.toFixed(0));
+        html += " kWhs less gas than the same month last year.";
+        html += "<br/><br/>";
 
-    html += "In " + currentMonth + " " + currentYear + ", we consumed ";
-    html += addCommas(gasSaved.toFixed(0));
-    html += " kWhs less gas than last year.";
-    html += "<br/><br/>";
-
-    // Only brag if it's an impressive number
-    if (cars >= 2) {
-        html += "That's enough to power roughly <b>";
-        html += cars;
-        html += " cars</b> for a year!";
-        html += "<br/>";
-        for (var i = 0; i < cars; i++) {
-            if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
-            html += "<img src='icons/car.svg' class='icons' /> ";
+        // Only brag if it's an impressive number
+        if (cars >= 2) {
+            html += "That's enough to power roughly <b>";
+            html += cars;
+            html += " cars</b> for a year!";
+            html += "<br/>";
+            for (var i = 0; i < cars; i++) {
+                if (i === maxNumberOfIcons - 1) i = comparisonPoint; // Limit the amount added
+                html += "<img src='icons/car.svg' class='icons' /> ";
+            }
         }
-    }
+    } else {
+        var gasOverused = getGasConsumed(currentMonth, currentYear) - getGasConsumed(currentMonth, lastYear);
 
+        html += "In " + currentMonth + " " + currentYear + ", we consumed ";
+        html += addCommas(gasOverused.toFixed(0));
+        html += " kWhs more gas than the same month last year.";
+        html += "<br/><br/>";
+    }
     return html;
 }
 
@@ -548,7 +579,7 @@ function updateComment(id) {
             break;
     }
     var html = "";
-    html += "<b>Did you know?</b><br/>";
+    html += "<b>" + document.getElementById(commentID + "CommentHeader").innerText + "</b><br/>";
     html += document.getElementById(commentID + "Comment").innerText;
     document.getElementById("comment").innerHTML = html;
 }
