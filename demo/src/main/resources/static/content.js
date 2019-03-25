@@ -547,7 +547,10 @@ function updateComment(id) {
             commentID = "gas";
             break;
     }
-    document.getElementById("comment").innerText = document.getElementById(commentID + "Comment").innerText;
+    var html = "";
+    html += "<b>Did you know?</b><br/>";
+    html += document.getElementById(commentID + "Comment").innerText;
+    document.getElementById("comment").innerHTML = html;
 }
 
 //

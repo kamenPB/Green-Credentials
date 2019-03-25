@@ -90,3 +90,16 @@ b {
 .hidden {
     display: none;
 }
+
+#comment b {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+#comment {
+    position: fixed;
+    top: 185px;
+    right: 20px;
+    max-width: 500px;
+    font-size: 22pt;
+}
