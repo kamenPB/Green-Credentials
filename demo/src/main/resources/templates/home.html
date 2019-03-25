@@ -15,6 +15,7 @@
     <div class="slides" id="electricity"></div>
     <div class="slides" id="gas"></div>
 </div>
+<div id="comment"></div>
 
 <div class="hidden">
     <!-- These hidden fields will be populated with Thymeleaf, and used by the JavaScript -->
@@ -38,6 +39,11 @@
     <span th:id="'gasConsumed' + ${monthName} + ${currentYear}" th:text="${gasConsumedCurrentYear}"></span>
     <span th:id="'gasConsumed' + ${monthName} + ${lastYear}" th:text="${gasConsumedLastYear}"></span>
     <span th:id="'gasConsumed' + ${monthName} + ${twoYearsAgo}" th:text="${gasConsumedTwoYearsAgo}"></span>
+
+    <span th:id="'wasteComment'" th:text="${wasteComment}"></span>
+    <span th:id="'waterComment'" th:text="${waterComment}"></span>
+    <span th:id="'electricityComment'" th:text="${electricityComment}"></span>
+    <span th:id="'gasComment'" th:text="${gasComment}"></span>
 </div>
 
 </body>

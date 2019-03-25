@@ -101,6 +101,7 @@ function slideshow() {
         slides[id].style.display = "block";
         drawChart(id);
         updateAnnotation(id);
+        updateComment(id);
     } else {
         // Skip this slide if it is not suitable to display
         delay = 0;
@@ -379,12 +380,6 @@ function createWasteAnnotation(){
         }
     }
 
-    // Additional facts
-    html += "<br/>";
-    html += "<b>Did you know?</b>";
-    html += "<br/>";
-    html += "Every week, we donate leftover clothes hangers to you, our customers! Find them by the <b>Customer Service Desk</b>.";
-
     return html;
 }
 
@@ -439,12 +434,6 @@ function createWaterAnnotation(){
         }
     }
 
-    // Additional facts
-    html += "<br/>";
-    html += "<b>Did you know?</b>";
-    html += "<br/>";
-    html += "Cabot Circus uses state-of-the-art <b>rainwater harvesting</b> technology, which helps reduce water waste!";
-
     return html;
 }
 
@@ -479,14 +468,6 @@ function createElectricityAnnotation(){
             html += "<img src='icons/home.svg' class='icons' /> ";
         }
     }
-
-    // Additional facts
-    html += "<br/>";
-    html += "<b>Did you know?</b>";
-    html += "<br/>";
-    html += "In 2018, we replaced our car park's lights with <b>LEDs</b>.";
-    html += "<br/>";
-    html += "This will save around <b>1,500,000 kWh a year</b>!";
 
     return html;
 }
@@ -524,12 +505,6 @@ function createGasAnnotation(){
         }
     }
 
-    // Additional facts
-    html += "<br/>";
-    html += "<b>Did you know?</b>";
-    html += "<br/>";
-    html += "Using a machine known as an <b>anaerobic digester</b>, we convert tons of food waste back into energy!";
-
     return html;
 }
 
@@ -552,6 +527,27 @@ function updateAnnotation(id) {
             break;
     }
     document.getElementById('annotation').innerHTML = annotationHTML;
+}
+
+// Update the comments section to match the chart changes
+function updateComment(id) {
+    var commentID = "";
+    switch (id) {
+        default:
+        case 0: // Waste
+            commentID = "waste";
+            break;
+        case 1: // Water
+            commentID = "water";
+            break;
+        case 2: // Electricity
+            commentID = "electricity";
+            break;
+        case 3: // Gas
+            commentID = "gas";
+            break;
+    }
+    document.getElementById("comment").innerText = document.getElementById(commentID + "Comment").innerText;
 }
 
 //

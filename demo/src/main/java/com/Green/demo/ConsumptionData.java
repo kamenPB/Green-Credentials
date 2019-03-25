@@ -43,6 +43,28 @@ public class ConsumptionData {
         return cell.getNumericCellValue();
     }
 
+    public String comment(String category) throws IOException {
+        XSSFWorkbook wb = getWorkbookFromExcelFile();
+        int sheet;
+        switch (category) {
+            case "waste":
+            default:
+                sheet = 0;
+                break;
+            case "water":
+                sheet = 1;
+                break;
+            case "electricity":
+                sheet = 3;
+                break;
+            case "gas":
+                sheet = 5;
+                break;
+        }
+        XSSFCell cell = wb.getSheetAt(sheet).getRow(1).getCell(13);
+        return cell.getStringCellValue();
+    }
+
 //    public static String toDisplayCase(String s) {
 //
 //        final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following

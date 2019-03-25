@@ -53,6 +53,11 @@ public class SimpleController extends ConsumptionData{
         model.addAttribute("gasConsumedLastYear", gasConsumed(getLastMonth(), 2));
         model.addAttribute("gasConsumedTwoYearsAgo", gasConsumed(getLastMonth(), 1));
 
+        model.addAttribute("wasteComment", comment("waste"));
+        model.addAttribute("waterComment", comment("water"));
+        model.addAttribute("electricityComment", comment("electricity"));
+        model.addAttribute("gasComment", comment("gas"));
+
         return "home";
     }
 
