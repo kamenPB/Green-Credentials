@@ -19,8 +19,22 @@ public class DemoApplicationTests {
 	@Test
 	public void month() throws IOException {
 		final int expected = 1;
-		//final int actual = (int) ConsumptionData.getLastMonth();
-		//Assert.assertEquals(actual,expected);
+		final int actual = (int) ConsumptionData.getLastMonth();
+		Assert.assertEquals(actual,expected);
 	}
+
+	@Test
+	public void year() throws IOException {
+		final String expected = "2017";
+		final String actual = ConsumptionData.getTwoYearsAgo();
+		Assert.assertEquals(actual,expected);
+	}
+
+//	@Test
+//	public void comment() throws IOException {
+//		final String expected = "2017";
+//		final String actual = (String) ConsumptionData.comment("waste");
+//		Assert.assertEquals(actual,expected);
+//	}
 
 }
