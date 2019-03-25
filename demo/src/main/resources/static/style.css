@@ -58,14 +58,13 @@ b {
 }
 
 .slides {
-    z-index: -1;
-    background-color:#F0F8FF;
-    max-width: 1050px;
-    max-height: 720px;
+    background-color:transparent;
     position: fixed;
     width: 1050px;
     height: 720px;
-    margin: 5% auto; /* Will not center vertically and won't work in IE6/7. */
+    max-width: 1050px;
+    max-height: 720px;
+    margin: auto; /* Will not center vertically and won't work in IE6/7. */
     top: 0;
     left: 0;
     right: 0;

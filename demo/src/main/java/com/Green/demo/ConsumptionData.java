@@ -129,7 +129,6 @@ public class ConsumptionData {
 
                 XSSFCell cell = wb.getSheetAt(sheet).getRow(month).getCell(column);
                 if (isEmptyCell(cell)) {
-                    mostRecentMonth = month - 1;
                     break;
                 } else {
                     mostRecentMonth = month;
