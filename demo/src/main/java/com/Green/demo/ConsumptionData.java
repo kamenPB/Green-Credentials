@@ -103,18 +103,47 @@ public class ConsumptionData {
     //    return LocalDate.now().minusMonths(1).getMonthValue();
     //}
 
+    private Boolean isEmptyCell(XSSFCell c) {
+        return c == null || c.getCellType() == XSSFCell.CELL_TYPE_BLANK;
+    }
+
     public int getLastMonth() throws IOException {
+//        XSSFWorkbook wb = getWorkbookFromExcelFile();
+//        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
+//        //casting from double
+//        return (int) cell.getNumericCellValue() - 1;
+
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
-        //casting from double
-        return (int) cell.getNumericCellValue() - 1;
+        int mostRecentMonth = 0;
+        for (int sheet = 0; sheet < 6; sheet++) {
+            for (int month = 0; month < 12; month++) {
+
+                // This hardcodes the column for the latest year for each sheet
+                int column = 3; // column D as default
+                if (sheet == 0) column = 2; // waste C
+                if (sheet == 1) column = 3; // water D
+                if (sheet == 2) column = 4; // landlord water E
+                if (sheet == 3) column = 3; // electricity D
+                if (sheet == 4) column = 3; // carpark electricity D
+                if (sheet == 5) column = 3; // gas D
+
+                XSSFCell cell = wb.getSheetAt(sheet).getRow(month).getCell(column);
+                if (isEmptyCell(cell)) {
+                    mostRecentMonth = month - 1;
+                    break;
+                } else {
+                    mostRecentMonth = month;
+                }
+            }
+        }
+        return mostRecentMonth;
     }
 
     private String[] monthNames = {"January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"};
 
     // returns "January", "February", etc.
-    public String getLastMonthName() throws IOException { return monthNames[getLastMonth()];}
+    public String getLastMonthName() throws IOException { return monthNames[getLastMonth() - 1];}
 
     public String getCurrentYear() {
         return Integer.toString(LocalDate.now().getYear());
