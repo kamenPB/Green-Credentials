@@ -9,8 +9,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class ConsumptionData {
-    private static XSSFWorkbook getWorkbookFromExcelFile() throws IOException {
-        return new XSSFWorkbook(new FileInputStream("..//data.xlsx")); // For now, hardcode the filename
+    public static XSSFWorkbook getWorkbookFromExcelFile() {
+        XSSFWorkbook wb = null;
+        try {
+            wb = new XSSFWorkbook(new FileInputStream("..//data.xlsx")); // For now, hardcode the filename
+        } catch(Exception e) {
+            System.out.println("File not found");
+        }
+        return wb;
     }
 
     public double wasteTotal(int month, int year) throws IOException {
@@ -107,7 +113,7 @@ public class ConsumptionData {
         return c == null || c.getCellType() == XSSFCell.CELL_TYPE_BLANK;
     }
 
-    public int getLastMonth() throws IOException {
+    public int getLastMonth() {
 //        XSSFWorkbook wb = getWorkbookFromExcelFile();
 //        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
 //        //casting from double
