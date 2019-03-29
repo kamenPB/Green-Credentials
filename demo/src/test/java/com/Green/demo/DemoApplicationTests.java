@@ -27,7 +27,7 @@ public class DemoApplicationTests extends ConsumptionData{
 
 	@Test
 	public void month() {
-		final int expected = 1; // 1 == February
+		final int expected = 2; // 2 == February
 		final int actual = getLastMonth();
 		Assert.assertEquals(actual,expected);
 	}
