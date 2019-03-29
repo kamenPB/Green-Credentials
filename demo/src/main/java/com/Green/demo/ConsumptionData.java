@@ -84,41 +84,11 @@ public class ConsumptionData {
         return cell.getStringCellValue();
     }
 
-//    public static String toDisplayCase(String s) {
-//
-//        final String ACTIONABLE_DELIMITERS = " '-/"; // these cause the character following
-//        // to be capitalized
-//
-//        StringBuilder sb = new StringBuilder();
-//        boolean capNext = true;
-//
-//        for (char c : s.toCharArray()) {
-//            c = (capNext)
-//                    ? Character.toUpperCase(c)
-//                    : Character.toLowerCase(c);
-//            sb.append(c);
-//            capNext = (ACTIONABLE_DELIMITERS.indexOf((int) c) >= 0); // explicit cast not needed
-//        }
-//        return sb.toString();
-//    }
-
-    // These functions assume the spreadsheet is up-to-date for the dates to match
-    // returns {1 - 12}
-
-    //public int getLastMonth() {
-    //    return LocalDate.now().minusMonths(1).getMonthValue();
-    //}
-
     private Boolean isEmptyCell(XSSFCell c) {
         return c == null || c.getCellType() == XSSFCell.CELL_TYPE_BLANK;
     }
 
     public int getLastMonth() {
-//        XSSFWorkbook wb = getWorkbookFromExcelFile();
-//        XSSFCell cell = wb.getSheetAt(3).getRow(0).getCell(12); // cell M
-//        //casting from double
-//        return (int) cell.getNumericCellValue() - 1;
-
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int mostRecentMonth = 0;
         for (int sheet = 0; sheet < 6; sheet++) {
@@ -155,7 +125,6 @@ public class ConsumptionData {
     private String[] monthNames = {"January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"};
 
-    // returns "January", "February", etc.
     public String getLastMonthName() { return monthNames[getLastMonth() - 1];}
 
     public String getCurrentYear() {

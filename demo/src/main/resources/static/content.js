@@ -1,11 +1,13 @@
 //
 // GLOBAL VARIABLES
 //
+var delay = 4; // The delay between slide changes, in seconds
+var maxNumberOfIcons = 25; // Maximum number of icons to display (so we dont have 100,000,000 elephants on screen)
+// var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
+
 var charts = []; // Store all charts in a global array to avoid memory leak
 var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0; // Keep track of the current slide being displayed
-var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
-var maxNumberOfIcons = 25; // Maximum number of icons to display (so we dont have 100,000,000 elephants on screen)
 
 //
 // HTML GETTER FUNCTIONS
@@ -93,9 +95,6 @@ function slideshow() {
     // 2 = Electricity
     // 3 = Gas
     var id = slideIndex - 1;
-
-    // Set the delay between slide changes, in seconds
-    var delay = 4;
 
     if (slideShouldDisplay(id)) {
         slides[id].style.display = "block";
