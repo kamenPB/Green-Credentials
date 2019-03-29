@@ -19,32 +19,32 @@ public class ConsumptionData {
         return wb;
     }
 
-    public double wasteTotal(int month, int year) throws IOException {
+    public double wasteTotal(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(1);
         return cell.getNumericCellValue();
     }
 
-    public double wasteRecycled(int month, int year) throws IOException {
+    public double wasteRecycled(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(2);
         return cell.getNumericCellValue();
 
     }
 
-    public double waterConsumed(int month, int year) throws IOException {
+    public double waterConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(1).getRow(month).getCell(year);
         return cell.getNumericCellValue();
     }
 
-    public double electricityConsumed(int month, int year) throws IOException {
+    public double electricityConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(3).getRow(month).getCell(year);
         return cell.getNumericCellValue();
     }
 
-    public double gasConsumed(int month, int year) throws IOException {
+    public double gasConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(5).getRow(month).getCell(year);
         return cell.getNumericCellValue();
@@ -70,14 +70,14 @@ public class ConsumptionData {
         return sheet;
     }
 
-    public String commentHeader(String category) throws IOException {
+    public String commentHeader(String category) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int sheet = getSheetFromCategory(category);
         XSSFCell cell = wb.getSheetAt(sheet).getRow(0).getCell(13);
         return cell.getStringCellValue();
     }
 
-    public String comment(String category) throws IOException {
+    public String comment(String category) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int sheet = getSheetFromCategory(category);
         XSSFCell cell = wb.getSheetAt(sheet).getRow(1).getCell(13);
@@ -148,7 +148,7 @@ public class ConsumptionData {
             "July", "August", "September", "October", "November", "December"};
 
     // returns "January", "February", etc.
-    public String getLastMonthName() throws IOException { return monthNames[getLastMonth() - 1];}
+    public String getLastMonthName() { return monthNames[getLastMonth() - 1];}
 
     public String getCurrentYear() {
         return Integer.toString(LocalDate.now().getYear());

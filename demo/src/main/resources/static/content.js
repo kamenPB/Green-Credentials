@@ -302,7 +302,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['rgb(51,217,195)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 5000,
+                minValue: 0, // 5000,
                 maxValue: 10000,
                 format: "#,### m³"
             };
@@ -313,7 +313,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['rgb(244,152,0)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 300000,
+                minValue: 0, // 300000,
                 maxValue: 450000,
                 format: "#,### kWh"
             };
@@ -324,7 +324,7 @@ function getChartOptions(id) {
             chartOptions.colors = ['rgb(207,222,0)'];
             chartOptions.legend = { position: "none" };
             chartOptions.vAxis = {
-                minValue: 20000,
+                minValue: 0, // 20000,
                 maxValue: 45000,
                 format: "#,### kWh"
             };
