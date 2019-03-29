@@ -3,69 +3,31 @@
 //
 var delay = 4; // The delay between slide changes, in seconds
 var maxNumberOfIcons = 25; // Maximum number of icons to display (so we dont have 100,000,000 elephants on screen)
-// var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
 
 var charts = []; // Store all charts in a global array to avoid memory leak
 var chartViews = []; // Store all chart views in a global array to avoid memory leak
 var slideIndex = 0; // Keep track of the current slide being displayed
 
 //
+// MAIN
+//
+google.charts.load('current', { 'packages': ['corechart'] });
+google.charts.setOnLoadCallback(slideshow);
+
+//
 // HTML GETTER FUNCTIONS
 //
-// The Thymeleaf will populate hidden variable <span>s with the values we need
-
-// Return the string value of the current month
-function getLastMonth() {
-    return document.getElementById("monthName").innerText;
-}
-
-// Return the string value of the current year
-function getCurrentYear() {
-    return document.getElementById("currentYear").innerText;
-}
-
-// Return the string value of the year 1 year before the current year
-function getLastYear() {
-    return document.getElementById("lastYear").innerText;
-}
-
-// Return the string value of the year 2 years before the current year
-function getTwoYearsAgo() {
-    return document.getElementById("twoYearsAgo").innerText;
-}
-
-// Retrieve floats from HTML elements
-function parseHTML(elementId) {
-    return parseFloat(document.getElementById(elementId).innerText);
-}
-
-// Waste functions
-function getWasteTotal(month, year) {
-    return parseHTML("wasteTotal" + month + year);
-}
-
-function getWasteRecycled(month, year) {
-    return parseHTML("wasteRecycled" + month + year);
-}
-
-function getWasteConverted(month, year) {
-    return getWasteTotal(month, year) - getWasteRecycled(month, year);
-}
-
-// Water functions
-function getWaterConsumed(month, year) {
-    return parseHTML("waterConsumed" + month + year);
-}
-
-// Electricity functions
-function getElectricityConsumed(month, year) {
-    return parseHTML("electricityConsumed" + month + year);
-}
-
-// Gas functions
-function getGasConsumed(month, year) {
-    return parseHTML("gasConsumed" + month + year);
-}
+// These functions read from hidden <span>s with data from the Java, populated via Thymeleaf
+function getLastMonth() { return document.getElementById("monthName").innerText; }
+function getCurrentYear() { return document.getElementById("currentYear").innerText; }
+function getLastYear() { return document.getElementById("lastYear").innerText; }
+function getTwoYearsAgo() { return document.getElementById("twoYearsAgo").innerText; }
+function getWasteTotal(month, year) { return parseFloat(document.getElementById("wasteTotal" + month + year).innerText); }
+function getWasteRecycled(month, year) { return parseFloat(document.getElementById("wasteRecycled" + month + year).innerText); }
+function getWasteConverted(month, year) { return getWasteTotal(month, year) - getWasteRecycled(month, year); }
+function getWaterConsumed(month, year) { return parseFloat(document.getElementById("waterConsumed" + month + year).innerText); }
+function getElectricityConsumed(month, year) { return parseFloat(document.getElementById("electricityConsumed" + month + year).innerText); }
+function getGasConsumed(month, year) { return parseFloat(document.getElementById("gasConsumed" + month + year).innerText); }
 
 //
 // SLIDESHOW FUNCTIONS
@@ -96,64 +58,13 @@ function slideshow() {
     // 3 = Gas
     var id = slideIndex - 1;
 
-    if (slideShouldDisplay(id)) {
-        slides[id].style.display = "block";
-        drawChart(id);
-        updateAnnotation(id);
-        updateComment(id);
-    } else {
-        // Skip this slide if it is not suitable to display
-        delay = 0;
-    }
+    slides[id].style.display = "block";
+    drawChart(id);
+    updateAnnotation(id);
+    updateComment(id);
 
     // Callback after delay has elapsed
     setTimeout(slideshow, delay * 1000);
-}
-
-// Evaluate whether the slide is suitable to display
-function slideShouldDisplay(id) {
-    // // Get the relevant date information
-    // var currentMonth = getLastMonth();
-    // var currentYear = getCurrentYear();
-    // var lastYear = getLastYear();
-    //
-    // // Decide based on the data category ID
-    // switch (id) {
-    //     case 0: { // Waste
-    //         // Only display if we recycled more than we converted into energy
-    //         if ((getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) || displayOverride) {
-    //             return true;
-    //         }
-    //         break;
-    //     }
-    //     case 1: { // Water
-    //         // Only display if we consumed less than last year in the same month
-    //         if (((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-    //             return true;
-    //         }
-    //         break;
-    //     }
-    //     case 2: { // Electricity
-    //         // Only display if we consumed less than last year in the same month
-    //         if (((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-    //             return true;
-    //         }
-    //         break;
-    //     }
-    //     case 3: { // Gas
-    //         // Only display if we consumed less than last year in the same month
-    //         if (((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
-    //             return true;
-    //         }
-    //         break;
-    //     }
-    // }
-    //
-    // return false;
-
-    // Beth doesn't want us to hide data that shows them up in usage
-    // We'll keep this function, commented out, just in case.
-    return true;
 }
 
 //
@@ -599,8 +510,45 @@ function addCommas(string) {
     return parts.join(".");
 }
 
+
+// Beth doesn't want us to hide data that shows them up in usage
+// We'll keep this function, commented out, just in case.
+
+// Evaluate whether the slide is suitable to display
+// var displayOverride = true; // Set to true if you want all slides to show even if they are undesired
+// function slideShouldDisplay(id) {
+//     // Get the relevant date information
+//     var currentMonth = getLastMonth();
+//     var currentYear = getCurrentYear();
+//     var lastYear = getLastYear();
 //
-// MAIN
+//     // Decide based on the data category ID
+//     switch (id) {
+//         case 0: { // Waste
+//             if ((getWasteRecycled(currentMonth, currentYear) > getWasteConverted(currentMonth, currentYear)) || displayOverride) {
+//                 return true;
+//             }
+//             break;
+//         }
+//         case 1: { // Water
+//             if (((getWaterConsumed(currentMonth, lastYear) - getWaterConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+//                 return true;
+//             }
+//             break;
+//         }
+//         case 2: { // Electricity
+//             if (((getElectricityConsumed(currentMonth, lastYear) - getElectricityConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+//                 return true;
+//             }
+//             break;
+//         }
+//         case 3: { // Gas
+//             if (((getGasConsumed(currentMonth, lastYear) - getGasConsumed(currentMonth, currentYear)) > 0) || displayOverride) {
+//                 return true;
+//             }
+//             break;
+//         }
+//     }
 //
-google.charts.load('current', { 'packages': ['corechart'] });
-google.charts.setOnLoadCallback(slideshow);
+//     return false;
+// }
