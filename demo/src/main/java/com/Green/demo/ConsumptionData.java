@@ -123,15 +123,23 @@ public class ConsumptionData {
         int mostRecentMonth = 0;
         for (int sheet = 0; sheet < 6; sheet++) {
             for (int month = 0; month < 12; month++) {
-
-                // This hardcodes the column for the latest year for each sheet
-                int column = 3; // column D as default
-                if (sheet == 0) column = 2; // waste C
-                if (sheet == 1) column = 3; // water D
-                if (sheet == 2) column = 4; // landlord water E
-                if (sheet == 3) column = 3; // electricity D
-                if (sheet == 4) column = 3; // carpark electricity D
-                if (sheet == 5) column = 3; // gas D
+                // Hard-code the column with the latest year's data in each sheet
+                int column;
+                switch (sheet) {
+                    case 1: // water D
+                    case 3: // electricity D
+                    case 4: // carpark electricity D
+                    case 5: // gas D
+                    default:
+                        column = 3;
+                        break;
+                    case 0: // waste C
+                        column = 2;
+                        break;
+                    case 2: // landlord water E
+                        column = 4;
+                        break;
+                }
 
                 XSSFCell cell = wb.getSheetAt(sheet).getRow(month).getCell(column);
                 if (isEmptyCell(cell)) {
