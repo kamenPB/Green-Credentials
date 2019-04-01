@@ -28,6 +28,9 @@ import java.io.IOException;
 
 @Controller
 public class SimpleController extends ConsumptionData{
+
+
+
     @GetMapping("/home")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model){
         model.addAttribute("name", name);
@@ -38,9 +41,10 @@ public class SimpleController extends ConsumptionData{
         model.addAttribute("lastYear", getLastYear());
         model.addAttribute("twoYearsAgo", getTwoYearsAgo());
 
-        model.addAttribute("wasteTotal", wasteTotal(getLastMonth(), 2));
-        model.addAttribute("wasteRecycled", wasteRecycled(getLastMonth(), 2));
+        model.addAttribute("wasteTotal", wasteTotal(getLastMonth()));
+        model.addAttribute("wasteRecycled", wasteRecycled(getLastMonth()));
 
+        //TODO use .contains to get the column of the year from the first row of each spreadsheet
         model.addAttribute("waterConsumedCurrentYear", waterConsumed(getLastMonth(), 3));
         model.addAttribute("waterConsumedLastYear", waterConsumed(getLastMonth(), 2));
         model.addAttribute("waterConsumedTwoYearsAgo", waterConsumed(getLastMonth(), 1));

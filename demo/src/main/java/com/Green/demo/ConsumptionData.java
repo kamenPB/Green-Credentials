@@ -16,7 +16,6 @@ public class ConsumptionData {
     final int GAS = 5;
 
 
-
     private static XSSFWorkbook getWorkbookFromExcelFile() {
         XSSFWorkbook wb = null;
         try {
@@ -27,13 +26,13 @@ public class ConsumptionData {
         return wb;
     }
 
-    double wasteTotal(int month, int year) {
+    double wasteTotal(int month) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(WASTE).getRow(month).getCell(1);
         return cell.getNumericCellValue();
     }
 
-    double wasteRecycled(int month, int year) {
+    double wasteRecycled(int month) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         XSSFCell cell = wb.getSheetAt(WASTE).getRow(month).getCell(2);
         return cell.getNumericCellValue();
