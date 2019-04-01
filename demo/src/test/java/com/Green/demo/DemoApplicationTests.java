@@ -32,8 +32,9 @@ public class DemoApplicationTests extends ConsumptionData{
 		Assert.assertEquals(actual,expected);
 	}
 
+	// will need to be manually updated
 	@Test
-	public void year() {
+	public void years() {
 		final String expected2017 = "2017";
 		final String actual2017 = getTwoYearsAgo();
 		Assert.assertEquals(actual2017,expected2017);
