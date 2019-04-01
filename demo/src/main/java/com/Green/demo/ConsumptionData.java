@@ -9,7 +9,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class ConsumptionData {
-    public static XSSFWorkbook getWorkbookFromExcelFile() {
+
+    final int WASTE = 0;
+    final int WATER = 1;
+    final int ELECTRICITY = 3;
+    final int GAS = 5;
+
+
+
+    private static XSSFWorkbook getWorkbookFromExcelFile() {
         XSSFWorkbook wb = null;
         try {
             wb = new XSSFWorkbook(new FileInputStream("..//data.xlsx")); // For now, hardcode the filename
@@ -19,65 +27,65 @@ public class ConsumptionData {
         return wb;
     }
 
-    public double wasteTotal(int month, int year) {
+    double wasteTotal(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(1);
+        XSSFCell cell = wb.getSheetAt(WASTE).getRow(month).getCell(1);
         return cell.getNumericCellValue();
     }
 
-    public double wasteRecycled(int month, int year) {
+    double wasteRecycled(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(0).getRow(month).getCell(2);
+        XSSFCell cell = wb.getSheetAt(WASTE).getRow(month).getCell(2);
         return cell.getNumericCellValue();
 
     }
 
-    public double waterConsumed(int month, int year) {
+    double waterConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(1).getRow(month).getCell(year);
+        XSSFCell cell = wb.getSheetAt(WATER).getRow(month).getCell(year);
         return cell.getNumericCellValue();
     }
 
-    public double electricityConsumed(int month, int year) {
+    double electricityConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(3).getRow(month).getCell(year);
+        XSSFCell cell = wb.getSheetAt(ELECTRICITY).getRow(month).getCell(year);
         return cell.getNumericCellValue();
     }
 
-    public double gasConsumed(int month, int year) {
+    double gasConsumed(int month, int year) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
-        XSSFCell cell = wb.getSheetAt(5).getRow(month).getCell(year);
+        XSSFCell cell = wb.getSheetAt(GAS).getRow(month).getCell(year);
         return cell.getNumericCellValue();
     }
 
-    private int getSheetFromCategory(String category) {
+    private int getSheetFromCategory(int category) {
         int sheet;
         switch (category) {
-            case "waste":
+            case WASTE:
             default:
-                sheet = 0;
+                sheet = WASTE;
                 break;
-            case "water":
-                sheet = 1;
+            case WATER:
+                sheet = WATER;
                 break;
-            case "electricity":
-                sheet = 3;
+            case ELECTRICITY:
+                sheet = ELECTRICITY;
                 break;
-            case "gas":
-                sheet = 5;
+            case GAS:
+                sheet = GAS;
                 break;
         }
         return sheet;
     }
 
-    public String commentHeader(String category) {
+    String commentHeader(int category) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int sheet = getSheetFromCategory(category);
         XSSFCell cell = wb.getSheetAt(sheet).getRow(0).getCell(13);
         return cell.getStringCellValue();
     }
 
-    public String comment(String category) {
+    String comment(int category) {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int sheet = getSheetFromCategory(category);
         XSSFCell cell = wb.getSheetAt(sheet).getRow(1).getCell(13);
@@ -88,7 +96,7 @@ public class ConsumptionData {
         return c == null || c.getCellType() == XSSFCell.CELL_TYPE_BLANK;
     }
 
-    public int getLastMonth() {
+    int getLastMonth() {
         XSSFWorkbook wb = getWorkbookFromExcelFile();
         int mostRecentMonth = 0;
         for (int sheet = 0; sheet < 6; sheet++) {
@@ -125,17 +133,17 @@ public class ConsumptionData {
     private String[] monthNames = {"January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"};
 
-    public String getLastMonthName() { return monthNames[getLastMonth() - 1];}
+    String getLastMonthName() { return monthNames[getLastMonth() - 1];}
 
-    public String getCurrentYear() {
+    String getCurrentYear() {
         return Integer.toString(LocalDate.now().getYear());
     }
 
-    public String getLastYear() {
+    String getLastYear() {
         return Integer.toString(LocalDate.now().minusYears(1).getYear());
     }
 
-    public String getTwoYearsAgo() {
+    String getTwoYearsAgo() {
         return Integer.toString(LocalDate.now().minusYears(2).getYear());
     }
 }

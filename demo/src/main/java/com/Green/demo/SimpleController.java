@@ -29,7 +29,7 @@ import java.io.IOException;
 @Controller
 public class SimpleController extends ConsumptionData{
     @GetMapping("/home")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) throws IOException {
+    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model){
         model.addAttribute("name", name);
 
         model.addAttribute("monthName", getLastMonthName());
@@ -53,14 +53,14 @@ public class SimpleController extends ConsumptionData{
         model.addAttribute("gasConsumedLastYear", gasConsumed(getLastMonth(), 2));
         model.addAttribute("gasConsumedTwoYearsAgo", gasConsumed(getLastMonth(), 1));
 
-        model.addAttribute("wasteCommentHeader", commentHeader("waste"));
-        model.addAttribute("wasteComment", comment("waste"));
-        model.addAttribute("waterCommentHeader", commentHeader("water"));
-        model.addAttribute("waterComment", comment("water"));
-        model.addAttribute("electricityCommentHeader", commentHeader("electricity"));
-        model.addAttribute("electricityComment", comment("electricity"));
-        model.addAttribute("gasCommentHeader", commentHeader("gas"));
-        model.addAttribute("gasComment", comment("gas"));
+        model.addAttribute("wasteCommentHeader", commentHeader(WASTE));
+        model.addAttribute("wasteComment", comment(WATER));
+        model.addAttribute("waterCommentHeader", commentHeader(WATER));
+        model.addAttribute("waterComment", comment(WATER));
+        model.addAttribute("electricityCommentHeader", commentHeader(ELECTRICITY));
+        model.addAttribute("electricityComment", comment(ELECTRICITY));
+        model.addAttribute("gasCommentHeader", commentHeader(GAS));
+        model.addAttribute("gasComment", comment(GAS));
 
         return "home";
     }
