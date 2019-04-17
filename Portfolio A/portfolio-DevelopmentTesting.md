@@ -1,7 +1,7 @@
 Development Testing
 ===================================
 
-Due to the passive nature of the "front-end" of our software being a TV display for the passers-by in Cabot Circus, most of our testing will focus on the back-end, where the Cabot staff enter data. To thoroughly test this, a unit-testing framework Maven will be used. For the test strategy of our software, we will individually test the components shown in the architecture diagram above. For example, the Water object class will have to be tested with unit tests to guarantee it can handle different data inputs, whether that be edge case values, garbage input, or other exceptional sources from the Excel data.
+Due to the passive nature of the "front-end" of our software being a TV display for the passers-by in Cabot Circus, most of our testing will focus on the back-end, where the Cabot staff enter data. To thoroughly test this, a unit-testing framework JUnit will be used. For the test strategy of our software, we will individually test the components shown in the architecture diagram above. For example, the Water object class will have to be tested with unit tests to guarantee it can handle different data inputs, whether that be edge case values, garbage input, or other exceptional sources from the Excel data.
 
 Since it will be difficult to test our "front-end" in house, we will have to look for opinion based feedback from both the Cabot team and customers. This can be done by having multiple designs of different chart types and colours for each component, and presenting them for comparison. By doing this, we can get more certainty to how our designs are perceived by a relevant audience. 
  
