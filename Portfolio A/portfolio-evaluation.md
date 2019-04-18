@@ -1,0 +1,11 @@
+During the later stages of development, when our project started to take a visual form, we began to get feedback on how it was presented from our client, Beth. During our twice monthly meetings, we would take a laptop and present the current status of our project, even if it wasn’t where we wanted it to be. This way, any little details that were not what the client had in mind could easily be amended, and these built up the project we have today.
+
+Most of the time, it was only Beth that would see the project, but a few times, a colleague of hers would be present and would help to contribute ideas, so if Beth missed out on anything, the other person would catch on.
+
+The developments made between a meeting and the one prior would be explained, because just the front screen is ambiguous when it comes to the back-end mechanics. Along with that, whenever we have an inquiries or confusions in between the meetings, we would make a list of them and ask them all when we have the chance, like a questionnaire.
+
+When it was nearly finished and only finishing touches were being implemented, the mechanics of it were fully explained to beth because she would be one of the few people to have to use it in the future; and the presentation of the slides were sent as screenshots and shared throughout the Cabot Circus team, they have the most idea on what the company is striving for and the diversity of people would gives lots of different perspectives on how it can be improved upon.
+
+All improvements we got from the feedback were put into a list so we could have easy access to everything left to be done in one location. These tasks would be ticked off one by one and the resulting product would once again be presented, and the cycle continues.
+
+In the final stages of the project, we began to incorporate unit testing in order to test the actual code behind the slideshow. This part of the evaluation is secondary to the visual observations of the client, this is because of the nature of what we have to do, it is primarily focused around how it looks, and doesn’t do anything too extraordinary to support it. Because of this, our testing can only do so much, we used it to test that the simple functions that relate to retrieving information from the excel sheets and information about the date when the program is run.
