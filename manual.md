@@ -1,7 +1,7 @@
-Operations Manual
+Operations Manual TO DO: Edit as md file
 
 
-1. Data.xlsx structure
+1. Data.xlsx structure explained
 
 1.1 In the file there are 6 spreadsheeds - Waste, Water, Landlord Water, Electricity, Carpark Electricity and Gas, respectively. 
 
@@ -14,6 +14,8 @@ Operations Manual
 1.5 Ideas of comments could be included below the comments section. However, they are not affecting overall presentation. 
 
 1.6 No formatting in the cells affects the presentation, so it is not suggested. All formatting is done internally in the code.
+
+1.7 Filename should not be changed. Format should be kept .xlsx, that is, save the file using Excel version 2007 or later. 
 
 
 2. Changes of year
