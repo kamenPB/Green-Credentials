@@ -16,7 +16,11 @@
     <div class="slides" id="electricity"></div>
     <div class="slides" id="gas"></div>
 </div>
-
+<!--/* Workaround for bug https://youtrack.jetbrains.com/issue/IDEA-132738 -->
+<!--@thymesVar id="post" type="your.package.Post"-->
+<!--@thymesVar id="title" type="String"-->
+<!--@thymesVar id="content" type="String"-->
+<!--*/-->
 <div class="hidden">
     <!-- These hidden fields will be populated with Thymeleaf, and used by the JavaScript -->
     <span id="monthName" th:text="${monthName}"></span>
