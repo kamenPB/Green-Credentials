@@ -1,6 +1,6 @@
 # Cabot Circus's Green Credentials Smart TV Display
 
-This repository contains the code for a web app built for Cabot Circus, which enables the shopping centre to publicise its consumption data in a customer-friendly digital poster.
+This repository contains the source code (in the ``demo`` directory) for a web app built for Cabot Circus, which enables the shopping centre to publicise its consumption data in a customer-friendly digital poster.
 
 # User Manual
 Usage instructions are included in ``manual.md``.
