@@ -30,3 +30,5 @@
 1. Errors
 
     1. Type error in the spreadsheets (i.e Cannot get a numeric value from a text cell). Error page will be displayed telling you there is a mismatch. You then will have to review the data.xmls file and the mistake should be more or less visible.
+    
+    1. Date error. These are likely to involve a wrong date on the local machine (mosly year as the screen displays the last month that has data on it). Check that. If that is not the issue, check if all the data for the particular month you want to display is filled in the correct cells. 
