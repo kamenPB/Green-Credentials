@@ -5,7 +5,7 @@ This repository contains the code for a web app built for Cabot Circus, which en
 # User Manual
 Usage instructions are included in ``manual.md``.
 
-# Deployment
+# Deployment Instructions
 To deploy the server, open a terminal in the ``green_credentials_build`` folder.
 
 Run the following command to launch the server:
