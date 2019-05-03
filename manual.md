@@ -2,7 +2,7 @@
 
 1. Data.xlsx structure explained
 
-    1. In the file there are 6 spreadsheeds - Waste, Water, Landlord Water, Electricity, Carpark Electricity and Gas, respectively. 
+    1. In the file there are 6 spreadsheets - Waste, Water, Landlord Water, Electricity, Carpark Electricity and Gas, respectively. 
 
     1. Data from Landlord water and Carpark electricity do not have particular slide in the presentation; could be used for further comments and/or statistics.
 
