@@ -145,6 +145,7 @@ The system receives various consumption data from the inputs the staff, primaril
 1. The display does not try and visualise this stat, but the explanatory comment is present beside the chart.
 
 In terms of importance, displaying the green credentials of Cabot Circus accurately, in a pictorial and easily understandable fashion on a smart TV is the main priority. The ability to add comments is an important, secondary goal. Website and app integration are tertiary goals, as is integration with other Hammerson shopping centres. This main goal can be divided into the following atomic requirements:
+1. The server can be run externally, by another computer, and the smart TV can use it from it's web browser
 1. The TV screen displays all the required data
 1. There is some sort of chart which visualises this data
 1. If needed, there is some sort of additional pictorial visual aid presented which helps explain the stats for a given data category (the number of elephants it would take to make the tonnage of waste recycled, the number of homes which could be powered by the electricity saved this month, the number of bath tubs you could fill with the water saved this month, etc.)
