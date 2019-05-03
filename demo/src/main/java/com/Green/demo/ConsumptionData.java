@@ -16,7 +16,7 @@ public class ConsumptionData {
     final int GAS = 5;
 
 
-    private static XSSFWorkbook getWorkbookFromExcelFile() {
+    public static XSSFWorkbook getWorkbookFromExcelFile() {
         XSSFWorkbook wb = null;
         try {
             wb = new XSSFWorkbook(new FileInputStream("..//data.xlsx")); // For now, hardcode the filename

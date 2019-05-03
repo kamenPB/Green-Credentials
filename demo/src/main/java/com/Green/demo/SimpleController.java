@@ -44,7 +44,6 @@ public class SimpleController extends ConsumptionData{
         model.addAttribute("wasteTotal", wasteTotal(getLastMonth()));
         model.addAttribute("wasteRecycled", wasteRecycled(getLastMonth()));
 
-        //TODO use .contains to get the column of the year from the first row of each spreadsheet
         model.addAttribute("waterConsumedCurrentYear", waterConsumed(getLastMonth(), 3));
         model.addAttribute("waterConsumedLastYear", waterConsumed(getLastMonth(), 2));
         model.addAttribute("waterConsumedTwoYearsAgo", waterConsumed(getLastMonth(), 1));

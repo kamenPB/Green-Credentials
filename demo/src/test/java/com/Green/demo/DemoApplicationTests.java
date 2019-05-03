@@ -18,12 +18,12 @@ public class DemoApplicationTests extends ConsumptionData{
 	public void contextLoads() {
 	}
 
-//	@Test
-//	public void fileLoaded() throws IOException {
-//		final XSSFWorkbook expected = new XSSFWorkbook(new FileInputStream("..//data.xlsx"));
-//		final XSSFWorkbook actual = getWorkbookFromExcelFile();
-//		Assert.assertEquals(actual,expected);
-//	}
+	@Test
+	public void fileLoaded() throws IOException {
+		final XSSFWorkbook expected = new XSSFWorkbook(new FileInputStream("..//data.xlsx"));
+		final XSSFWorkbook actual = getWorkbookFromExcelFile();
+		Assert.assertEquals(actual,expected);
+	}
 
 	@Test
 	public void month() {
