@@ -26,3 +26,7 @@
     1. Remove the oldest data, assuming that is the year furthest from the actual, should be the first column after the months. To remove it, right click on the column letter and delete the whole column. Make sure you shift the rest of the data to the left, if not done automatically. 
 
     1. To start a new year then, you need to add a new column on a specific position, so that the initial structure is kept unchanged and calculations are done correctly. Simply, find the latest filled year, right click the column letter and insert 1 column to the right. Fill the title and the data. Re-calculations and presentation are then done automatic after a refresh.
+
+1. Errors
+
+    1. Type error in the spreadsheets (i.e Cannot get a numeric value from a text cell). Error page will be displayed telling you there is a mismatch. You then will have to review the data.xmls file and the mistake should be more or less visible.
