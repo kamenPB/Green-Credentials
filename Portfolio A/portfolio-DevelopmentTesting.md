@@ -1,7 +1,7 @@
 Development Testing
 ===================================
 
-![alt text](https://github.com/kamenPB/Green-Credentials/blob/master/Portfolio%20A/PNG/architecture.jpg "Architecture Diagram")
+![alt text](https://github.com/kamenPB/Green-Credentials/blob/master/Portfolio%20A/PNG/architecture.png "Architecture Diagram")
 
 Due to the passive nature of the "front-end" of our software being a TV display for the passers-by in Cabot Circus, most of our testing will focus on the back-end, where the Cabot staff enter data. To thoroughly test this, a unit-testing framework JUnit will be used. For the test strategy of our software, we will individually test the components shown in the simple architecture diagram above. For example, the Water object class will have to be tested with unit tests to guarantee it can handle different data inputs, whether that be edge case values, inappropriate input, or other exceptional sources from the spreadsheets.
 
