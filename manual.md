@@ -15,6 +15,8 @@
     1. No formatting in the cells affects the presentation, so it is not suggested. All formatting is done internally in the code.
 
     1. Filename should not be changed. Format should be kept .xlsx, that is, save the file using Excel version 2007 or later. 
+    
+    1. If you run the program and you are given a page that says "WHITELABEL ERROR PAGE", it is possible that you made a mistake somewhere in the excel spreadsheet, go through all of the values for the data to check if there are any letters inputted, if there are, remove them and rerun the program and it should run as usual.
 
 
 1. Changes of year
