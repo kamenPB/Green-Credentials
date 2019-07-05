@@ -1,7 +1,11 @@
 //
 // GLOBAL VARIABLES
 //
+<<<<<<< HEAD
 var delay = 15; // The delay between slide changes, in seconds
+=======
+var delay = 10; // The delay between slide changes, in seconds
+>>>>>>> 55840c3d45553291352e609c9b9c984fb025b66f
 var maxNumberOfIcons = 25; // Maximum number of icons to display (so we dont have 100,000,000 elephants on screen)
 
 var charts = []; // Store all charts in a global array to avoid memory leak
